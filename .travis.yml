@@ -1,0 +1,9 @@
+language: csharp
+dist: xenial
+mono: none
+dotnet: 2.2.0
+install:
+- dotnet restore src/ParkMate/
+script:
+- dotnet build src/ParkMate/
+- dotnet test src/ParkMate/Web.Tests/Web.Tests.csproj
