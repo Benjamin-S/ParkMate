@@ -1,4 +1,7 @@
-﻿namespace ParkMate.ApplicationCore
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace ParkMate.ApplicationCore
 {
     public abstract class ValueObject
     {
