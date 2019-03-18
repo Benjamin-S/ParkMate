@@ -55,7 +55,8 @@ namespace ParkMate.ApplicationCore.ValueObjects
         }
         public bool Overlaps(BookingPeriod dateTimeRange)
         {
-            return (this.Start < dateTimeRange.End && dateTimeRange.Start < this.End);
+            return this.Start < dateTimeRange.End && 
+                   this.End > dateTimeRange.Start;
         }
     }
 }
