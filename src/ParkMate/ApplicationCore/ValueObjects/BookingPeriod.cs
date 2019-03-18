@@ -8,50 +8,31 @@ namespace ParkMate.ApplicationCore.ValueObjects
         public DateTime End { get; }
 
         public BookingPeriod(DateTime start, DateTime end)
+        {
             if (end <= start)
             {
                 throw  new ArgumentException("End time cannot be before or equal to start time");
             }
             Start = start;    
             End = end;
-            Start = start;
-            End = end;
-
-            if (start == end)
-                throw new ArgumentException("Start date and end date are equal");
-
-            if(end < start)
-                throw new ArgumentException("End date precedes start date");
         }
         public static BookingPeriod CreateOneHourPeriod(DateTime day)
         {
-            var start = day;
-            var end = day.AddHours(1);
-
             return new BookingPeriod(day, day.AddHours(1));
         }
         
         public static BookingPeriod CreateOneDayPeriod(DateTime day)
         {
-            var start = day;
-            var end = day.AddDays(1);
-
-            return(new BookingPeriod(start, end));
+            return new BookingPeriod(day, day.AddDays(1));
         }
 
         public static BookingPeriod CreateOneWeekPeriod(DateTime startDateTime)
         {
-            var start = startDateTime;
-            var end = startDateTime.AddDays(7);
-
-            return(new BookingPeriod(start, end));
+            return new BookingPeriod(startDateTime, startDateTime.AddDays(7));
         }
         public static BookingPeriod CreateOneMonthPeriod(DateTime startDateTime)
         {
-            var start = startDateTime;
-            var end = startDateTime.AddMonths(1);
-
-            return(new BookingPeriod(start, end));
+            return new BookingPeriod(startDateTime, startDateTime.AddMonths(1));
         }
         public bool Overlaps(BookingPeriod dateTimeRange)
         {
