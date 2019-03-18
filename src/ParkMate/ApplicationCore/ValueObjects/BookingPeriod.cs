@@ -28,7 +28,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
             var start = day;
             var end = day.AddHours(1);
 
-            return(new BookingPeriod(start, end));
+            return new BookingPeriod(day, day.AddHours(1));
         }
         
         public static BookingPeriod CreateOneDayPeriod(DateTime day)
