@@ -8,7 +8,12 @@ namespace ParkMate.ApplicationCore.ValueObjects
         public DateTime End { get; }
 
         public BookingPeriod(DateTime start, DateTime end)
-        {
+            if (end <= start)
+            {
+                throw  new ArgumentException("End time cannot be before or equal to start time");
+            }
+            Start = start;    
+            End = end;
             Start = start;
             End = end;
 
