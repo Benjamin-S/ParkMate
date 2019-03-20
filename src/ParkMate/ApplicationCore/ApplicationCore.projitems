@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IEmailSender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Address.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingPeriod.cs" />
