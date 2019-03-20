@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace ParkMate.ApplicationCore.Interfaces
 {
     public interface IEmailSender
     {
-        void SendEmail(string emailAddress, string subject, string body);
+        Task SendEmailAsync(string emailAddress, string subject, string body);
     }
 }
