@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 namespace ParkMate.ApplicationCore.ValueObjects
 {
-    public class BookingPeriod
+    public class BookingPeriod : ValueObject
     {
         public DateTime Start { get; }
         public DateTime End { get; }
@@ -11,16 +12,16 @@ namespace ParkMate.ApplicationCore.ValueObjects
         {
             if (end <= start)
             {
-                throw  new ArgumentException("End time cannot be before or equal to start time");
+                throw new ArgumentException("End time cannot be before or equal to start time");
             }
-            Start = start;    
+            Start = start;
             End = end;
         }
         public static BookingPeriod CreateOneHourPeriod(DateTime day)
         {
             return new BookingPeriod(day, day.AddHours(1));
         }
-        
+
         public static BookingPeriod CreateOneDayPeriod(DateTime day)
         {
             return new BookingPeriod(day, day.AddDays(1));
@@ -36,8 +37,14 @@ namespace ParkMate.ApplicationCore.ValueObjects
         }
         public bool Overlaps(BookingPeriod dateTimeRange)
         {
-            return this.Start < dateTimeRange.End && 
+            return this.Start < dateTimeRange.End &&
                    this.End > dateTimeRange.Start;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Start;
+            yield return End;
         }
     }
 }
