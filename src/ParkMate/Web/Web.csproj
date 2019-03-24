@@ -2,19 +2,25 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
-        <UserSecretsId>aspnet-Web-3CD4BB7A-F1FE-44B6-8ABA-7382B1FCA583</UserSecretsId>
+        <UserSecretsId>d8b0333e-bd67-4289-a727-db7c434416e6</UserSecretsId>
         <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     </PropertyGroup>
 
 
     <ItemGroup>
-        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Remove="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
+      <Content Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
+      <Content Remove="Areas\Identity\Pages\Error.cshtml" />
+    </ItemGroup>
 </Project>
