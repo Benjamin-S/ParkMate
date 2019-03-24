@@ -1,11 +1,9 @@
 using System.Threading.Tasks;
-//using ParkMate.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
 
 namespace ParkMate.Infrastructure.Services
 {
