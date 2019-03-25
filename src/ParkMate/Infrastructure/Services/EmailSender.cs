@@ -9,21 +9,19 @@ namespace ParkMate.Infrastructure.Services
 {
     public class EmailSender : IEmailSender
     {
-        private string sendGridApiKey = null;
-        public IConfiguration Configuration { get; }
+        private string _sendGridApiKey = null;
 
         public EmailSender(IConfiguration configuration)
         {
-            Configuration = configuration;
-            sendGridApiKey = Configuration["SendGrid:ServiceApiKey"];
+            _sendGridApiKey = configuration["SendGrid:ServiceApiKey"];
         }
 
         public async Task SendEmailAsync(string emailAddress, string subject, string body)
         {
-            var client = new SendGridClient(sendGridApiKey);
+            var client = new SendGridClient(_sendGridApiKey);
 
-            EmailAddress fromEmail = new EmailAddress("mail@parkmate.com");
-            EmailAddress toEmail = new EmailAddress(emailAddress);
+            var fromEmail = new EmailAddress("mail@parkmate.com");
+            var toEmail = new EmailAddress(emailAddress);
 
             var msg = MailHelper.CreateSingleEmail(fromEmail, toEmail, subject, null, body);
 
