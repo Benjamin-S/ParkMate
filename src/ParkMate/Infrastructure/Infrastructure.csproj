@@ -11,6 +11,7 @@
     
     <ItemGroup>
       <Folder Include="Identity\" />
+      <Folder Include="Data\" />
     </ItemGroup>
     <Import Project="..\ApplicationCore\ApplicationCore.projitems" Label="Shared" />
 

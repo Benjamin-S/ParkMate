@@ -16,6 +16,7 @@ using ParkMate.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ParkMate.Infrastructure.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using ParkMate.Infrastructure.Data;
 
 namespace ParkMate.Web
 {
@@ -38,6 +39,10 @@ namespace ParkMate.Web
 
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseNpgsql(Configuration["ConnectionStrings:Identity"]));
+
+            services.AddDbContext<ParkMateDbContext>(options =>
+                options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"]));
+
 
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
             {

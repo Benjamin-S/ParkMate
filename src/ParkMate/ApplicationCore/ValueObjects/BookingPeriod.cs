@@ -5,8 +5,9 @@ namespace ParkMate.ApplicationCore.ValueObjects
 {
     public class BookingPeriod : ValueObject
     {
-        public DateTime Start { get; }
-        public DateTime End { get; }
+        private BookingPeriod()
+        {
+        }
 
         public BookingPeriod(DateTime start, DateTime end)
         {
@@ -17,6 +18,10 @@ namespace ParkMate.ApplicationCore.ValueObjects
             Start = start;
             End = end;
         }
+
+        public DateTime Start { get; private set; }
+        public DateTime End { get; private set; }
+
         public static BookingPeriod CreateOneHourPeriod(DateTime day)
         {
             return new BookingPeriod(day, day.AddHours(1));
