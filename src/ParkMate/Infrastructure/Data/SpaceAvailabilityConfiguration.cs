@@ -9,7 +9,6 @@ namespace ParkMate.Infrastructure.Data
         public void Configure(EntityTypeBuilder<SpaceAvailability> spaceAvailability)
         {
             spaceAvailability.OwnsOne(a => a.Monday);
-            spaceAvailability.OwnsOne(a => a.Monday);
             spaceAvailability.OwnsOne(a => a.Tuesday);
             spaceAvailability.OwnsOne(a => a.Wednesday);
             spaceAvailability.OwnsOne(a => a.Thursday);
