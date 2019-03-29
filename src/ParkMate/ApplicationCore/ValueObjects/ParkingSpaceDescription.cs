@@ -14,13 +14,13 @@ namespace ParkMate.ApplicationCore.ValueObjects
             string description, 
             string imageUrl)
         {
-            Title = string.IsNullOrWhiteSpace(title) ? 
+            Title = !string.IsNullOrWhiteSpace(title) ? 
                 title : throw new ArgumentNullException(nameof(title));
 
-            Description = string.IsNullOrWhiteSpace(description) ? 
+            Description = !string.IsNullOrWhiteSpace(description) ? 
                 description : throw new ArgumentNullException(nameof(description));
 
-            ImageURL = string.IsNullOrWhiteSpace(imageUrl) ? 
+            ImageURL = !string.IsNullOrWhiteSpace(imageUrl) ? 
                 imageUrl : throw new ArgumentNullException(nameof(imageUrl));
         }
 

@@ -17,10 +17,14 @@ namespace ParkMate.ApplicationCore.ValueObjects
             double latitude,
             double longitude)
         {
-            Street = street ?? throw new ArgumentNullException(nameof(street));
-            City = city ?? throw new ArgumentNullException(nameof(city));
-            State = state ?? throw new ArgumentNullException(nameof(state));
-            Zip = zip ?? throw new ArgumentNullException(nameof(zip));
+            Street = !string.IsNullOrWhiteSpace(street) ? 
+                street : throw new ArgumentNullException(nameof(street));
+            City = !string.IsNullOrWhiteSpace(city) ? 
+                city : throw new ArgumentNullException(nameof(city));
+            State = !string.IsNullOrWhiteSpace(state) ? 
+                state : throw new ArgumentNullException(nameof(state));
+            Zip = !string.IsNullOrWhiteSpace(zip) ? 
+                zip : throw new ArgumentNullException(nameof(zip));
             Latitude = latitude;
             Longitude = longitude;
         }

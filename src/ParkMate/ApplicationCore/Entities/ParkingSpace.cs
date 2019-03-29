@@ -15,7 +15,7 @@ namespace ParkMate.ApplicationCore.Entities
             SpaceAvailability availability,
             BookingRate bookingRate)
         {
-            OwnerId = string.IsNullOrWhiteSpace(ownerId) ? ownerId :
+            OwnerId = !string.IsNullOrWhiteSpace(ownerId) ? ownerId :
                 throw new ArgumentNullException(nameof(ownerId));
             Description = description ?? 
                 throw new ArgumentNullException(nameof(description));
