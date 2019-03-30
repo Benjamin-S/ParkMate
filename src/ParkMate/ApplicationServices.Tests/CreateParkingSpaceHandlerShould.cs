@@ -7,6 +7,7 @@ using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using Xunit;
 using ApplicationServices.Commands;
+using System.Threading;
 
 namespace ApplicationServices.Tests
 {
@@ -21,7 +22,7 @@ namespace ApplicationServices.Tests
             {
                 var repository = new WriteRepository<BaseEntity>(context);
                 var handler = new CreateParkingSpaceHandler(repository);
-                await handler.Handle(command);
+                await handler.Handle(command, default(CancellationToken));
             }
 
             using (var context = new ParkMateDbContext(GetDbContextOptions("CreateNewParkingSpace")))
