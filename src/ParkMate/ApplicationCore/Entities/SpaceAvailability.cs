@@ -58,7 +58,7 @@ namespace ParkMate.ApplicationCore.Entities
         public static SpaceAvailability Create247Availability()
         {
             return new SpaceAvailability(
-                true,
+                false,
                 AvailabilityTime.Create24HourAvailability(),
                 AvailabilityTime.Create24HourAvailability(),
                 AvailabilityTime.Create24HourAvailability(),
@@ -67,6 +67,10 @@ namespace ParkMate.ApplicationCore.Entities
                 AvailabilityTime.Create24HourAvailability(),
                 AvailabilityTime.Create24HourAvailability()
             );
+        }
+        public void SetVisible(bool isVisible)
+        {
+            IsVisible = isVisible;
         }
         public void SetAvailabilityForDay(DayOfWeek day, AvailabilityTime availability)
         {

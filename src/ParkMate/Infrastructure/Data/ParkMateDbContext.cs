@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using ParkMate.ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.Infrastructure.Data
 {
-    public class ParkMateDbContext : DbContext
+    public class ParkMateDbContext : DbContext, IUnitOfWork
     {
         public ParkMateDbContext(DbContextOptions<ParkMateDbContext> options) 
             : base(options)
@@ -17,6 +20,14 @@ namespace ParkMate.Infrastructure.Data
         {
             modelBuilder.ApplyConfiguration(new ParkingSpaceConfiguration());
             modelBuilder.ApplyConfiguration(new SpaceAvailabilityConfiguration());
+        }
+
+        public async Task<bool> SaveEntitiesAsync(
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await base.SaveChangesAsync();
+
+            return true;
         }
     }
 }

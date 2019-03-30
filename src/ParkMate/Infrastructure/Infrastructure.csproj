@@ -7,13 +7,15 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
-        <PackageReference Include="Sendgrid" Version="9.10.0"/>
+        <PackageReference Include="Sendgrid" Version="9.10.0" />
     </ItemGroup>
     
     <ItemGroup>
       <Folder Include="Identity\" />
       <Folder Include="Data\" />
     </ItemGroup>
-    <Import Project="..\ApplicationCore\ApplicationCore.projitems" Label="Shared" />
-
+    
+    <ItemGroup>
+      <ProjectReference Include="..\ApplicationServices\ApplicationServices.csproj" />
+    </ItemGroup>
 </Project>

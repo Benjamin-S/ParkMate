@@ -12,11 +12,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 using ParkMate.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ParkMate.Infrastructure.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using ParkMate.Infrastructure.Data;
+using ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationCore.Entities;
 
 namespace ParkMate.Web
 {
@@ -61,8 +65,10 @@ namespace ParkMate.Web
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
-
+            
+            services.AddMediatR(typeof(CreateParkingSpace).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IRepository<BaseEntity>, WriteRepository<BaseEntity>>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

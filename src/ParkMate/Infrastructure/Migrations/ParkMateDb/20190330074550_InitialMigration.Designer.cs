@@ -10,7 +10,7 @@ using ParkMate.Infrastructure.Data;
 namespace Infrastructure.Migrations.ParkMateDb
 {
     [DbContext(typeof(ParkMateDbContext))]
-    [Migration("20190329092727_InitialMigration")]
+    [Migration("20190330074550_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
