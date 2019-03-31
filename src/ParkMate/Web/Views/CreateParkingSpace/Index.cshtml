@@ -28,7 +28,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Address.Zip"></label>
-                    <select asp-for="Address.Zip" class="form-control">
+                    <input asp-for="Address.Zip" class="form-control"/>
+                    <span asp-validation-for="Address.Zip" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address.State"></label>
+                    <select asp-for="Address.State" class="form-control">
                         <option>New South Wales</option>
                         <option>Victoria</option>
                         <option>Queensland</option>
@@ -37,11 +42,6 @@
                         <option>Tasmania</option>
                         <option>Northern Territory</option>
                     </select>
-                    <span asp-validation-for="Address.Zip" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Address.State"></label>
-                    <input asp-for="Address.State" class="form-control"/>
                     <span asp-validation-for="Address.State" class="text-danger"></span>
                 </div>
             </div>
