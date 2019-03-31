@@ -140,8 +140,13 @@
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped" id="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <button type="button" id="prevBtn" class="btn btn-primary float-left mt-1">Previous</button>
-                <button type="button" id="nextBtn" class="btn btn-primary float-right mt-1">Next</button>              
+                <div class="clearfix">
+                    <button type="button" id="prevBtn" class="btn btn-primary mt-1">Previous</button>
+                    <button type="button" id="nextBtn" class="btn btn-primary float-right mt-1">Next</button> 
+                </div>
+                <div class="alert alert-danger mt-2" id="alert" role="alert">
+                    Please ensure all details are completed before continuing.
+                </div>
             </div>
         </form>
     </div>
@@ -205,6 +210,13 @@
                     valid = false;
                 }
             }
+            
+            if (valid) {
+                $("#alert").hide();
+            } else {
+                $("#alert").show();
+            }
+            
             return valid;
         }
 
