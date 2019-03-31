@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data" id = "form">
+        <form method="post" enctype="multipart/form-data" id="form">
             <div class="formTab">
                 <h4>Parking Space Address</h4>
                 <hr/>
@@ -74,18 +74,18 @@
                 <hr/>
 
                 <div class="form-group">
+                    <label asp-for="BookingRate.HourlyRate"></label>
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <label asp-for="BookingRate.HourlyRate"></label>
                     <input asp-for="BookingRate.HourlyRate" class="form-control"/>
                     <span asp-validation-for="BookingRate.HourlyRate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="BookingRate.DailyRate"></label>
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <label asp-for="BookingRate.DailyRate"></label>
                     <input asp-for="BookingRate.DailyRate" class="form-control"/>
                     <span asp-validation-for="BookingRate.DailyRate" class="text-danger"></span>
                 </div>
@@ -166,8 +166,8 @@
     </div>
 </div>
 
-@section scripts {
-    <script>
+@section scripts {   
+    <script >
         var currentTab = 0;
         showTab(currentTab);
         $("#prevBtn").on("click", function() { nextPrev(-1); });
@@ -177,7 +177,6 @@
         function showTab(tabNumber) {
             var tabs = document.getElementsByClassName("formTab");
             tabs[tabNumber].style.display = "block";
-            $("#test").text(tabNumber);
 
             if (tabNumber == 0) {
                 $("#prevBtn").hide();
@@ -193,46 +192,26 @@
         }
 
         function nextPrev(direction) {
-
-            if (direction == 1 && !validateForm()) {
-                  return false;
-            }
-
             var tabs = document.getElementsByClassName("formTab");
-            tabs[currentTab].style.display = "none";
-            currentTab += direction;
+            tabs[currentTab].classList.add("currentTab");
+
+            if (direction == 1 && !($(".currentTab input").valid())) {
+                return false;
+            }
 
             if (currentTab >= tabs.length) {
                 $("#form").submit();
                 return false;
             }
+            
+            tabs[currentTab].style.display = "none";
+            tabs[currentTab].classList.remove("currentTab");
+            currentTab += direction;
 
             showTab(currentTab);
             var progress = ((currentTab/tabs.length)*100)+ "%";
             $("#progress-bar").css("width", progress);
             $("#progress-bar").attr("aria-valuenow", progress);
         }
-        
-        function validateForm() {
-            var valid = true;
-            var tabs = document.getElementsByClassName("formTab");
-            var tabInputs = tabs[currentTab].getElementsByTagName("input");
-            
-            for (i = 0; i < tabInputs.length; i++) {
-                if (tabInputs[i].value == "") {
-                    tabInputs[i].className += " invalid";
-                    valid = false;
-                }
-            }
-            
-            if (valid) {
-                $("#alert").hide();
-            } else {
-                $("#alert").show();
-            }
-            
-            return valid;
-        }
-
     </script>
 }
