@@ -66,7 +66,7 @@ namespace ParkMate.Web
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
             
-            services.AddMediatR(typeof(CreateParkingSpace).Assembly);
+            services.AddMediatR(typeof(CreateParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IRepository<BaseEntity>, WriteRepository<BaseEntity>>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -45,7 +45,7 @@ namespace ParkMate.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        async Task<CreateParkingSpace> BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)
+        async Task<RegisterNewParkingSpaceCommand> BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)
         {
             var fileName = dto.Description.ImageFile.FileName;
             var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
@@ -65,7 +65,7 @@ namespace ParkMate.Web.Controllers
 
             var availability = SpaceAvailability.Create247Availability();
 
-            return new CreateParkingSpace("test-id", description, address, availability, rate);
+            return new RegisterNewParkingSpaceCommand("test-id", description, address, availability, rate);
         }
     }
 }
