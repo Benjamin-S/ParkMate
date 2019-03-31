@@ -75,18 +75,22 @@
 
                 <div class="form-group">
                     <label asp-for="BookingRate.HourlyRate"></label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                    </div>
-                    <input asp-for="BookingRate.HourlyRate" class="form-control"/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input asp-for="BookingRate.HourlyRate" class="form-control"/>
+                     </div>
                     <span asp-validation-for="BookingRate.HourlyRate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="BookingRate.DailyRate"></label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input asp-for="BookingRate.DailyRate" class="form-control"/>
                     </div>
-                    <input asp-for="BookingRate.DailyRate" class="form-control"/>
                     <span asp-validation-for="BookingRate.DailyRate" class="text-danger"></span>
                 </div>
             </div>
@@ -199,14 +203,14 @@
                 return false;
             }
 
+            tabs[currentTab].style.display = "none";
+            tabs[currentTab].classList.remove("currentTab");
+            currentTab += direction;
+            
             if (currentTab >= tabs.length) {
                 $("#form").submit();
                 return false;
             }
-            
-            tabs[currentTab].style.display = "none";
-            tabs[currentTab].classList.remove("currentTab");
-            currentTab += direction;
 
             showTab(currentTab);
             var progress = ((currentTab/tabs.length)*100)+ "%";
