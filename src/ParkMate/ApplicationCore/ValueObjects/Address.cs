@@ -14,8 +14,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
             string city,
             string state,
             string zip,
-            double latitude,
-            double longitude)
+            Point location)
         {
             Street = !string.IsNullOrWhiteSpace(street) ? 
                 street : throw new ArgumentNullException(nameof(street));
@@ -25,16 +24,15 @@ namespace ParkMate.ApplicationCore.ValueObjects
                 state : throw new ArgumentNullException(nameof(state));
             Zip = !string.IsNullOrWhiteSpace(zip) ? 
                 zip : throw new ArgumentNullException(nameof(zip));
-            Latitude = latitude;
-            Longitude = longitude;
+            Location = location ?? 
+                throw new ArgumentNullException(nameof(location));
         }
 
         public string Street { get; private set; }
         public string City { get; private set; }
         public string State { get; private set; }
         public string Zip { get; private set; }
-        public double Latitude { get; private set; }
-        public double Longitude { get; private set; }
+        public Point Location { get; private set; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
@@ -42,8 +40,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
             yield return City;
             yield return State;
             yield return Zip;
-            yield return Latitude;
-            yield return Longitude; 
+            yield return Location;
         }
     }
 }

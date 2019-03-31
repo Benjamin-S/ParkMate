@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enums\DayOfWeekEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\ParkingSpaceDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\ValueObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Point.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Entities\" />

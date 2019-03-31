@@ -20,6 +20,7 @@ namespace ParkMate.Infrastructure.Data
         {
             modelBuilder.ApplyConfiguration(new ParkingSpaceConfiguration());
             modelBuilder.ApplyConfiguration(new SpaceAvailabilityConfiguration());
+            modelBuilder.HasPostgresExtension("postgis");
         }
 
         public async Task<bool> SaveEntitiesAsync(

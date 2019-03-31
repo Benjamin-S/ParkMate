@@ -5,9 +5,9 @@ using ParkMate.ApplicationCore.ValueObjects;
 
 namespace ApplicationServices.Commands
 {
-    public class CreateParkingSpace : IRequest<bool>
+    public class RegisterNewParkingSpaceCommand : IRequest<bool>
     {
-        public CreateParkingSpace(
+        public RegisterNewParkingSpaceCommand(
             string ownerId,
             ParkingSpaceDescription description,
             Address address,

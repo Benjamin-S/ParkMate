@@ -21,7 +21,7 @@ namespace ApplicationServices.Tests
             using (var context = new ParkMateDbContext(GetDbContextOptions("CreateNewParkingSpace")))
             {
                 var repository = new WriteRepository<BaseEntity>(context);
-                var handler = new CreateParkingSpaceHandler(repository);
+                var handler = new RegisterNewParkingSpaceCommandHandler(repository);
                 await handler.Handle(command, default(CancellationToken));
             }
 
@@ -42,7 +42,7 @@ namespace ApplicationServices.Tests
         Address GetTestAddress()
         {
             return new Address(
-                "123 Test Street", "TestVille", "ABC", "12345", 1.2, 3.4);
+                "123 Test Street", "TestVille", "ABC", "12345", new Point(1.2, 3.4));
         }
 
         BookingRate GetTestBookingRate()
@@ -61,14 +61,14 @@ namespace ApplicationServices.Tests
             return SpaceAvailability.Create247Availability();
         }
 
-        CreateParkingSpace GetTestCreateParkingSpaceCommand(string userId)
+        RegisterNewParkingSpaceCommand GetTestCreateParkingSpaceCommand(string userId)
         {
             var address = GetTestAddress();
             var rate = GetTestBookingRate();
             var description = GetTestDescription();
             var availability = GetTestAvailability();
 
-            return new CreateParkingSpace(userId, description, address, availability, rate);
+            return new RegisterNewParkingSpaceCommand(userId, description, address, availability, rate);
         }
 
         DbContextOptions<ParkMateDbContext> GetDbContextOptions(string name)
