@@ -55,7 +55,7 @@ namespace ParkMate.Web.Controllers
                 await dto.Description.ImageFile.CopyToAsync(stream);
             }
             var address = new Address(dto.Address.Street, dto.Address.City, dto.Address.State,
-                dto.Address.Zip, dto.Address.Latitude, dto.Address.Longitude);
+                dto.Address.Zip, new Point(dto.Address.Latitude, dto.Address.Longitude));
 
             var description = new ParkingSpaceDescription(dto.Description.Title,
                 dto.Description.Description, dto.Description.ImageFile.FileName);

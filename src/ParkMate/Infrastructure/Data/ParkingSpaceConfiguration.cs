@@ -1,6 +1,7 @@
 ﻿using ParkMate.ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 
 namespace ParkMate.Infrastructure.Data
 {
@@ -14,6 +15,9 @@ namespace ParkMate.Infrastructure.Data
                 ad.Property(a => a.City).IsRequired();
                 ad.Property(a => a.State).IsRequired();
                 ad.Property(a => a.Zip).IsRequired();
+                ad.Property(a => a.Location).HasConversion(
+                    p => new Point(p.Latitude, p.Longitude), 
+                    p => new ApplicationCore.ValueObjects.Point(p.X, p.Y));
             });
             builder.OwnsOne(ps => ps.Description, des => 
             {

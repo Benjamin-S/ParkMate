@@ -45,7 +45,8 @@ namespace ParkMate.Web
                 options.UseNpgsql(Configuration["ConnectionStrings:Identity"]));
 
             services.AddDbContext<ParkMateDbContext>(options =>
-                options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"]));
+                options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"], 
+                o => o.UseNetTopologySuite()));
 
 
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
@@ -66,7 +67,7 @@ namespace ParkMate.Web
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
             
-            services.AddMediatR(typeof(CreateParkingSpaceCommand).Assembly);
+            services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IRepository<BaseEntity>, WriteRepository<BaseEntity>>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
