@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ApplicationServices.Commands;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using MediatR;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.Web.Models;
+using ParkMate.Web.Util;
 
 namespace ParkMate.Web.Controllers
 {
@@ -17,14 +15,17 @@ namespace ParkMate.Web.Controllers
     {
         private readonly IHostingEnvironment _environment;
         private readonly IMediator _mediator;
+        private readonly ImageProcessor _imageProcessor;
 
         public CreateParkingSpaceController(
             IHostingEnvironment environment,
-            IMediator mediator)
+            IMediator mediator,
+            ImageProcessor _imageProcessor)
         {
             _environment = environment;
             _mediator = mediator;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -39,33 +40,30 @@ namespace ParkMate.Web.Controllers
             {
                 return View(dto);
             }
-            var command = await BuildParkingSpaceCommand(dto);
-            var result = await _mediator.Send(command); 
+            var imageResult =  await _imageProcessor.SaveImage(dto.Description.ImageFile);
+            dto.Description.ImageURL = imageResult.FileName;
+
+            var result = await _mediator.Send(BuildParkingSpaceCommand(dto)); 
 
             return RedirectToAction(nameof(Index));
         }
 
-        async Task<RegisterNewParkingSpaceCommand> BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)
+        RegisterNewParkingSpaceCommand BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)
         {
-            var fileName = dto.Description.ImageFile.FileName;
-            var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
+            return new RegisterNewParkingSpaceCommand(
+                User.FindFirst(ClaimTypes.NameIdentifier).ToString(),
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await dto.Description.ImageFile.CopyToAsync(stream);
-            }
-            var address = new Address(dto.Address.Street, dto.Address.City, dto.Address.State,
-                dto.Address.Zip, new Point(dto.Address.Latitude, dto.Address.Longitude));
+                new ParkingSpaceDescription(dto.Description.Title,
+                    dto.Description.Description, dto.Description.ImageFile.FileName),
 
-            var description = new ParkingSpaceDescription(dto.Description.Title,
-                dto.Description.Description, dto.Description.ImageFile.FileName);
+                new Address(dto.Address.Street, dto.Address.City, dto.Address.State,
+                    dto.Address.Zip, new Point(dto.Address.Latitude, dto.Address.Longitude)),
 
-            var rate = new BookingRate(new Money(dto.BookingRate.HourlyRate),
-                new Money(dto.BookingRate.DailyRate));
+                SpaceAvailability.Create247Availability(),
+                    new BookingRate(
+                        new Money(dto.BookingRate.HourlyRate),
+                        new Money(dto.BookingRate.DailyRate)));
 
-            var availability = SpaceAvailability.Create247Availability();
-
-            return new RegisterNewParkingSpaceCommand("test-id", description, address, availability, rate);
         }
     }
 }
