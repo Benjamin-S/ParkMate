@@ -2,10 +2,11 @@ using MediatR;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
+using ParkMate.ApplicationServices;
 
 namespace ApplicationServices.Commands
 {
-    public class RegisterNewParkingSpaceCommand : IRequest<bool>
+    public class RegisterNewParkingSpaceCommand : IRequest<CommandResult>
     {
         public RegisterNewParkingSpaceCommand(
             string ownerId,

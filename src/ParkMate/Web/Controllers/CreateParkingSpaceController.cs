@@ -40,7 +40,7 @@ namespace ParkMate.Web.Controllers
                 return View(dto);
             }
             var command = await BuildParkingSpaceCommand(dto);
-            bool result = await _mediator.Send(command); 
+            var result = await _mediator.Send(command); 
 
             return RedirectToAction(nameof(Index));
         }
