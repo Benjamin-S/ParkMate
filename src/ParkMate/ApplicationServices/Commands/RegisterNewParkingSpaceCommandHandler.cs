@@ -11,15 +11,17 @@ namespace ApplicationServices.Commands
     public class RegisterNewParkingSpaceCommandHandler 
         : IRequestHandler<RegisterNewParkingSpaceCommand, CommandResult>
     {
-        private IRepository<BaseEntity> _repository;
+        private IRepository<ParkingSpace> _repository;
 
-        public RegisterNewParkingSpaceCommandHandler(IRepository<BaseEntity> repository)
+        public RegisterNewParkingSpaceCommandHandler(IRepository<ParkingSpace> repository)
         {
             _repository = repository ?? 
                 throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<CommandResult> Handle(RegisterNewParkingSpaceCommand command, CancellationToken cancellationToken)
+        public async Task<CommandResult> Handle(
+            RegisterNewParkingSpaceCommand command, 
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var parkingSpace = new ParkingSpace(command.OwnerId, command.Description,
                 command.Address, command.Availability, command.BookingRate);

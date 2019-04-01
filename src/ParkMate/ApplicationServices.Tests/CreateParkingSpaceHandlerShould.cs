@@ -16,66 +16,29 @@ namespace ApplicationServices.Tests
         [Fact]
         public async Task CreateNewParkingSpace()
         {
-            var command = GetTestCreateParkingSpaceCommand("test-user");
+            var command = TestHelper.GetTestCreateParkingSpaceCommand("test-user");
 
-            using (var context = new ParkMateDbContext(GetDbContextOptions("CreateNewParkingSpace")))
+            using (var context = new ParkMateDbContext(TestHelper.GetNamedDbContextOptions("CreateNewParkingSpace")))
             {
-                var repository = new WriteRepository<BaseEntity>(context);
+                var repository = new WriteRepository<ParkingSpace>(context);
                 var handler = new RegisterNewParkingSpaceCommandHandler(repository);
                 await handler.Handle(command, default(CancellationToken));
             }
 
-            using (var context = new ParkMateDbContext(GetDbContextOptions("CreateNewParkingSpace")))
+            using (var context = new ParkMateDbContext(TestHelper.GetNamedDbContextOptions("CreateNewParkingSpace")))
             {
                 Assert.Equal(1, context.ParkingSpaces.Count());
                 var space = context.ParkingSpaces.Include(s => s.Availability).FirstOrDefault();
 
                 Assert.NotNull(space.Availability);
-                Assert.Equal(GetTestAddress(), space.Address);
-                Assert.Equal(GetTestBookingRate(), space.BookingRate);
-                Assert.Equal(GetTestDescription(), space.Description);
-                Assert.Equal(GetTestAddress(), space.Address);
+                Assert.Equal(TestHelper.GetTestAddress(), space.Address);
+                Assert.Equal(TestHelper.GetTestBookingRate(), space.BookingRate);
+                Assert.Equal(TestHelper.GetTestDescription(), space.Description);
+                Assert.Equal(TestHelper.GetTestAddress(), space.Address);
                 Assert.Equal("test-user", space.OwnerId);
             }
         }        
         
-        Address GetTestAddress()
-        {
-            return new Address(
-                "123 Test Street", "TestVille", "ABC", "12345", new Point(1.2, 3.4));
-        }
-
-        BookingRate GetTestBookingRate()
-        {
-            return new BookingRate(new Money(), new Money());
-        }
-
-        ParkingSpaceDescription GetTestDescription()
-        {
-            return new ParkingSpaceDescription(
-                "Test Title", "Test Description", "http://www.test.com/test.png");
-        }
-
-        SpaceAvailability GetTestAvailability()
-        {
-            return SpaceAvailability.Create247Availability();
-        }
-
-        RegisterNewParkingSpaceCommand GetTestCreateParkingSpaceCommand(string userId)
-        {
-            var address = GetTestAddress();
-            var rate = GetTestBookingRate();
-            var description = GetTestDescription();
-            var availability = GetTestAvailability();
-
-            return new RegisterNewParkingSpaceCommand(userId, description, address, availability, rate);
-        }
-
-        DbContextOptions<ParkMateDbContext> GetDbContextOptions(string name)
-        {
-            return new DbContextOptionsBuilder<ParkMateDbContext>()
-                .UseInMemoryDatabase(databaseName: name)
-                .Options;
-        }
+       
     }
 }

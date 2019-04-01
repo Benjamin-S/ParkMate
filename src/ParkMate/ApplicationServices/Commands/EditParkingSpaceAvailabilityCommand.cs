@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MediatR;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 

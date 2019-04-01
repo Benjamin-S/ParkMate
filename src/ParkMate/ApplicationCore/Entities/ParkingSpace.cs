@@ -32,5 +32,12 @@ namespace ParkMate.ApplicationCore.Entities
         public Address Address { get; private set; }
         public SpaceAvailability Availability { get; private set; }
         public BookingRate BookingRate { get; private set; }
+
+        public void UpdateAddress(Address address)
+        {
+            Address = address ?? 
+                      throw new ArgumentNullException(nameof(address));
+        }
+        public void 
     }
 }

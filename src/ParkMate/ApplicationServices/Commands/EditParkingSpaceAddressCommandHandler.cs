@@ -8,32 +8,29 @@ using ParkMate.ApplicationServices;
 
 namespace ApplicationServices.Commands
 {
-    public class EditParkingSpaceAvailabilityCommandHandler 
-        : IRequestHandler<EditParkingSpaceAvailabilityCommand, CommandResult>
+    public class EditParkingSpaceAddressCommandHandler 
+        : IRequestHandler<EditParkingSpaceAddressCommand, CommandResult>
     {
         private IRepository<ParkingSpace> _repository;
 
-        public EditParkingSpaceAvailabilityCommandHandler(IRepository<ParkingSpace> repository)
+        public EditParkingSpaceAddressCommandHandler(IRepository<ParkingSpace> repository)
         {
             _repository = repository ?? 
                           throw new ArgumentNullException(nameof(repository));
         }
 
         public async Task<CommandResult> Handle(
-            EditParkingSpaceAvailabilityCommand command, 
+            EditParkingSpaceAddressCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
 
-            foreach (var time in command.AvailabilityTimes)
-            {
-                parkingSpace.Availability.SetAvailabilityForDay(time);
-            }
+            parkingSpace.UpdateAddress(command.Address);
             
             _repository.Update(parkingSpace);
             await _repository.UnitOfWork.SaveEntitiesAsync();
             
-            return new CommandResult(true, "Parking Space availability was successfully updated");
+            return new CommandResult(true, "Parking Space address was successfully updated");
         }
     }
 }
