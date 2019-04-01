@@ -11,36 +11,39 @@ namespace ParkMate.ApplicationCore.ValueObjects
         }
 
         private AvailabilityTime(
+            DayOfWeek day,
             TimeSpan availableFrom, 
             TimeSpan availableTo, 
             bool isAvailable)
         {
+            DayOfWeek = day;
             AvailableFrom = availableFrom;
             AvailableTo = availableTo;
             IsAvailable = isAvailable;
         }
 
+        public DayOfWeek DayOfWeek { get; private set; }
         public TimeSpan AvailableFrom { get; private set; }
         public TimeSpan AvailableTo { get; private set; }
         public bool IsAvailable { get; private set; }
 
-        public static AvailabilityTime CreateAvailabilityWithHours(TimeSpan from, TimeSpan to)
+        public static AvailabilityTime CreateAvailabilityWithHours(DayOfWeek day, TimeSpan from, TimeSpan to)
         {
             if (from.Subtract(to).Duration().Hours < 1)
             {
                 throw new InvalidAvailabilityTimeException(from, to, "Minimum availability period is 1 hour");
             }
-            return new AvailabilityTime(from, to, true);
+            return new AvailabilityTime(day, from, to, true);
         }
 
-        public static AvailabilityTime CreateUnavailableDay()
+        public static AvailabilityTime CreateUnavailableDay(DayOfWeek day)
         {
-            return new AvailabilityTime(TimeSpan.Zero, TimeSpan.Zero, false);
+            return new AvailabilityTime(day, TimeSpan.Zero, TimeSpan.Zero, false);
         }
 
-        public static AvailabilityTime Create24HourAvailability()
+        public static AvailabilityTime Create24HourAvailability(DayOfWeek day)
         {
-            return new AvailabilityTime(TimeSpan.Zero, TimeSpan.Zero, true);
+            return new AvailabilityTime(day, TimeSpan.Zero, TimeSpan.Zero, true);
         }
 
         public bool IsAvailable24Hours()
@@ -52,6 +55,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
+            yield return DayOfWeek;
             yield return AvailableFrom;
             yield return AvailableTo;
             yield return IsAvailable;

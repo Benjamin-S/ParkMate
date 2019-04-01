@@ -15,7 +15,7 @@ namespace ApplicationCore.Tests
             var end = new TimeSpan(1, 59, 0);
 
             Assert.Throws<InvalidAvailabilityTimeException>(() => 
-                AvailabilityTime.CreateAvailabilityWithHours(start, end));
+                AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday, start, end));
         }
 
         [Fact]
@@ -24,14 +24,14 @@ namespace ApplicationCore.Tests
             var start = new TimeSpan(1, 0, 0);
             var end = new TimeSpan(2, 0, 0);
 
-            _ = AvailabilityTime.CreateAvailabilityWithHours(start, end);
+            _ = AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday,start, end);
         }
 
         [Fact]
         public void EqualDifferentObjectWithSameValue()
         {
-            var time1 = AvailabilityTime.CreateAvailabilityWithHours(new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
-            var time2 = AvailabilityTime.CreateAvailabilityWithHours(new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
+            var time1 = AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday,new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
+            var time2 = AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday,new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
 
             Assert.Equal(time1, time2);
         }
@@ -39,8 +39,8 @@ namespace ApplicationCore.Tests
         [Fact]
         public void NotEqualDifferentObjectWithDifferentValue()
         {
-            var time1 = AvailabilityTime.CreateAvailabilityWithHours(new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
-            var time2 = AvailabilityTime.CreateAvailabilityWithHours(new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 1));
+            var time1 = AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday,new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
+            var time2 = AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday,new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 1));
 
             Assert.NotEqual(time1, time2);
         }
@@ -48,7 +48,7 @@ namespace ApplicationCore.Tests
         [Fact]
         public void ReturnTrueOnIsAvailable24HoursIfIs24Hours()
         {
-            var availability = AvailabilityTime.Create24HourAvailability();
+            var availability = AvailabilityTime.Create24HourAvailability(DayOfWeek.Monday);
 
             Assert.True(availability.IsAvailable24Hours());
         }
@@ -56,7 +56,7 @@ namespace ApplicationCore.Tests
         [Fact]
         public void ReturnFalseOnIsAvailable24HoursIfNot24Hours()
         {
-            var availability = AvailabilityTime.CreateAvailabilityWithHours(new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
+            var availability = AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday,new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
 
             Assert.False(availability.IsAvailable24Hours());
         }
@@ -64,7 +64,7 @@ namespace ApplicationCore.Tests
         [Fact]
         public void ReturnTrueOnIsAvailableIfAvailable()
         {
-            var availability = AvailabilityTime.CreateAvailabilityWithHours(new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
+            var availability = AvailabilityTime.CreateAvailabilityWithHours(DayOfWeek.Monday,new TimeSpan(1, 0, 0), new TimeSpan(2, 0, 0));
 
             Assert.True(availability.IsAvailable);
         }
@@ -72,7 +72,7 @@ namespace ApplicationCore.Tests
         [Fact]
         public void ReturnFalseOnIsAvailableIfNotAvailable()
         {
-            var availability = AvailabilityTime.CreateUnavailableDay();
+            var availability = AvailabilityTime.CreateUnavailableDay(DayOfWeek.Monday);
 
             Assert.False(availability.IsAvailable);
         }

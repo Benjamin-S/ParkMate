@@ -59,22 +59,22 @@ namespace ParkMate.ApplicationCore.Entities
         {
             return new SpaceAvailability(
                 false,
-                AvailabilityTime.Create24HourAvailability(),
-                AvailabilityTime.Create24HourAvailability(),
-                AvailabilityTime.Create24HourAvailability(),
-                AvailabilityTime.Create24HourAvailability(),
-                AvailabilityTime.Create24HourAvailability(),
-                AvailabilityTime.Create24HourAvailability(),
-                AvailabilityTime.Create24HourAvailability()
+                AvailabilityTime.Create24HourAvailability(DayOfWeek.Monday),
+                AvailabilityTime.Create24HourAvailability(DayOfWeek.Tuesday),
+                AvailabilityTime.Create24HourAvailability(DayOfWeek.Wednesday),
+                AvailabilityTime.Create24HourAvailability(DayOfWeek.Thursday),
+                AvailabilityTime.Create24HourAvailability(DayOfWeek.Friday),
+                AvailabilityTime.Create24HourAvailability(DayOfWeek.Saturday),
+                AvailabilityTime.Create24HourAvailability(DayOfWeek.Sunday)
             );
         }
         public void SetVisible(bool isVisible)
         {
             IsVisible = isVisible;
         }
-        public void SetAvailabilityForDay(DayOfWeek day, AvailabilityTime availability)
+        public void SetAvailabilityForDay(AvailabilityTime availability)
         {
-            _availabilityOnDay[day] = availability ??
+            _availabilityOnDay[availability.DayOfWeek] = availability ??
                 throw new ArgumentNullException(nameof(availability));
         }
     }
