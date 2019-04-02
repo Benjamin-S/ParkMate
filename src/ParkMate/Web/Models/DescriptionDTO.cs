@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace ParkMate.Web.Models
 {
@@ -15,6 +16,7 @@ namespace ParkMate.Web.Models
         public string Description { get; set; }
         public string ImageURL { get; set; }
         [Required]
+        [Display(Name = "Image File")]
         public IFormFile ImageFile { get; set; }
     }
 }
