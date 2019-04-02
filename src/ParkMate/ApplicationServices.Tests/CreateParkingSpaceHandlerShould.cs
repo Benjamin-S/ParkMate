@@ -20,7 +20,7 @@ namespace ApplicationServices.Tests
 
             using (var context = new ParkMateDbContext(TestHelper.GetNamedDbContextOptions("CreateNewParkingSpace")))
             {
-                var repository = new WriteRepository<ParkingSpace>(context);
+                var repository = new ParkingSpaceRepository(context);
                 var handler = new RegisterNewParkingSpaceCommandHandler(repository);
                 await handler.Handle(command, default(CancellationToken));
             }

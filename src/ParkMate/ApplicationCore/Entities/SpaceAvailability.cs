@@ -21,26 +21,13 @@ namespace ParkMate.ApplicationCore.Entities
             AvailabilityTime sunday)
         {
             IsVisible = isVisible;
-            _availabilityOnDay[DayOfWeek.Monday] = Monday = monday ??
-                throw new ArgumentNullException(nameof(monday)); 
-
-            _availabilityOnDay[DayOfWeek.Tuesday] = Tuesday = tuesday ??
-                throw new ArgumentNullException(nameof(tuesday));
-
-            _availabilityOnDay[DayOfWeek.Wednesday] = Wednesday = wednesday ??
-                throw new ArgumentNullException(nameof(wednesday));
-
-            _availabilityOnDay[DayOfWeek.Thursday] = Thursday = thursday ??
-                throw new ArgumentNullException(nameof(thursday));
-
-            _availabilityOnDay[DayOfWeek.Friday] = Friday = friday ??
-                throw new ArgumentNullException(nameof(friday));
-
-            _availabilityOnDay[DayOfWeek.Saturday] = Saturday = saturday ??
-                throw new ArgumentNullException(nameof(saturday));
-
-            _availabilityOnDay[DayOfWeek.Sunday] = Sunday = sunday ??
-                throw new ArgumentNullException(nameof(sunday));
+            Monday = monday ?? throw new ArgumentNullException(nameof(monday)); 
+            Tuesday = tuesday ?? throw new ArgumentNullException(nameof(tuesday));
+            Wednesday = wednesday ?? throw new ArgumentNullException(nameof(wednesday));
+            Thursday = thursday ?? throw new ArgumentNullException(nameof(thursday));
+            Friday = friday ?? throw new ArgumentNullException(nameof(friday));
+            Saturday = saturday ?? throw new ArgumentNullException(nameof(saturday));
+            Sunday = sunday ?? throw new ArgumentNullException(nameof(sunday));
         }
 
         public bool IsVisible { get; private set; }
@@ -51,9 +38,6 @@ namespace ParkMate.ApplicationCore.Entities
         public AvailabilityTime Friday { get; private set; }
         public AvailabilityTime Saturday { get; private set; }
         public AvailabilityTime Sunday { get; private set; }
-
-        private Dictionary<DayOfWeek, AvailabilityTime> _availabilityOnDay { get; }
-             = new Dictionary<DayOfWeek, AvailabilityTime>();
 
         public static SpaceAvailability Create247Availability()
         {
@@ -74,8 +58,33 @@ namespace ParkMate.ApplicationCore.Entities
         }
         public void SetAvailabilityForDay(AvailabilityTime availability)
         {
-            _availabilityOnDay[availability.DayOfWeek] = availability ??
-                throw new ArgumentNullException(nameof(availability));
+            switch (availability.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    Monday = availability;
+                    break;
+                case DayOfWeek.Tuesday:
+                    Tuesday = availability;
+                    break;
+                case DayOfWeek.Wednesday:
+                    Wednesday = availability;
+                    break;
+                case DayOfWeek.Thursday:
+                    Thursday = availability;
+                    break;
+                case DayOfWeek.Friday:
+                    Friday = availability;
+                    break;
+                case DayOfWeek.Saturday:
+                    Saturday = availability;
+                    break;
+                case DayOfWeek.Sunday:
+                    Sunday = availability;
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
