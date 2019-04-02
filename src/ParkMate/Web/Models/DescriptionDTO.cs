@@ -7,9 +7,11 @@ namespace ParkMate.Web.Models
     {
         [Required]
         [StringLength(50)]
+        [Display(Name = "Parking Space Title")]
         public string Title { get; set; }
         [Required]
         [StringLength(500)]
+        [Display(Name = "Parking Space Description")]
         public string Description { get; set; }
         public string ImageURL { get; set; }
         [Required]
