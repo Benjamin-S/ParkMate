@@ -8,4 +8,4 @@ script:
 - dotnet build src/ParkMate/
 - dotnet test src/ParkMate/Web.Tests/Web.Tests.csproj
 - dotnet test src/ParkMate/ApplicationCore.Tests/ApplicationCore.Tests.csproj
-- dotnet test src/ParkMate/ApplicationCore.Tests/ApplicationServices.Tests.csproj
+- dotnet test src/ParkMate/ApplicationServices.Tests.csproj
