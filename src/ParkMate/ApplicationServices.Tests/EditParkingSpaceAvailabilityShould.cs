@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationCore.ValueObjects;
@@ -14,19 +15,10 @@ namespace ApplicationServices.Tests
         [Fact]
         public async Task ChangeToCorrectAvailability()
         {
+            await CreateTestParkingSpaceInDb("ChangeToCorrectAvailability");
 
-            using (var context = new ParkMateDbContext(GetNamedDbContextOptions("ChangePToCorrectAvailability")))
+            using (var context = new ParkMateDbContext(GetNamedDbContextOptions("ChangeToCorrectAvailability")))
             {
-                var command = GetTestCreateParkingSpaceCommand("test-user");
-                var repository = new ParkingSpaceRepository(context);
-                var handler = new RegisterNewParkingSpaceCommandHandler(repository);
-                await handler.Handle(command);
-            }
-
-            using (var context = new ParkMateDbContext(GetNamedDbContextOptions("ChangePToCorrectAvailability")))
-            {
-                var repository = new ParkingSpaceRepository(context);
-                var space = await repository.GetByIdAsync(1);
                 var monday = AvailabilityTime.CreateUnavailableDay(DayOfWeek.Monday);
                 var tuesday = AvailabilityTime.CreateUnavailableDay(DayOfWeek.Tuesday);
                 var wednesday = AvailabilityTime.CreateAvailabilityWithHours(
@@ -54,8 +46,13 @@ namespace ApplicationServices.Tests
                 {
                     monday, tuesday, wednesday, thursday, friday, saturday, sunday
                 };
+                
+                var repository = new ParkingSpaceRepository(context);
+
+                var space = context.ParkingSpaces.FirstOrDefault();
                 var command = new EditParkingSpaceAvailabilityCommand(space.Id, times);
                 var handler = new EditParkingSpaceAvailabilityCommandHandler(repository);
+                
                 await handler.Handle(command);
                 
                 Assert.NotNull(space.Availability);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ApplicationServices.Commands;
 using Microsoft.EntityFrameworkCore;
 using ParkMate.ApplicationCore.Entities;
@@ -17,7 +18,7 @@ namespace ApplicationServices.Tests
 
         public static BookingRate GetTestBookingRate()
         {
-            return new BookingRate(new Money(), new Money());
+            return new BookingRate(new Money(11), new Money(22));
         }
 
         public static ParkingSpaceDescription GetTestDescription()
@@ -51,6 +52,17 @@ namespace ApplicationServices.Tests
             return new DbContextOptionsBuilder<ParkMateDbContext>()
                 .UseInMemoryDatabase(databaseName: name)
                 .Options;
+        }
+
+        public static async Task CreateTestParkingSpaceInDb(string name)
+        {
+            using (var context = new ParkMateDbContext(GetNamedDbContextOptions(name)))
+            {
+                var command = GetTestCreateParkingSpaceCommand("test-user");
+                var repository = new ParkingSpaceRepository(context);
+                var handler = new RegisterNewParkingSpaceCommandHandler(repository);
+                await handler.Handle(command);
+            }
         }
     }
 }

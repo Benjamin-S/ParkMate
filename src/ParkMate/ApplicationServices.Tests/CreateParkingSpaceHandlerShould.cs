@@ -16,14 +16,7 @@ namespace ApplicationServices.Tests
         [Fact]
         public async Task CreateNewParkingSpace()
         {
-            var command = TestHelper.GetTestCreateParkingSpaceCommand("test-user");
-
-            using (var context = new ParkMateDbContext(TestHelper.GetNamedDbContextOptions("CreateNewParkingSpace")))
-            {
-                var repository = new ParkingSpaceRepository(context);
-                var handler = new RegisterNewParkingSpaceCommandHandler(repository);
-                await handler.Handle(command, default(CancellationToken));
-            }
+            await TestHelper.CreateTestParkingSpaceInDb("CreateNewParkingSpace");
 
             using (var context = new ParkMateDbContext(TestHelper.GetNamedDbContextOptions("CreateNewParkingSpace")))
             {

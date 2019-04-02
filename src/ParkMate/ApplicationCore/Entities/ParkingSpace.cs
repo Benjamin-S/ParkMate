@@ -48,8 +48,11 @@ namespace ParkMate.ApplicationCore.Entities
 
         public void UpdateBookingRate(BookingRate bookingRate)
         {
-            BookingRate = bookingRate ??
-                      throw new ArgumentNullException(nameof(bookingRate));
+            if (bookingRate == null)
+            {
+                throw new ArgumentNullException(nameof(bookingRate));
+            }
+            BookingRate.UpdateFrom(bookingRate);
         }
     }
 }
