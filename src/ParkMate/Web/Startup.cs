@@ -69,7 +69,7 @@ namespace ParkMate.Web
             
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IRepository<BaseEntity>, WriteRepository<BaseEntity>>();
+            services.AddScoped<IRepository<ParkingSpace>, ParkingSpaceRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

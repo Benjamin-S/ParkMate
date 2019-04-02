@@ -6,37 +6,28 @@ using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.Infrastructure.Data
 {
-    public class WriteRepository<T> : IRepository<T> where T : BaseEntity
+    public abstract class WriteRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly ParkMateDbContext _dbContext;
-        
-        public WriteRepository(ParkMateDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        protected ParkMateDbContext DbContext { get; set; }
 
-        public IUnitOfWork UnitOfWork => _dbContext;
-       
+        public IUnitOfWork UnitOfWork => DbContext;
 
-        public async Task<T> GetByIdAsync(int id)
-        {
-            return await _dbContext.Set<T>().SingleOrDefaultAsync(e => e.Id == id);
-        }
+        public abstract Task<T> GetByIdAsync(int id);
 
         public async Task<T> AddAsync(T entity)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
+            await DbContext.Set<T>().AddAsync(entity);
             return entity;
         }
 
         public void Update(T entity)
         {
-            _dbContext.Entry(entity).State = EntityState.Modified;
+            DbContext.Update(entity);
         }
 
         public void Delete(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
+            DbContext.Set<T>().Remove(entity);
         }
     }
 }
