@@ -62,10 +62,13 @@
                     <span asp-validation-for="Description.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description.ImageFile" class="control-label"></label>
-                    <input asp-for="Description.ImageFile" type="file" class="form-control"/>
+                    <label asp-for="Description.ImageFile"></label>
+                    <div class="custom-file">
+                        <input asp-for="Description.ImageFile" type="file" class="custom-file-input" id="customFile"/>
+                        <label class="custom-file-label" for="customFile">Choose file...</label>
+                    </div>
                     <span asp-validation-for="Description.ImageFile" class="text-danger"></span>
-                </div>
+                </div>              
             </div>
             
             <div class="formTab">
@@ -117,46 +120,47 @@
                 <h4>Available On Days</h4>
                 <hr/>
     
-                <div class="form-group">
-                    <label asp-for="AvailableDays.IsAvailableMonday"></label>
-                    <input asp-for="AvailableDays.IsAvailableMonday" class="form-control"/>
-                    <span asp-validation-for="AvailableDays.IsAvailableMonday" class="text-danger"></span>
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="AvailableDays.IsAvailableMonday" class="custom-control-input" type="checkbox"/>
+                    <label asp-for="AvailableDays.IsAvailableMonday" class="custom-control-label"></label>
+                    <span asp-validation-for="AvailableDays.IsAvailableMonday" class="text-danger "></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="AvailableDays.IsAvailableTuesday"></label>
-                    <input asp-for="AvailableDays.IsAvailableTuesday" class="form-control"/>
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="AvailableDays.IsAvailableTuesday" class="custom-control-input" type="checkbox"/>
+                    <label asp-for="AvailableDays.IsAvailableTuesday" class="custom-control-label"></label>
                     <span asp-validation-for="AvailableDays.IsAvailableTuesday" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="AvailableDays.IsAvailableWednesday"></label>
-                    <input asp-for="AvailableDays.IsAvailableWednesday" class="form-control"/>
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="AvailableDays.IsAvailableWednesday" class="custom-control-input" type="checkbox"/>
+                    <label asp-for="AvailableDays.IsAvailableWednesday" class="custom-control-label"></label>
                     <span asp-validation-for="AvailableDays.IsAvailableWednesday" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="AvailableDays.IsAvailableThursday"></label>
-                    <input asp-for="AvailableDays.IsAvailableThursday" class="form-control"/>
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="AvailableDays.IsAvailableThursday" class="custom-control-input" type="checkbox"/>
+                    <label asp-for="AvailableDays.IsAvailableThursday" class="custom-control-label"></label>
                     <span asp-validation-for="AvailableDays.IsAvailableThursday" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="AvailableDays.IsAvailableFriday"></label>
-                    <input asp-for="AvailableDays.IsAvailableFriday" class="form-control"/>
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="AvailableDays.IsAvailableFriday" class="custom-control-input" type="checkbox"/>
+                    <label asp-for="AvailableDays.IsAvailableFriday" class="custom-control-label"></label>
                     <span asp-validation-for="AvailableDays.IsAvailableFriday" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="AvailableDays.IsAvailableSaturday"></label>
-                    <input asp-for="AvailableDays.IsAvailableSaturday" class="form-control"/>
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="AvailableDays.IsAvailableSaturday" class="custom-control-input" type="checkbox"/>
+                    <label asp-for="AvailableDays.IsAvailableSaturday" class="custom-control-label"></label>
                     <span asp-validation-for="AvailableDays.IsAvailableSaturday" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="AvailableDays.IsAvailableSunday"></label>
-                    <input asp-for="AvailableDays.IsAvailableSunday" class="form-control"/>
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="AvailableDays.IsAvailableSunday" class="custom-control-input" type="checkbox"/>
+                    <label asp-for="AvailableDays.IsAvailableSunday" class="custom-control-label"></label>
                     <span asp-validation-for="AvailableDays.IsAvailableSunday" class="text-danger"></span>
                 </div>
+                <br/>
             </div>
             
             <div> 
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped" id="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar progress-bar-striped" id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <div class="clearfix">
                     <button type="button" id="prevBtn" class="btn btn-primary mt-1">Previous</button>
@@ -173,12 +177,20 @@
 @section Scripts { 
     <partial name="_ValidationScriptsPartial" /> 
     
+
+    
     <script >
         var currentTab = 0;
         showTab(currentTab);
+        
         $("#prevBtn").on("click", function() { nextPrev(-1); });
         $("#nextBtn").on("click", function() { nextPrev(1); });
 
+        $('#customFile').on('change',
+            function() {
+                var fileName = $(this).val();
+                $(this).next('.custom-file-label').html(fileName);
+            });
 
         function showTab(tabNumber) {
             var tabs = document.getElementsByClassName("formTab");
