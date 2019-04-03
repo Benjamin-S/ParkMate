@@ -54,5 +54,10 @@ namespace ParkMate.ApplicationCore.Entities
             }
             BookingRate.UpdateFrom(bookingRate);
         }
+
+        public void SetVisibility(bool isListed)
+        {
+            Availability.SetVisible(isListed);
+        }
     }
 }

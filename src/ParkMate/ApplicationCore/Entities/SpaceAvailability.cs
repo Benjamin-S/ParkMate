@@ -52,7 +52,7 @@ namespace ParkMate.ApplicationCore.Entities
                 AvailabilityTime.Create24HourAvailability(DayOfWeek.Sunday)
             );
         }
-        public void SetVisible(bool isVisible)
+        internal void SetVisible(bool isVisible)
         {
             IsVisible = isVisible;
         }
