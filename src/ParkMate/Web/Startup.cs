@@ -18,9 +18,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using ParkMate.Infrastructure.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using ParkMate.Infrastructure.Data;
-using ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
+using ParkMate.Web.Util;
 
 namespace ParkMate.Web
 {
@@ -70,6 +71,7 @@ namespace ParkMate.Web
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IRepository<ParkingSpace>, ParkingSpaceRepository>();
+            services.AddSingleton<ImageProcessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Commands;
 using Microsoft.EntityFrameworkCore;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.Infrastructure.Data;
 
-namespace ApplicationServices.Tests
+namespace ParkMate.ApplicationServices.Tests
 {
     public static class TestHelper
     {

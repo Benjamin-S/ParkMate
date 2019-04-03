@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ParkMate.Infrastructure.Data;
 using Xunit;
-using static ApplicationServices.Tests.TestHelper;
+using static ParkMate.ApplicationServices.Tests.TestHelper;
 
-namespace ApplicationServices.Tests
+namespace ParkMate.ApplicationServices.Tests
 {
     public class CreateParkingSpaceHandlerShould
     {

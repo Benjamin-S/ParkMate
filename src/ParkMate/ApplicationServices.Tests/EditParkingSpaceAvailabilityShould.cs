@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationCore.ValueObjects;
 using Xunit;
-using ApplicationServices.Commands;
-using static ApplicationServices.Tests.TestHelper;
+using ParkMate.ApplicationServices.Commands;
+using static ParkMate.ApplicationServices.Tests.TestHelper;
 
-namespace ApplicationServices.Tests
+namespace ParkMate.ApplicationServices.Tests
 {
     public class EditParkingSpaceAvailabilityShould
     {

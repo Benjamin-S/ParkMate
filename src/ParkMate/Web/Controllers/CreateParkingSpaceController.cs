@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Commands;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -20,10 +20,11 @@ namespace ParkMate.Web.Controllers
         public CreateParkingSpaceController(
             IHostingEnvironment environment,
             IMediator mediator,
-            ImageProcessor _imageProcessor)
+            ImageProcessor imageProcessor)
         {
             _environment = environment;
             _mediator = mediator;
+            _imageProcessor = imageProcessor;
         }
 
         [HttpGet]

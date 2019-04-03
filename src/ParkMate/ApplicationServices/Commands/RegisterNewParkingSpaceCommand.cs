@@ -7,7 +7,7 @@ using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 
-namespace ApplicationServices.Commands
+namespace ParkMate.ApplicationServices.Commands
 {
     public class RegisterNewParkingSpaceCommand : IRequest<CommandResult>
     {

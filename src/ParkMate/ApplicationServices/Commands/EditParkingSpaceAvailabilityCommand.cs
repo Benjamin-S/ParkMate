@@ -8,7 +8,7 @@ using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 
-namespace ApplicationServices.Commands
+namespace ParkMate.ApplicationServices.Commands
 {
     public class EditParkingSpaceAvailabilityCommand  : IRequest<CommandResult>
     {

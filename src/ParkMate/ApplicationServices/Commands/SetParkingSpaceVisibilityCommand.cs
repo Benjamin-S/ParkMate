@@ -6,7 +6,7 @@ using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 
-namespace ApplicationServices.Commands
+namespace ParkMate.ApplicationServices.Commands
 {
     public class SetParkingSpaceVisibilityCommand  : IRequest<CommandResult>
     {

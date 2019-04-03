@@ -2,11 +2,11 @@ using System.Threading.Tasks;
 using System.Linq;
 using Xunit;
 using ParkMate.Infrastructure.Data;
-using ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Commands;
 using Microsoft.EntityFrameworkCore;
-using static ApplicationServices.Tests.TestHelper;
+using static ParkMate.ApplicationServices.Tests.TestHelper;
 
-namespace ApplicationServices.Tests
+namespace ParkMate.ApplicationServices.Tests
 {
     public class SetParkingSpaceVisibilityShould
     {
