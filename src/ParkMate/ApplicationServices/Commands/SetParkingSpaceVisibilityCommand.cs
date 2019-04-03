@@ -41,7 +41,8 @@ namespace ParkMate.ApplicationServices.Commands
             _repository.Update(parkingSpace);
             await _repository.UnitOfWork.SaveEntitiesAsync();
             
-            return new CommandResult(true, "Parking Space description was successfully updated");
+            return new CommandResult(true, "Parking Space has been " +
+                (command.IsListed ? "publicly listed" : "unlisted"));
         }
     }
 }
