@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ParkMate.ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
+using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.Infrastructure.Data
@@ -20,6 +21,7 @@ namespace ParkMate.Infrastructure.Data
         {
             modelBuilder.ApplyConfiguration(new ParkingSpaceConfiguration());
             modelBuilder.ApplyConfiguration(new SpaceAvailabilityConfiguration());
+            modelBuilder.HasPostgresExtension("postgis");
         }
 
         public async Task<bool> SaveEntitiesAsync(

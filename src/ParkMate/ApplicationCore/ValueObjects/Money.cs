@@ -35,6 +35,12 @@ namespace ParkMate.ApplicationCore.ValueObjects
                     "can not be less than zero");
             }
         }
+
+        public void UpdateFrom(Money other)
+        {
+            Value = other.Value;
+        }
+
         private static decimal Round(decimal value)
         {
             return Decimal.Round(value, 2);

@@ -8,6 +8,7 @@ namespace ParkMate.ApplicationCore.Entities
         private ParkingSpace()
         {
         }
+
         public ParkingSpace(
             string ownerId,
             ParkingSpaceDescription description,
@@ -32,5 +33,26 @@ namespace ParkMate.ApplicationCore.Entities
         public Address Address { get; private set; }
         public SpaceAvailability Availability { get; private set; }
         public BookingRate BookingRate { get; private set; }
+
+        public void UpdateAddress(Address address)
+        {
+            Address = address ?? 
+                      throw new ArgumentNullException(nameof(address));
+        }
+
+        public void UpdateDescription(ParkingSpaceDescription description)
+        {
+            Description = description ??
+                      throw new ArgumentNullException(nameof(description));
+        }
+
+        public void UpdateBookingRate(BookingRate bookingRate)
+        {
+            if (bookingRate == null)
+            {
+                throw new ArgumentNullException(nameof(bookingRate));
+            }
+            BookingRate.UpdateFrom(bookingRate);
+        }
     }
 }
