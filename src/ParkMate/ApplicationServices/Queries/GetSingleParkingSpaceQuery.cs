@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
+using MongoDB.Driver;
 using ParkMate.ApplicationCore.Entities;
-using ParkMate.Infrastructure.Data;
-using System.Collections.Generic;
+using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.ApplicationServices.Queries
 {
@@ -23,9 +21,9 @@ namespace ParkMate.ApplicationServices.Queries
     public class GetSingleParkingSpaceQueryHandler
         : IRequestHandler<GetSingleParkingSpaceQuery, QueryResult<ParkingSpace>>
     {
-        private ParkMateDbContext _context;
+        private IMongoContext _context;
 
-        public GetSingleParkingSpaceQueryHandler(ParkMateDbContext context)
+        public GetSingleParkingSpaceQueryHandler(IMongoContext context)
         {
             _context = context;
         }
@@ -34,11 +32,12 @@ namespace ParkMate.ApplicationServices.Queries
             GetSingleParkingSpaceQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var space = await _context.ParkingSpaces
-                .Include(s => s.Availability)
-                .SingleOrDefaultAsync(s => s.Id == query.ParkingSpaceId);
+            var filter = Builders<ParkingSpace>.Filter
+                .Eq(ps => ps.Id == query.ParkingSpaceId, true);
 
-            if(space != null)
+            var space = await _context.ParkingSpaces.FindAsync(filter).Result.FirstOrDefaultAsync();
+
+            if (space != null)
             {
                 return new QueryResult<ParkingSpace>
                 {

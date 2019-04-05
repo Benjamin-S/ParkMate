@@ -12,7 +12,6 @@ using ParkMate.Web.Util;
 
 namespace ParkMate.Web.Controllers
 {
-    [Authorize]
     public class CreateParkingSpaceController : Controller
     {
         private readonly IHostingEnvironment _environment;
@@ -43,8 +42,8 @@ namespace ParkMate.Web.Controllers
             {
                 return View(dto);
             }
-            var imageResult =  await _imageProcessor.SaveImage(dto.Description.ImageFile);
-            dto.Description.ImageURL = imageResult.FileName;
+            //var imageResult =  await _imageProcessor.SaveImage(dto.Description.ImageFile);
+            dto.Description.ImageURL = "test.jpg"; //imageResult.FileName;
 
             var result = await _mediator.Send(BuildParkingSpaceCommand(dto)); 
 
@@ -53,8 +52,8 @@ namespace ParkMate.Web.Controllers
 
         RegisterNewParkingSpaceCommand BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)
         {
-            return new RegisterNewParkingSpaceCommand(
-                User.FindFirst(ClaimTypes.NameIdentifier).ToString(),
+            return new RegisterNewParkingSpaceCommand("test"
+                , //User.FindFirst(ClaimTypes.NameIdentifier).ToString(),
 
                 new ParkingSpaceDescription(dto.Description.Title,
                     dto.Description.Description, dto.Description.ImageFile.FileName),

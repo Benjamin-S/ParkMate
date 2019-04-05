@@ -5,8 +5,10 @@
  using ParkMate.ApplicationCore.ValueObjects;
  using ParkMate.ApplicationServices.Commands;
  using static ParkMate.ApplicationServices.Tests.TestHelper;
+using Moq;
+using MediatR;
 
- namespace ParkMate.ApplicationServices.Tests
+namespace ParkMate.ApplicationServices.Tests
  {
      public class EditParkingSpaceDescriptionShould
      {
@@ -21,7 +23,7 @@
                  var repository = new ParkingSpaceRepository(context);
                  var description = new ParkingSpaceDescription("New Test Title", "New Description", "newfile.jpg");
                  var command = new EditParkingSpaceDescriptionCommand(space.Id, description);
-                 var handler = new EditParkingSpaceDescriptionCommandHandler(repository);
+                 var handler = new EditParkingSpaceDescriptionCommandHandler(repository, new Mock<IMediator>().Object);
 
                  await handler.Handle(command);
 

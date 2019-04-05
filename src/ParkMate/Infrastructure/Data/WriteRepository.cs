@@ -17,6 +17,7 @@ namespace ParkMate.Infrastructure.Data
         public async Task<T> AddAsync(T entity)
         {
             await DbContext.Set<T>().AddAsync(entity);
+            
             return entity;
         }
 

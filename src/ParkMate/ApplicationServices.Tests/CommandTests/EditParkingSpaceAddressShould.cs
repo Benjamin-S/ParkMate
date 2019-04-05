@@ -6,6 +6,8 @@ using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices.Commands;
 using static ParkMate.ApplicationServices.Tests.TestHelper;
+using Moq;
+using MediatR;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -22,7 +24,7 @@ namespace ParkMate.ApplicationServices.Tests
                 var repository = new ParkingSpaceRepository(context);
                 var address = new Address("567 Test Road", "TestVille", "Tst", "56789", new Point(9,10));
                 var command = new EditParkingSpaceAddressCommand(space.Id, address);
-                var handler = new EditParkingSpaceAddressCommandHandler(repository);
+                var handler = new EditParkingSpaceAddressCommandHandler(repository, new Mock<IMediator>().Object);
                
                 await handler.Handle(command);
                              

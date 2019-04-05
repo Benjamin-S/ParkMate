@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using MediatR;
+using MongoDB.Driver;
 using ParkMate.ApplicationCore.Entities;
-using ParkMate.Infrastructure.Data;
-using System.Collections.Generic;
+using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.ApplicationServices.Queries
 {
@@ -24,9 +22,9 @@ namespace ParkMate.ApplicationServices.Queries
         : IRequestHandler<GetAllParkingSpacesForOwnerQuery, 
             QueryResult<IReadOnlyList<ParkingSpace>>>
     {
-        private ParkMateDbContext _context;
+        private IMongoContext _context;
 
-        public GetAllParkingSpacesForOwnerQueryHandler(ParkMateDbContext context)
+        public GetAllParkingSpacesForOwnerQueryHandler(IMongoContext context)
         {
             _context = context;
         }
@@ -35,10 +33,10 @@ namespace ParkMate.ApplicationServices.Queries
             GetAllParkingSpacesForOwnerQuery query, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var result = await _context.ParkingSpaces
-                .Include(s => s.Availability)
-                .Where(s => s.OwnerId.Equals(query.OwnerId))
-                .ToListAsync();
+            var filter = Builders<ParkingSpace>.Filter
+                .Eq(ps => ps.OwnerId.Equals(query.OwnerId), true);
+
+            var result = await _context.ParkingSpaces.FindAsync(filter).Result.ToListAsync();
 
             if (result.Count != 0)
             {

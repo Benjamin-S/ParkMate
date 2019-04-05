@@ -3,7 +3,6 @@ namespace ParkMate.ApplicationCore.Entities
     public class BaseEntity
     {
         public int Id { get; private set; }
-
         public override bool Equals(object obj)
         {
             var other = obj as BaseEntity;

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.Infrastructure.Data;
+using Moq;
+using MediatR;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -60,7 +62,7 @@ namespace ParkMate.ApplicationServices.Tests
             {
                 var command = GetTestCreateParkingSpaceCommand(ownerName);
                 var repository = new ParkingSpaceRepository(context);
-                var handler = new RegisterNewParkingSpaceCommandHandler(repository);
+                var handler = new RegisterNewParkingSpaceCommandHandler(repository, new Mock<IMediator>().Object);
                 await handler.Handle(command);
             }
         }

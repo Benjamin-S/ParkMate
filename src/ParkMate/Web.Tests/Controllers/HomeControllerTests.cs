@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 using ParkMate.Web.Controllers;
+using ParkMate.Infrastructure.Data;
 
 namespace ParkMate.Web.Tests
 {
