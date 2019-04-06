@@ -9,10 +9,23 @@
     <Import_RootNamespace>ApplicationCore</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)BaseEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\BaseEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IEmailSender.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ValueObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Address.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingPeriod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ParkingSpace.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\AvailabilityTime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingRate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Money.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\InvalidAvailabilityTimeException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\InvalidMoneyValueException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\SpaceAvailability.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\ParkingSpaceDescription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\ValueObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Point.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Entities\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
   </ItemGroup>
 </Project>

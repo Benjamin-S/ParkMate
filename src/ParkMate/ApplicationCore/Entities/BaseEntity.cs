@@ -1,4 +1,4 @@
-namespace ParkMate.ApplicationCore
+namespace ParkMate.ApplicationCore.Entities
 {
     public class BaseEntity
     {
