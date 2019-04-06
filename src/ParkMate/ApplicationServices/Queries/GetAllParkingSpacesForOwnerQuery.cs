@@ -37,20 +37,11 @@ namespace ParkMate.ApplicationServices.Queries
 
             var result = await _context.ParkingSpaces.FindAsync(filter).Result.ToListAsync();
 
-            if (result.Count != 0)
+            if (result != null && result.Count != 0)
             {
-                return new QueryResult<IReadOnlyList<ParkingSpace>>
-                {
-                    Success = true,
-                    PayLoad = result
-                };
+                return QueryResult<IReadOnlyList<ParkingSpace>>.Succeed(result);
             }
-
-            return new QueryResult<IReadOnlyList<ParkingSpace>>
-            {
-                Success = false,
-                Message = "No parking spaces found for user"
-            };
+            return QueryResult<IReadOnlyList<ParkingSpace>>.Fail("Parking space not found");
         }
     }
 }
