@@ -38,17 +38,9 @@ namespace ParkMate.ApplicationServices.Queries
 
             if (space != null)
             {
-                return new QueryResult<ParkingSpace>
-                {
-                    Success = true,
-                    PayLoad = space
-                };
+                return QueryResult<ParkingSpace>.Succeed(space);
             }
-            return new QueryResult<ParkingSpace>
-            {
-                Success = false,
-                Message = "Parking space not found"
-            };
+            return QueryResult<ParkingSpace>.Fail("Parking space not found");
         }
     }
 }
