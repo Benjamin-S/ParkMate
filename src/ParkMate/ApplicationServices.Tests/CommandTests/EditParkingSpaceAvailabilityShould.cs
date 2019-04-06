@@ -7,6 +7,8 @@ using ParkMate.ApplicationCore.ValueObjects;
 using Xunit;
 using ParkMate.ApplicationServices.Commands;
 using static ParkMate.ApplicationServices.Tests.TestHelper;
+using Moq;
+using MediatR;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -51,7 +53,7 @@ namespace ParkMate.ApplicationServices.Tests
 
                 var space = context.ParkingSpaces.FirstOrDefault();
                 var command = new EditParkingSpaceAvailabilityCommand(space.Id, times);
-                var handler = new EditParkingSpaceAvailabilityCommandHandler(repository);
+                var handler = new EditParkingSpaceAvailabilityCommandHandler(repository, new Mock<IMediator>().Object);
                 
                 await handler.Handle(command);
                 

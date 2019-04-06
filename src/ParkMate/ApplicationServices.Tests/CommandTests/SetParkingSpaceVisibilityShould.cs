@@ -5,6 +5,8 @@ using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationServices.Commands;
 using Microsoft.EntityFrameworkCore;
 using static ParkMate.ApplicationServices.Tests.TestHelper;
+using Moq;
+using MediatR;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -20,7 +22,7 @@ namespace ParkMate.ApplicationServices.Tests
                 var space = context.ParkingSpaces.Include(s => s.Availability).FirstOrDefault();
                 var repository = new ParkingSpaceRepository(context);
                 var command = new SetParkingSpaceVisibilityCommand(space.Id, true);
-                var handler = new SetParkingSpaceVisibilityCommandCommandHandler(repository);
+                var handler = new SetParkingSpaceVisibilityCommandCommandHandler(repository, new Mock<IMediator>().Object);
                 bool previousState = space.Availability.IsVisible;
                 
                 await handler.Handle(command);

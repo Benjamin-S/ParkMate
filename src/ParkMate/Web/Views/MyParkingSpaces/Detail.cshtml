@@ -1,0 +1,14 @@
+﻿@model QueryResult<ParkingSpace>
+@{
+    ViewData["Title"] = "Parking Space Details";
+    var space = Model.PayLoad;
+}
+
+<h1>Parking Space Details</h1>
+
+<div>
+    <p>Title: @space.Description.Title</p>
+    <p>Description: @space.Description.Description</p>
+
+
+ </div>

@@ -6,6 +6,7 @@ using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
+using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
 {
@@ -36,11 +37,16 @@ namespace ParkMate.ApplicationServices.Commands
         : IRequestHandler<RegisterNewParkingSpaceCommand, CommandResult>
     {
         private IRepository<ParkingSpace> _repository;
+        private IMediator _mediator;
 
-        public RegisterNewParkingSpaceCommandHandler(IRepository<ParkingSpace> repository)
+        public RegisterNewParkingSpaceCommandHandler(
+            IRepository<ParkingSpace> repository, 
+            IMediator mediator)
         {
-            _repository = repository ?? 
-                          throw new ArgumentNullException(nameof(repository));
+            _repository = repository ??
+                throw new ArgumentNullException(nameof(repository));
+            _mediator = mediator ??
+                throw new ArgumentNullException(nameof(mediator));
         }
 
         public async Task<CommandResult> Handle(
@@ -52,6 +58,8 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _repository.AddAsync(parkingSpace);
             await _repository.UnitOfWork.SaveEntitiesAsync();
+
+            await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
             
             return new CommandResult(true, "Parking Space was successfully registered");
         }

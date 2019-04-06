@@ -5,6 +5,8 @@ using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices.Commands;
 using static ParkMate.ApplicationServices.Tests.TestHelper;
+using Moq;
+using MediatR;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -22,7 +24,7 @@ namespace ParkMate.ApplicationServices.Tests
                 var repository = new ParkingSpaceRepository(context);
                 var bookingRate = new BookingRate(new Money(12), new Money(34));
                 var command = new EditParkingSpaceBookingRateCommand(space.Id, bookingRate);
-                var handler = new EditParkingSpaceBookingRateCommandHandler(repository);
+                var handler = new EditParkingSpaceBookingRateCommandHandler(repository, new Mock<IMediator>().Object);
                 
                 await handler.Handle(command);
                 

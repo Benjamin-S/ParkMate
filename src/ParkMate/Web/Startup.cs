@@ -17,6 +17,7 @@ using ParkMate.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ParkMate.Infrastructure.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using MongoDB.Driver;
 using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Interfaces;
@@ -50,7 +51,16 @@ namespace ParkMate.Web
                 options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"],
                 o => o.UseNetTopologySuite()));
 
+            services.Configure<MongoSettings>(options =>
+            {
+                options.Database = "ParkMateReadDb";
+                options.ConnectionString = Configuration["ConnectionStrings:ParkMateReadDB"];
+            });
+            
+            services.AddSingleton<IMongoClient, MongoClient>( 
+                _ => new MongoClient(Configuration["ConnectionStrings:ParkMateReadDB"]));
 
+            
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -69,10 +79,16 @@ namespace ParkMate.Web
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
+<<<<<<< HEAD
             services.AddImageSharp();
+=======
+           
+>>>>>>> upstream/master
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IRepository<ParkingSpace>, ParkingSpaceRepository>();
+            services.AddScoped<IDocumentWriteRepository, DocumentRepository>();
+            services.AddScoped<IMongoContext, MongoDbContext>();
             services.AddSingleton<ImageProcessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

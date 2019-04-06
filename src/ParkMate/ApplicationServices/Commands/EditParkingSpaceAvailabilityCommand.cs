@@ -7,6 +7,7 @@ using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
 {
@@ -26,11 +27,15 @@ namespace ParkMate.ApplicationServices.Commands
         : IRequestHandler<EditParkingSpaceAvailabilityCommand, CommandResult>
     {
         private IRepository<ParkingSpace> _repository;
+        private IMediator _mediator;
 
-        public EditParkingSpaceAvailabilityCommandHandler(IRepository<ParkingSpace> repository)
+        public EditParkingSpaceAvailabilityCommandHandler(
+            IRepository<ParkingSpace> repository,
+            IMediator mediator)
         {
             _repository = repository ?? 
-                          throw new ArgumentNullException(nameof(repository));
+                throw new ArgumentNullException(nameof(repository));
+            _mediator = mediator;
         }
 
         public async Task<CommandResult> Handle(
@@ -46,7 +51,9 @@ namespace ParkMate.ApplicationServices.Commands
             
             _repository.Update(parkingSpace);
             await _repository.UnitOfWork.SaveEntitiesAsync();
-            
+
+            await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
+
             return new CommandResult(true, "Parking Space availability was successfully updated");
         }
     }

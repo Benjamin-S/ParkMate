@@ -1,0 +1,15 @@
+﻿@model QueryResult<IReadOnlyList<ParkingSpace>>
+@{
+    ViewData["Title"] = "My Parking Spaces";
+}
+
+<h1>My Parking Spaces</h1>
+
+<div>
+
+@foreach(var space in Model.PayLoad)
+{
+    <p>@space.Description.Title | @space.Description.Description</p>
+}
+
+</div>
