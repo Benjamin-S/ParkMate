@@ -34,8 +34,9 @@ namespace ParkMate.Web.Util
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await image.CopyToAsync(stream);
-                ResizeImage(stream, filePath);
             }
+
+            ResizeImage(filePath);
 
             return new ImageValidationResult
             {
@@ -60,15 +61,15 @@ namespace ParkMate.Web.Util
             };
         }
 
-        void ResizeImage(Stream stream, string filename)
+        void ResizeImage(string fileName)
         {
             // resize image so we're not saving images that are larger than necessary 
-            using (Image<Rgba32> image = Image.Load(stream))
+            using (Image<Rgba32> image = Image.Load(fileName))
             {
                 image.Mutate(x => x
                     .Resize(image.Width / 2, image.Height / 2)
                 );
-                image.Save(filename);
+                image.Save(fileName);
             }
         }
     }

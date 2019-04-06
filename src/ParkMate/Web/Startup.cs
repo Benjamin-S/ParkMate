@@ -56,11 +56,11 @@ namespace ParkMate.Web
                 options.Database = "ParkMateReadDb";
                 options.ConnectionString = Configuration["ConnectionStrings:ParkMateReadDB"];
             });
-            
-            services.AddSingleton<IMongoClient, MongoClient>( 
+
+            services.AddSingleton<IMongoClient, MongoClient>(
                 _ => new MongoClient(Configuration["ConnectionStrings:ParkMateReadDB"]));
 
-            
+
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -79,11 +79,8 @@ namespace ParkMate.Web
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
-<<<<<<< HEAD
             services.AddImageSharp();
-=======
-           
->>>>>>> upstream/master
+
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IRepository<ParkingSpace>, ParkingSpaceRepository>();
