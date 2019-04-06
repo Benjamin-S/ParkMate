@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
-using ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Commands;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using MediatR;
 using ParkMate.ApplicationCore.ValueObjects;
@@ -11,6 +12,7 @@ using ParkMate.Web.Util;
 
 namespace ParkMate.Web.Controllers
 {
+    [Authorize]
     public class CreateParkingSpaceController : Controller
     {
         private readonly IHostingEnvironment _environment;
@@ -20,10 +22,11 @@ namespace ParkMate.Web.Controllers
         public CreateParkingSpaceController(
             IHostingEnvironment environment,
             IMediator mediator,
-            ImageProcessor _imageProcessor)
+            ImageProcessor imageProcessor)
         {
             _environment = environment;
             _mediator = mediator;
+            _imageProcessor = imageProcessor;
         }
 
         [HttpGet]

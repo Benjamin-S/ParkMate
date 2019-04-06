@@ -3,10 +3,10 @@ using System.Linq;
 using Xunit;
 using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationCore.ValueObjects;
-using ApplicationServices.Commands;
-using static ApplicationServices.Tests.TestHelper;
+using ParkMate.ApplicationServices.Commands;
+using static ParkMate.ApplicationServices.Tests.TestHelper;
 
-namespace ApplicationServices.Tests
+namespace ParkMate.ApplicationServices.Tests
 {
     public class EditParkingSpaceBookingRateShould
     {

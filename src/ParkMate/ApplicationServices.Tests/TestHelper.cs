@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Commands;
 using Microsoft.EntityFrameworkCore;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.Infrastructure.Data;
 
-namespace ApplicationServices.Tests
+namespace ParkMate.ApplicationServices.Tests
 {
     public static class TestHelper
     {
@@ -54,11 +54,11 @@ namespace ApplicationServices.Tests
                 .Options;
         }
 
-        public static async Task CreateTestParkingSpaceInDb(string name)
+        public static async Task CreateTestParkingSpaceInDb(string name, string ownerName = "test-user")
         {
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions(name)))
             {
-                var command = GetTestCreateParkingSpaceCommand("test-user");
+                var command = GetTestCreateParkingSpaceCommand(ownerName);
                 var repository = new ParkingSpaceRepository(context);
                 var handler = new RegisterNewParkingSpaceCommandHandler(repository);
                 await handler.Handle(command);
