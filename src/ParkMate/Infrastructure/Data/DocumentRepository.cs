@@ -13,17 +13,19 @@ namespace ParkMate.Infrastructure.Data
         {
             _context = context;
         }
-        public async Task ReplaceOneAsync<T>(T entity) where T : BaseEntity
+        public async Task ReplaceOneAsync<T>(T entity, string collectionName) 
+            where T : BaseEntity
         {
-            var collection = _context.MongoDatabase.GetCollection<T>(nameof(T));
+            var collection = _context.MongoDatabase.GetCollection<T>(collectionName);
             
             await collection.ReplaceOneAsync(
                 doc => doc.Id == entity.Id, entity,
                 new UpdateOptions { IsUpsert = true });
         }
-        public async Task InsertOneAsync<T>(T entity) where T : BaseEntity
+        public async Task InsertOneAsync<T>(T entity, string collectionName) 
+            where T : BaseEntity
         {
-            var collection = _context.MongoDatabase.GetCollection<T>(nameof(T));
+            var collection = _context.MongoDatabase.GetCollection<T>(collectionName);
 
             await collection.InsertOneAsync(entity);
         }

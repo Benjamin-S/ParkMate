@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model QueryResult<ParkingSpace>
 @{
+    ViewData["Title"] = "Parking Space Details";
+    var space = Model.PayLoad;
 }
+
+<h1>Parking Space Details</h1>
+
+<div>
+    <p>Title: @space.Description.Title</p>
+    <p>Description: @space.Description.Description</p>
+
+
+ </div>

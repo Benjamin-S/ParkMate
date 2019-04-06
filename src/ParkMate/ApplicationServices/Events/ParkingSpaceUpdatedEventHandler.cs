@@ -20,7 +20,7 @@ namespace ParkMate.ApplicationServices.Events
             ParkingSpaceUpdatedEvent notification,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _repository.ReplaceOneAsync(notification.ParkingSpace);
+            await _repository.ReplaceOneAsync(notification.ParkingSpace, "ParkingSpace");
         }
     }
 }

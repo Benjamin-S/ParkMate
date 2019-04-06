@@ -58,6 +58,7 @@ namespace ParkMate.Web
             
             services.AddSingleton<IMongoClient, MongoClient>( 
                 _ => new MongoClient(Configuration["ConnectionStrings:ParkMateReadDB"]));
+
             
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
             {

@@ -32,8 +32,7 @@ namespace ParkMate.ApplicationServices.Queries
             GetSingleParkingSpaceQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = Builders<ParkingSpace>.Filter
-                .Eq(ps => ps.Id == query.ParkingSpaceId, true);
+            var filter = Builders<ParkingSpace>.Filter.Eq(ps => ps.Id, query.ParkingSpaceId);
 
             var space = await _context.ParkingSpaces.FindAsync(filter).Result.FirstOrDefaultAsync();
 

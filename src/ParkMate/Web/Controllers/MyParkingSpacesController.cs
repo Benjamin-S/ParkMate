@@ -1,19 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using ParkMate.ApplicationServices.Queries;
 
 namespace Web.Controllers
 {
     public class MyParkingSpacesController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+        private IMediator _mediator;
+        private string _userId; 
+
+        public MyParkingSpacesController(IMediator mediator)
         {
-            return View();
+            _mediator = mediator;
+            _userId = "test"; //User.FindFirst(ClaimTypes.NameIdentifier).ToString();
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var query = new GetAllParkingSpacesForOwnerQuery(_userId);
+            var result = await _mediator.Send(query);
+            return View(result);
+        }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            var query = new GetSingleParkingSpaceQuery(id);
+            var result = await _mediator.Send(query);
+            return View(result);
         }
     }
 }

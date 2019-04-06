@@ -6,7 +6,7 @@ namespace ParkMate.ApplicationServices.Interfaces
 {
     public interface IDocumentWriteRepository
     {
-        Task InsertOneAsync<T>(T entity) where T : BaseEntity;
-        Task ReplaceOneAsync<T>(T entity) where T : BaseEntity;
+        Task InsertOneAsync<T>(T entity, string collection) where T : BaseEntity;
+        Task ReplaceOneAsync<T>(T entity, string collection) where T : BaseEntity;
     }
 }

@@ -16,6 +16,6 @@ namespace ParkMate.Infrastructure.Data
         public IMongoDatabase MongoDatabase { get; }
 
         public IMongoCollection<ParkingSpace> ParkingSpaces => 
-            MongoDatabase.GetCollection<ParkingSpace>(nameof(ParkingSpace));
+            MongoDatabase.GetCollection<ParkingSpace>("ParkingSpace");
     }
 }

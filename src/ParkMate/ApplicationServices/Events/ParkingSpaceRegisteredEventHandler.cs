@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.ApplicationServices.Events
@@ -19,7 +20,7 @@ namespace ParkMate.ApplicationServices.Events
             ParkingSpaceRegisteredEvent notification, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _repository.InsertOneAsync(notification.ParkingSpace);
+            await _repository.InsertOneAsync(notification.ParkingSpace, "ParkingSpace");
         }
     }
 }
