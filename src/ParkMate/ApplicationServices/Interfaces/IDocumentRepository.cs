@@ -8,5 +8,6 @@ namespace ParkMate.ApplicationServices.Interfaces
     {
         Task InsertOneAsync<T>(T entity, string collection) where T : BaseEntity;
         Task ReplaceOneAsync<T>(T entity, string collection) where T : BaseEntity;
+        Task DeleteOneAsync<T>(T entity, string name) where T : BaseEntity;
     }
 }
