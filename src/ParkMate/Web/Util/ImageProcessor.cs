@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using NetTopologySuite.Algorithm;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -36,6 +35,7 @@ namespace ParkMate.Web.Util
             }
 
             // Resize image once streamed to server and overwrite previous file
+            // TODO: Find a way to do this at the time of streaming to server to limit IO operations
             ResizeImage(filePath);
 
             return new ImageValidationResult
@@ -47,70 +47,30 @@ namespace ParkMate.Web.Util
 
         public ImageValidationResult IsValidImage(IFormFile image)
         {
-            // Maximum image size is 10MB, reject anything over that
-            const long maxFileSize = 10 * 1024 * 1024;
-
-            var isImage = image.ContentType.IndexOf("image", StringComparison.OrdinalIgnoreCase) <0;
-            var isValidSize = image.Length < maxFileSize;
-
-            if (!isImage || !isValidSize)
+            // TODO: Validate based on minimum size restrictions when agreed upon
+            if (image.ContentType.IndexOf("image", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 return new ImageValidationResult
                 {
                     IsValid = false
                 };
             }
-
-            var tempImage = Image.Load(image.OpenReadStream());
-
             return new ImageValidationResult
             {
-                IsValid = !IsImageTooSmall((tempImage))
+                IsValid = true
             };
-
         }
 
         private void ResizeImage(string fileName)
         {
+            // TODO: Implement scaled resizing based on image size restrictions
             using (Image<Rgba32> image = Image.Load(fileName))
             {
-                const int width = 1280;
-                const int height = 720;
-                var isLandscape = image.Width >= image.Height;
-                var isTooLarge = isLandscape ? image.Width > 1280 : image.Height > 1600;
-
-                if (isTooLarge)
-                {
-                    if (isLandscape)
-                    {
-                        image.Mutate(x => x
-                            .Resize(width, 0)
-                        );
-                    }
-                    else
-                    {
-                        image.Mutate(x => x
-                            .Resize(0, height)
-                        );
-                    }
-                }   
+                // HACK: Temporary resizing of 50% for functionality
+                image.Mutate(x => x
+                    .Resize(image.Width / 2, image.Height / 2)
+                );
                 image.Save(fileName);
-            }
-        }
-
-        private bool IsImageTooSmall(Image<Rgba32> image)
-        {
-            const int minWidth = 640;
-            const int minHeight = 480;
-            var isLandscape = image.Width >= image.Height;
-
-            if (isLandscape)
-            {
-                return image.Width < minWidth || image.Height < minHeight;
-            }
-            else
-            {
-                return image.Width < minHeight || image.Height < minWidth;
             }
         }
     }
