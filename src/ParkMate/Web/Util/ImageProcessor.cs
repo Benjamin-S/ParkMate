@@ -26,8 +26,6 @@ namespace ParkMate.Web.Util
                 return validation;
             }
 
-            // Resize image, will probably need to convert to something other than IFormFile
-
             var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
             var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
 
@@ -36,6 +34,8 @@ namespace ParkMate.Web.Util
                 await image.CopyToAsync(stream);
             }
 
+            // Resize image once streamed to server and overwrite previous file
+            // TODO: Find a way to do this at the time of streaming to server to limit IO operations
             ResizeImage(filePath);
 
             return new ImageValidationResult
@@ -47,7 +47,7 @@ namespace ParkMate.Web.Util
 
         public ImageValidationResult IsValidImage(IFormFile image)
         {
-            // validate that image file is valid, and is at least of minimum acceptable size
+            // TODO: Validate based on minimum size restrictions when agreed upon
             if (image.ContentType.IndexOf("image", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 return new ImageValidationResult
@@ -61,11 +61,12 @@ namespace ParkMate.Web.Util
             };
         }
 
-        void ResizeImage(string fileName)
+        private void ResizeImage(string fileName)
         {
-            // resize image so we're not saving images that are larger than necessary 
+            // TODO: Implement scaled resizing based on image size restrictions
             using (Image<Rgba32> image = Image.Load(fileName))
             {
+                // HACK: Temporary resizing of 50% for functionality
                 image.Mutate(x => x
                     .Resize(image.Width / 2, image.Height / 2)
                 );
