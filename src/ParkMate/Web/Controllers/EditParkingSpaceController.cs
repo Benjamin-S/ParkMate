@@ -100,5 +100,17 @@ namespace ParkMate.Web.Controllers
 
             return Index();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteParkingSpace(int parkingSpaceId)
+        {
+            var command = new DeleteParkingSpaceCommand(parkingSpaceId);
+
+            var result = await _mediator.Send(command);
+
+            return Index();
+        }
+
     }
 }
