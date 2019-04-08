@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ParkMate.ApplicationCore.ValueObjects;
 
 namespace ParkMate.ApplicationCore.Entities
@@ -33,6 +34,7 @@ namespace ParkMate.ApplicationCore.Entities
         public Address Address { get; private set; }
         public SpaceAvailability Availability { get; private set; }
         public BookingRate BookingRate { get; private set; }
+        public List<Booking> Bookings { get; private set; } = new List<Booking>();
 
         public void UpdateAddress(Address address)
         {

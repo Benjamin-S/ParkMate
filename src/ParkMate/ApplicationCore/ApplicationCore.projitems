@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Point.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Vehicle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Customer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Booking.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Entities\" />

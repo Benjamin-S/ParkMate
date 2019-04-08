@@ -24,6 +24,6 @@ namespace ParkMate.ApplicationCore.Entities
         public string Email { get; private set; }
         public List<Vehicle> Vehicles { get; private set; } = new List<Vehicle>();
         public List<ParkingSpace> ParkingSpaces { get; private set; } = new List<ParkingSpace>();
-        //public List<Booking> Bookings { get; private set; }
+        public List<Booking> Bookings { get; private set; } = new List<Booking>();
     }
 }
