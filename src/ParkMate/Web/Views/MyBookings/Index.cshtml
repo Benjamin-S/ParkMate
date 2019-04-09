@@ -1,0 +1,32 @@
+@* @model QueryResult<IReadOnlyList<Booking>> *@
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<div>
+    <partial name="_UserProfilePartial"/>
+</div>
+
+<h2>My Bookings</h2>
+
+@*
+<div>    
+    @{
+        if (Model.PayLoad != null)
+        {
+            @foreach (var booking in Model.PayLoad)
+             {
+                 <p>@booking.Title</p>
+             }
+        }
+    }
+</div>
+*@
+
+@section Scripts
+{
+    <script>
+        $("#myBookings").addClass("active");
+    </script>
+}
