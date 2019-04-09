@@ -22,5 +22,6 @@ namespace ParkMate.ApplicationCore.Entities
         public ParkingSpace ParkingSpace { get; private set; }
         public Vehicle Vehicle { get; private set; }
         public BookingPeriod BookingPeriod { get; private set; }
+        public DateTime BookingTime { get; private set; }
     }
 }
