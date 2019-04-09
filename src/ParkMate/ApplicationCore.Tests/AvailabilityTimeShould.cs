@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using ParkMate.ApplicationCore.ValueObjects;
+using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.Exceptions;
 
 using System;

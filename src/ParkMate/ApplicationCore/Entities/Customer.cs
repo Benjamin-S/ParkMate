@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ParkMate.ApplicationCore.Entities
 {
-    public class Customer
+    public class Customer : BaseEntity
     {
         private Customer()
         {
@@ -24,6 +25,7 @@ namespace ParkMate.ApplicationCore.Entities
         public string Email { get; private set; }
         public List<Vehicle> Vehicles { get; private set; } = new List<Vehicle>();
         public List<ParkingSpace> ParkingSpaces { get; private set; } = new List<ParkingSpace>();
-        //public List<Booking> Bookings { get; private set; }
+        public Schedule Bookings { get; private set; }
+        public BookingHistory BookingHistory { get; private set; }
     }
 }

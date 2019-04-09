@@ -14,7 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Address.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingPeriod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ParkingSpace.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\AvailabilityTime.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingRate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Money.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\InvalidAvailabilityTimeException.cs" />
@@ -25,9 +24,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Point.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Vehicle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Customer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Booking.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\AlreadyBookedException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Schedule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\SystemTime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\BookingHistory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\AvailabilityTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Entities\" />
     <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Util\" />
   </ItemGroup>
 </Project>

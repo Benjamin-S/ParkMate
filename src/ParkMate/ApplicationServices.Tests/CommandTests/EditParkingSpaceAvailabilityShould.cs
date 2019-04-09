@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ParkMate.Infrastructure.Data;
-using ParkMate.ApplicationCore.ValueObjects;
 using Xunit;
-using ParkMate.ApplicationServices.Commands;
-using static ParkMate.ApplicationServices.Tests.TestHelper;
 using Moq;
 using MediatR;
+using ParkMate.Infrastructure.Data;
+using ParkMate.ApplicationCore.ValueObjects;
+using ParkMate.ApplicationServices.Commands;
+using static ParkMate.ApplicationServices.Tests.TestHelper;
 
 namespace ParkMate.ApplicationServices.Tests
 {

@@ -9,7 +9,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
         {
         }
 
-        public BookingPeriod(DateTime start, DateTime end)
+        public BookingPeriod(DateTime start, DateTime end, Money charge)
         {
             if (end <= start)
             {
@@ -17,29 +17,27 @@ namespace ParkMate.ApplicationCore.ValueObjects
             }
             Start = start;
             End = end;
+            Charge = charge;
         }
 
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
+        public Money Charge { get; private set; }
 
-        public static BookingPeriod CreateOneHourPeriod(DateTime day)
+        public static BookingPeriod CreateHourlyBooking(DateTime start, DateTime end, BookingRate rate)
         {
-            return new BookingPeriod(day, day.AddHours(1));
-        }
-
-        public static BookingPeriod CreateOneDayPeriod(DateTime day)
-        {
-            return new BookingPeriod(day, day.AddDays(1));
+            var hours = end.Subtract(start).Hours;
+            var charge = hours * rate.HourlyRate;
+            return new BookingPeriod(start, end, charge);
         }
 
-        public static BookingPeriod CreateOneWeekPeriod(DateTime startDateTime)
+        public static BookingPeriod CreateDailyBooking(DateTime start, DateTime end, BookingRate rate)
         {
-            return new BookingPeriod(startDateTime, startDateTime.AddDays(7));
+            var days = end.Subtract(start).Days;
+            var charge = days * rate.DailyRate;
+            return new BookingPeriod(start, end, charge);
         }
-        public static BookingPeriod CreateOneMonthPeriod(DateTime startDateTime)
-        {
-            return new BookingPeriod(startDateTime, startDateTime.AddMonths(1));
-        }
+
         public bool Overlaps(BookingPeriod dateTimeRange)
         {
             return this.Start < dateTimeRange.End &&
@@ -50,6 +48,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
         {
             yield return Start;
             yield return End;
+            yield return Charge;
         }
     }
 }

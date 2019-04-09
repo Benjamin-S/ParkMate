@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ParkMate.ApplicationCore.Exceptions;
+using ParkMate.ApplicationCore.Util;
 using ParkMate.ApplicationCore.ValueObjects;
 
 namespace ParkMate.ApplicationCore.Entities
@@ -33,17 +37,19 @@ namespace ParkMate.ApplicationCore.Entities
         public Address Address { get; private set; }
         public SpaceAvailability Availability { get; private set; }
         public BookingRate BookingRate { get; private set; }
+        public Schedule Schedule { get; private set; } = new Schedule();
+        public BookingHistory BookingHistory { get; private set; } = new BookingHistory();
 
         public void UpdateAddress(Address address)
         {
             Address = address ?? 
-                      throw new ArgumentNullException(nameof(address));
+                throw new ArgumentNullException(nameof(address));
         }
 
         public void UpdateDescription(ParkingSpaceDescription description)
         {
             Description = description ??
-                      throw new ArgumentNullException(nameof(description));
+                throw new ArgumentNullException(nameof(description));
         }
 
         public void UpdateBookingRate(BookingRate bookingRate)
@@ -59,5 +65,23 @@ namespace ParkMate.ApplicationCore.Entities
         {
             Availability.SetVisible(isListed);
         }
+
+        public bool IsAvailable(BookingPeriod bookingPeriod)
+        {
+            return Availability.IsAvailable(bookingPeriod) && 
+                    Schedule.IsAvailable(bookingPeriod);
+        }
+
+        public void AddBookingToSchedule(Booking booking)
+        {
+            Schedule.AddBooking(booking);
+        }
+
+        public void ProcessLapsedBookings()
+        {
+            var lapsed = Schedule.RemoveLapsedBookings();
+            lapsed.ForEach(booking => BookingHistory.AddToHistory(booking));
+        }
+
     }
 }
