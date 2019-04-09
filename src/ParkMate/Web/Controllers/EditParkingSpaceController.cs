@@ -8,6 +8,7 @@ using MediatR;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.Commands;
+using ParkMate.ApplicationServices.Queries;
 using ParkMate.Web.Models;
 using ParkMate.Web.Util;
 
@@ -25,12 +26,27 @@ namespace ParkMate.Web.Controllers
             _mediator = mediator;
             _imageProcessor = imageProcessor;
         }
-        
-        [HttpGet]
-        public IActionResult Index()
+
+        public IActionResult EditAddress()
         {
-            return Index();
+            return View();
         }
+        
+        public IActionResult EditAvailability()
+        {
+            return View();
+        }
+        
+        public IActionResult EditBookingRate()
+        {
+            return View();
+        }
+        
+        public IActionResult EditDescription()
+        {
+            return View();
+        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -42,7 +58,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return Index();
+            return View("~/Views/ViewParkingSpace");
         }
         
         [HttpPost]
@@ -58,7 +74,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return Index();
+            return View("~/Views/ViewParkingSpace");
         }
         
         [HttpPost]
@@ -71,7 +87,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return Index();
+            return View("~/Views/ViewParkingSpace");
         }
         
         [HttpPost]
@@ -82,7 +98,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return Index();
+            return View("~/Views/ViewParkingSpace");
         }
 
         [HttpPost]
@@ -98,7 +114,19 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return Index();
+            return View("~/Views/ViewParkingSpace");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteParkingSpace(int parkingSpaceId)
+        {
+            var command = new DeleteParkingSpaceCommand(parkingSpaceId);
+
+            var result = await _mediator.Send(command);
+
+            return View("~/Views/ViewParkingSpace");
+        }
+
     }
 }
