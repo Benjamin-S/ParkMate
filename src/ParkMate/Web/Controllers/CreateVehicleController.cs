@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
-    public class CreateVehicle : Controller
+    [Authorize]
+    public class CreateVehicleController : Controller
     {
-        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
-            return
-            View();
+            return View();
         }
     }
 }
