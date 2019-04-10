@@ -6,13 +6,11 @@ using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.Infrastructure.Data
 {
-    public abstract class WriteRepository<T> : IRepository<T> where T : BaseEntity
+    public class WriteRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected ParkMateDbContext DbContext { get; set; }
 
         public IUnitOfWork UnitOfWork => DbContext;
-
-        public abstract Task<T> GetByIdAsync(int id);
 
         public async Task<T> AddAsync(T entity)
         {

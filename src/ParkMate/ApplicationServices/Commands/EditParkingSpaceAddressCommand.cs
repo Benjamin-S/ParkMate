@@ -25,11 +25,11 @@ namespace ParkMate.ApplicationServices.Commands
     public class EditParkingSpaceAddressCommandHandler 
         : IRequestHandler<EditParkingSpaceAddressCommand, CommandResult>
     {
-        private IRepository<ParkingSpace> _repository;
+        private IParkingSpaceRepository _repository;
         private IMediator _mediator;
 
         public EditParkingSpaceAddressCommandHandler(
-            IRepository<ParkingSpace> repository,
+            IParkingSpaceRepository repository,
             IMediator mediator)
         {
             _repository = repository ?? 

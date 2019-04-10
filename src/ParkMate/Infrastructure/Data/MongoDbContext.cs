@@ -17,5 +17,7 @@ namespace ParkMate.Infrastructure.Data
 
         public IMongoCollection<ParkingSpace> ParkingSpaces => 
             MongoDatabase.GetCollection<ParkingSpace>("ParkingSpace");
+        public IMongoCollection<Customer> Customers =>
+            MongoDatabase.GetCollection<Customer>("Customer");
     }
 }

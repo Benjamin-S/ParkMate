@@ -23,11 +23,11 @@ namespace ParkMate.ApplicationServices.Commands
     public class DeleteParkingSpaceCommandHandler
         : IRequestHandler<DeleteParkingSpaceCommand, CommandResult>
     {
-        private IRepository<ParkingSpace> _repository;
+        private IParkingSpaceRepository _repository;
         private IMediator _mediator;
 
         public DeleteParkingSpaceCommandHandler(
-            IRepository<ParkingSpace> repository,
+            IParkingSpaceRepository repository,
             IMediator mediator)
         {
             _repository = repository ??
