@@ -58,7 +58,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return View("~/Views/ViewParkingSpace");
+            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
         }
         
         [HttpPost]
@@ -74,7 +74,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return View("~/Views/ViewParkingSpace");
+            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
         }
         
         [HttpPost]
@@ -87,7 +87,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return View("~/Views/ViewParkingSpace");
+            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
         }
         
         [HttpPost]
@@ -98,7 +98,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return View("~/Views/ViewParkingSpace");
+            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
         }
 
         [HttpPost]
@@ -114,7 +114,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return View("~/Views/ViewParkingSpace");
+            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
         }
 
         [HttpPost]
@@ -125,7 +125,7 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return View("~/Views/ViewParkingSpace");
+            return RedirectToAction("Index","MyParkingSpaces");
         }
 
     }
