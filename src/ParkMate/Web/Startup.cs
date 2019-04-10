@@ -71,6 +71,8 @@ namespace ParkMate.Web
             })
             .AddEntityFrameworkStores<IdentityDbContext>()
             .AddDefaultTokenProviders();
+            
+            services.ConfigureApplicationCookie(options => { options.LoginPath = "/Identity/Account/Login"; });
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
