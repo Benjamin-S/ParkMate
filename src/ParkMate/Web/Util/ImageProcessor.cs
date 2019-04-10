@@ -21,22 +21,36 @@ namespace ParkMate.Web.Util
 
         public async Task<ImageValidationResult> SaveImage(IFormFile image)
         {
-            var validation = IsValidImage(image);
-            if (!validation.IsValid)
-            {
-                return validation;
-            }
-
             var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
             var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
 
+            Image<Rgba32> finalImage = null;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await image.CopyToAsync(memoryStream);
+                var fileBytes = memoryStream.ToArray();
+                using (var readStream = image.OpenReadStream())
+                {
+                    finalImage = Image.Load(fileBytes);
+                }
+
+                var validation = IsValidImage(image);
+                var smallImage = IsImageTooSmall(finalImage);
+
+                if (!validation.IsValid || smallImage)
+                {
+                    return new ImageValidationResult
+                    {
+                        IsValid = false
+                    };
+                }
+                finalImage = ResizeImage(finalImage);
+            }
+
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                await image.CopyToAsync(stream);
-                using (var imageOutput = Image.Load(stream))
-                {
-                    ResizeImage(imageOutput).SaveAsJpeg(stream);
-                }
+                finalImage.SaveAsJpeg(stream);
             }
 
             return new ImageValidationResult
@@ -51,7 +65,7 @@ namespace ParkMate.Web.Util
             // Maximum image size is 10MB, reject anything over that
             const long maxFileSize = 10 * 1024 * 1024;
 
-            var isImage = image.ContentType.IndexOf("image", StringComparison.OrdinalIgnoreCase) <0;
+            var isImage = image.ContentType.IndexOf("image", StringComparison.OrdinalIgnoreCase) < 0;
             var isValidSize = image.Length < maxFileSize;
 
             if (!isImage || !isValidSize)
@@ -61,45 +75,37 @@ namespace ParkMate.Web.Util
                     IsValid = false
                 };
             }
-            
-            // Load IFormFile to memory stream and create an image object to check for min size
-            using (var memoryStream = new MemoryStream())
+
+            return new ImageValidationResult
             {
-                image.CopyTo(memoryStream);
-                using (Image<Rgba32> tempImage = Image.Load<Rgba32>(memoryStream.ToArray()))
-                {
-                    return new ImageValidationResult
-                    {
-                        IsValid = !IsImageTooSmall((tempImage))
-                    };
-                }
-            }
+                IsValid = true
+            };
         }
 
         private Image<Rgba32> ResizeImage(Image<Rgba32> image)
         {
-                const int width = 1280;
-                const int height = 720;
-                var isLandscape = image.Width >= image.Height;
-                var isTooLarge = isLandscape ? image.Width > 1280 : image.Height > 1600;
+            const int width = 1280;
+            const int height = 720;
+            var isLandscape = image.Width >= image.Height;
+            var isTooLarge = isLandscape ? image.Width > width : image.Height > height;
 
-                if (!isTooLarge)
-                {
-                    return image;
-                }
-                if (isLandscape)
-                {
-                    image.Mutate(x => x
-                        .Resize(width, 0)
-                    );
-                }
-                else
-                {
-                    image.Mutate(x => x
-                        .Resize(0, height)
-                    );
-                }
+            if (!isTooLarge)
+            {
                 return image;
+            }
+            if (isLandscape)
+            {
+                image.Mutate(x => x
+                    .Resize(width, 0)
+                );
+            }
+            else
+            {
+                image.Mutate(x => x
+                    .Resize(0, height)
+                );
+            }
+            return image;
         }
 
         private bool IsImageTooSmall(Image<Rgba32> image)
