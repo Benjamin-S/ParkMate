@@ -1,15 +1,44 @@
-﻿@model QueryResult<IReadOnlyList<ParkingSpace>>
+@model QueryResult<IReadOnlyList<ParkingSpace>>
+
 @{
     ViewData["Title"] = "My Parking Spaces";
 }
 
-<h1>My Parking Spaces</h1>
-
 <div>
-
-@foreach(var space in Model.PayLoad)
-{
-    <p>@space.Description.Title | @space.Description.Description</p>
-}
-
+    <partial name="_UserProfilePartial"/>
 </div>
+
+<h2>My Spaces</h2>
+
+
+@{
+    if (Model.PayLoad != null)
+    {
+        foreach (var space in Model.PayLoad)
+        {
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src=@space.Description.ImageURL class="card-img" alt="No Image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@space.Description.Title</h5>
+                            <p class="card-text">@space.Description.Description</p>
+                            <small class="text-muted">
+                                <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View</a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }      
+}
+             
+@section Scripts
+{
+    <script>
+        $("#mySpaces").addClass("active");
+    </script>
+}

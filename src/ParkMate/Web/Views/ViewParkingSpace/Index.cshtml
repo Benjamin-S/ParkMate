@@ -1,0 +1,63 @@
+@model QueryResult<ParkingSpace>
+@{
+    ViewData["Title"] = "Parking Space Details";
+    var space = Model.PayLoad;
+}
+
+<h1>Parking Space Details</h1>
+
+<div>
+    <div class="card">
+        <div class="card-body">
+            @* Check if UserId == space.OwnerId *@
+            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
+            <h5 class="card-title">Description</h5>
+            <h6 class="card-text">@space.Description.Title</h6>
+            <p class="card-text">@space.Description.Description</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            @* Check if UserId == space.OwnerId *@
+            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditAddress">Edit</a>
+            <h5 class="card-title">Address</h5>
+            <p class="card-text">Street: @space.Address.Street</p>
+            <p class="card-text">City: @space.Address.City</p>
+            <p class="card-text">State: @space.Address.State</p>
+            <p class="card-text">Postcode: @space.Address.Zip</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            @* Check if UserId == space.OwnerId *@
+            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
+            <h5 class="card-title">Booking Rate</h5>
+            <p class="card-text">Hourly Rate: @space.BookingRate.HourlyRate</p>
+            <p class="card-text">Daily Rate: @space.BookingRate.DailyRate</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            @* Check if UserId == space.OwnerId *@
+            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditAvailability" asp-route-id="@space.Id">Edit</a>
+            <h5 class="card-title">Availability</h5>
+            <span class="badge" id="Monday">Monday</span>
+            <span class="badge" id="Tuesday">Tuesday</span>
+            <span class="badge" id="Wednesday">Wednesday</span>
+            <span class="badge" id="Thursday">Thursday</span>
+            <span class="badge" id="Friday">Friday</span>
+            <span class="badge" id="Saturday">Saturday</span>
+            <span class="badge" id="Sunday">Sunday</span>
+        </div>
+    </div>
+</div>
+
+@* Check if UserId == space.OwnerId *@
+<span class="switch-lg">
+    <input type="checkbox" class="switch" id="switch-id">
+    <label for="switch-id">List Space</label>
+</span>
+
+<button type="button" class="btn btn-danger float-right">Delete</button>
+
+

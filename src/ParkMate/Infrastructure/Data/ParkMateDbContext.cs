@@ -16,11 +16,17 @@ namespace ParkMate.Infrastructure.Data
         }
         public DbSet<ParkingSpace> ParkingSpaces { get; private set; }
         public DbSet<SpaceAvailability> SpaceAvailability { get; private set; }
+        public DbSet<Booking> Bookings { get; private set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<BookingHistory> BookingHistory { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ParkingSpaceConfiguration());
             modelBuilder.ApplyConfiguration(new SpaceAvailabilityConfiguration());
+            modelBuilder.ApplyConfiguration(new BookingConfiguration());
             modelBuilder.HasPostgresExtension("postgis");
         }
 

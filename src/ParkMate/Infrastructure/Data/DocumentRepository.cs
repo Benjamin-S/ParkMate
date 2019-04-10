@@ -9,25 +9,37 @@ namespace ParkMate.Infrastructure.Data
     {
         private IMongoContext _context;
 
+        private IMongoCollection<T> Collection<T>(string name) 
+        {
+            return _context.MongoDatabase.GetCollection<T>(name);
+        }
+
         public DocumentRepository(IMongoContext context)
         {
             _context = context;
         }
-        public async Task ReplaceOneAsync<T>(T entity, string collectionName) 
+
+        public async Task ReplaceOneAsync<T>(T entity, string name) 
             where T : BaseEntity
         {
-            var collection = _context.MongoDatabase.GetCollection<T>(collectionName);
+            var collection = _context.MongoDatabase.GetCollection<T>(name);
             
-            await collection.ReplaceOneAsync(
-                doc => doc.Id == entity.Id, entity,
+            await Collection<T>(name).ReplaceOneAsync(
+                doc => doc.Id == entity.Id, 
+                entity,
                 new UpdateOptions { IsUpsert = true });
         }
+
         public async Task InsertOneAsync<T>(T entity, string collectionName) 
             where T : BaseEntity
         {
-            var collection = _context.MongoDatabase.GetCollection<T>(collectionName);
+            await Collection<T>(collectionName).InsertOneAsync(entity);
+        }
 
-            await collection.InsertOneAsync(entity);
+        public async Task DeleteOneAsync<T>(T entity, string name)
+            where T : BaseEntity
+        {
+            await Collection<T>(name).DeleteOneAsync(e => e.Id == entity.Id);
         }
     }
 }

@@ -46,6 +46,13 @@ namespace ParkMate.ApplicationCore.ValueObjects
             return new AvailabilityTime(day, TimeSpan.Zero, TimeSpan.Zero, true);
         }
 
+        public void FromOther(AvailabilityTime other)
+        {
+            AvailableFrom = other.AvailableFrom;
+            AvailableTo = other.AvailableTo;
+            IsAvailable = other.IsAvailable;
+        }
+
         public bool IsAvailable24Hours()
         {
             return IsAvailable &&
@@ -60,5 +67,6 @@ namespace ParkMate.ApplicationCore.ValueObjects
             yield return AvailableTo;
             yield return IsAvailable;
         }
+
     }
 }

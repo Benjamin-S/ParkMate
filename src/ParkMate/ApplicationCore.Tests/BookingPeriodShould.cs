@@ -6,13 +6,15 @@ namespace ApplicationCore.Tests
 {
     public class BookingPeriodShould
     {
+        Money money = new Money();
+
         [Fact]
         public void ThrowExceptionIfEndPrecedesStart()
         {
             var start = new DateTime(2019, 3, 2);
             var end = new DateTime(2019, 3, 1);
 
-            Assert.Throws<ArgumentException>(() => new BookingPeriod(start, end));
+            Assert.Throws<ArgumentException>(() => new BookingPeriod(start, end, money));
         }
         
         [Fact]
@@ -21,64 +23,44 @@ namespace ApplicationCore.Tests
             var start = new DateTime(2019, 3, 1);
             var end = new DateTime(2019, 3, 1);
 
-            Assert.Throws<ArgumentException>(() => new BookingPeriod(start, end));
+            Assert.Throws<ArgumentException>(() => new BookingPeriod(start, end, money));
         }
-        
+
         [Fact]
-        public void CreateOneHourPeriod()
+        public void CreateHourlyPeriodWithCorrectAmount()
         {
-            var start = new DateTime(2019, 3, 1, 13, 30, 0);
-            var end = start.AddHours(1);
-            
-            var sut = BookingPeriod.CreateOneHourPeriod(start);
-            
-            Assert.Equal(sut.End.Subtract(sut.Start), TimeSpan.FromHours(1));
+            var start = new DateTime(2019, 3, 1, 12, 0, 0);
+            var end = new DateTime(2019, 3, 1, 16, 0, 0);
+            var rate = new BookingRate(new Money(5), new Money(10));
+
+            var sut = BookingPeriod.CreateHourlyBooking(start, end, rate);
+
+            Assert.Equal(new Money(20), sut.Charge);
         }
-        
+
         [Fact]
-        public void CreateOneDayPeriod()
+        public void CreateDailyPeriodWithCorrectAmount()
         {
-            var start = new DateTime(2019, 3, 1, 13, 30, 0);
-            var end = start.AddDays(1);
-            
-            var sut = BookingPeriod.CreateOneDayPeriod(start);
-            
-            Assert.Equal(sut.End.Subtract(sut.Start), TimeSpan.FromDays(1));
+            var start = new DateTime(2019, 3, 1, 12, 0, 0);
+            var end = new DateTime(2019, 3, 5, 16, 0, 0);
+            var rate = new BookingRate(new Money(5), new Money(10));
+
+            var sut = BookingPeriod.CreateDailyBooking(start, end, rate);
+
+            Assert.Equal(new Money(40), sut.Charge);
         }
-        
-        [Fact]
-        public void CreateOneWeekPeriod()
-        {
-            var start = new DateTime(2019, 3, 1, 13, 30, 0);
-            var end = start.AddDays(7);
-            
-            var sut = BookingPeriod.CreateOneWeekPeriod(start);
-            
-            Assert.Equal(sut.End.Subtract(sut.Start), TimeSpan.FromDays(7));
-        }
-        
-        [Fact]
-        public void CreateOneMonthPeriod()
-        {
-            var start = new DateTime(2019, 3, 1, 13, 30, 0);
-            var end = start.AddMonths(1);
-            
-            var sut = BookingPeriod.CreateOneMonthPeriod(start);
-            
-            Assert.Equal(sut.End.Subtract(sut.Start), end.Subtract(start));
-        }
-        
+
         [Fact]
         public void ReturnTrueIfPeriodsOverlap()
         {
-            var period1 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7));
-            var period2 = new BookingPeriod(new DateTime(2019, 3, 6), new DateTime(2019, 3, 8));
+            var period1 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7), money);
+            var period2 = new BookingPeriod(new DateTime(2019, 3, 6), new DateTime(2019, 3, 8), money);
             
-            var period3 = new BookingPeriod(new DateTime(2019, 3, 6), new DateTime(2019, 3, 14));
-            var period4 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7));
+            var period3 = new BookingPeriod(new DateTime(2019, 3, 6), new DateTime(2019, 3, 14), money);
+            var period4 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7), money);
             
-            var period5 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7));
-            var period6 = new BookingPeriod(new DateTime(2019, 3, 3), new DateTime(2019, 3, 4));
+            var period5 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7), money);
+            var period6 = new BookingPeriod(new DateTime(2019, 3, 3), new DateTime(2019, 3, 4), money);
             
             Assert.True(period1.Overlaps(period2));
             Assert.True(period2.Overlaps(period1));
@@ -93,11 +75,12 @@ namespace ApplicationCore.Tests
         [Fact]
         public void ReturnFalseIfPeriodsDontOverlap()
         {
-            var period1 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7));
-            var period2 = new BookingPeriod(new DateTime(2019, 3, 8), new DateTime(2019, 3, 9));
+            var money = new Money();
+            var period1 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 7), money);
+            var period2 = new BookingPeriod(new DateTime(2019, 3, 8), new DateTime(2019, 3, 9), money);
             
-            var period3 = new BookingPeriod(new DateTime(2019, 3, 6), new DateTime(2019, 3, 14));
-            var period4 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 5));
+            var period3 = new BookingPeriod(new DateTime(2019, 3, 6), new DateTime(2019, 3, 14), money);
+            var period4 = new BookingPeriod(new DateTime(2019, 3, 1), new DateTime(2019, 3, 5), money);
             
             Assert.False(period1.Overlaps(period2));
             Assert.False(period2.Overlaps(period1));
