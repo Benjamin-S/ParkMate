@@ -1,0 +1,17 @@
+@using Microsoft.AspNetCore.Identity
+@using ParkMate.Infrastructure.Identity
+@inject SignInManager<ParkMateUser> SignInManager
+@inject UserManager<ParkMateUser> UserManager
+
+@{
+    ViewData["Title"] = "My Profile";    
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<h1>@user.Name 's Profile</h1>  
+
+<nav class="nav nav-pills nav-justified">
+    <a class="nav-item nav-link" id="myBookings"  asp-controller="MyBookings" asp-action="Index">My Bookings</a>
+    <a class="nav-item nav-link" id="myVehicles" asp-controller="MyVehicles" asp-action="Index">My Cars</a>
+    <a class="nav-item nav-link" id="mySpaces" asp-controller="MyParkingSpaces" asp-action="Index">My Spaces</a>
+</nav>

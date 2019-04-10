@@ -72,6 +72,8 @@ namespace ParkMate.Web
             })
             .AddEntityFrameworkStores<IdentityDbContext>()
             .AddDefaultTokenProviders();
+            
+            services.ConfigureApplicationCookie(options => { options.LoginPath = "/Identity/Account/Login"; });
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
@@ -83,7 +85,8 @@ namespace ParkMate.Web
 
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IRepository<ParkingSpace>, ParkingSpaceRepository>();
+            services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDocumentWriteRepository, DocumentRepository>();
             services.AddScoped<IMongoContext, MongoDbContext>();
             services.AddSingleton<ImageProcessor>();

@@ -10,22 +10,23 @@ using ParkMate.ApplicationServices.Queries;
 
 namespace Web.Controllers
 {
-    public class MyParkingSpacesController : Controller
+    public class MyVehiclesController : Controller
     {
         private IMediator _mediator;
         private string _userId; 
 
-        public MyParkingSpacesController(IMediator mediator)
+        public MyVehiclesController(IMediator mediator)
         {
             _mediator = mediator;
             _userId = "test"; //User.FindFirst(ClaimTypes.NameIdentifier).ToString();
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var query = new GetAllParkingSpacesForOwnerQuery(_userId);
-            var result = await _mediator.Send(query);
-            return View(result);
+            // var query = new GetSingleVehicleQuery(id);
+            // var result = await _mediator.Send(query);
+            // return View(result);
+            return View();
         }
     }
 }
