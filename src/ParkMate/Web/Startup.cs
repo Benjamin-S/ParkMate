@@ -81,7 +81,8 @@ namespace ParkMate.Web
            
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IRepository<ParkingSpace>, ParkingSpaceRepository>();
+            services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDocumentWriteRepository, DocumentRepository>();
             services.AddScoped<IMongoContext, MongoDbContext>();
             services.AddSingleton<ImageProcessor>();
