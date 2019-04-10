@@ -23,6 +23,7 @@ using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.Web.Util;
+using SixLabors.ImageSharp.Web.DependencyInjection;
 
 namespace ParkMate.Web
 {
@@ -47,7 +48,7 @@ namespace ParkMate.Web
                 options.UseNpgsql(Configuration["ConnectionStrings:Identity"]));
 
             services.AddDbContext<ParkMateDbContext>(options =>
-                options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"], 
+                options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"],
                 o => o.UseNetTopologySuite()));
 
             services.Configure<MongoSettings>(options =>
@@ -55,11 +56,11 @@ namespace ParkMate.Web
                 options.Database = "ParkMateReadDb";
                 options.ConnectionString = Configuration["ConnectionStrings:ParkMateReadDB"];
             });
-            
-            services.AddSingleton<IMongoClient, MongoClient>( 
+
+            services.AddSingleton<IMongoClient, MongoClient>(
                 _ => new MongoClient(Configuration["ConnectionStrings:ParkMateReadDB"]));
 
-            
+
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -80,7 +81,8 @@ namespace ParkMate.Web
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
-           
+            services.AddImageSharp();
+
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
