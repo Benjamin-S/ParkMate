@@ -21,7 +21,7 @@ namespace ParkMate.ApplicationServices.Tests
             {
                 var space = context.ParkingSpaces.Include(s => s.Availability).FirstOrDefault();
                 var repository = new ParkingSpaceRepository(context);
-                var command = new SetParkingSpaceVisibilityCommand(space.Id, true);
+                var command = new SetParkingSpaceVisibilityCommand(space.Id, space.OwnerId, true);
                 var handler = new SetParkingSpaceVisibilityCommandCommandHandler(repository, new Mock<IMediator>().Object);
                 bool previousState = space.Availability.IsVisible;
                 

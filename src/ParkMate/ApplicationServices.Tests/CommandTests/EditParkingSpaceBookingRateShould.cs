@@ -23,7 +23,7 @@ namespace ParkMate.ApplicationServices.Tests
                 var space = context.ParkingSpaces.FirstOrDefault();
                 var repository = new ParkingSpaceRepository(context);
                 var bookingRate = new BookingRate(new Money(12), new Money(34));
-                var command = new EditParkingSpaceBookingRateCommand(space.Id, bookingRate);
+                var command = new EditParkingSpaceBookingRateCommand(space.Id, space.OwnerId, bookingRate);
                 var handler = new EditParkingSpaceBookingRateCommandHandler(repository, new Mock<IMediator>().Object);
                 
                 await handler.Handle(command);

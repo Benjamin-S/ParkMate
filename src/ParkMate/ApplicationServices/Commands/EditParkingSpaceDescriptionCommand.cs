@@ -13,23 +13,25 @@ namespace ParkMate.ApplicationServices.Commands
 {
     public class EditParkingSpaceDescriptionCommand  : IRequest<CommandResult>
     {
-        public EditParkingSpaceDescriptionCommand(int parkingSpaceId, ParkingSpaceDescription description)
+        public EditParkingSpaceDescriptionCommand(int parkingSpaceId, string ownerId, ParkingSpaceDescription description)
         {
             ParkingSpaceId = parkingSpaceId;
+            OwnerId = ownerId;
             Description = description;
         }
         public int ParkingSpaceId { get; }
+        public string OwnerId { get; }
         public ParkingSpaceDescription Description { get; }
     }
     
     public class EditParkingSpaceDescriptionCommandHandler 
         : IRequestHandler<EditParkingSpaceDescriptionCommand, CommandResult>
     {
-        private IRepository<ParkingSpace> _repository;
+        private IParkingSpaceRepository _repository;
         private IMediator _mediator;
 
         public EditParkingSpaceDescriptionCommandHandler(
-            IRepository<ParkingSpace> repository,
+            IParkingSpaceRepository repository,
             IMediator mediator)
         {
             _repository = repository ?? 
@@ -41,7 +43,7 @@ namespace ParkMate.ApplicationServices.Commands
             EditParkingSpaceDescriptionCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId, command.OwnerId);
 
             parkingSpace.UpdateDescription(command.Description);
             

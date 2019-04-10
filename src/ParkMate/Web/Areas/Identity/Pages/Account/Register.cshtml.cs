@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ParkMate.ApplicationServices.Commands;
 using ParkMate.Infrastructure.Identity;
 
 namespace Web.Areas.Identity.Pages.Account
@@ -20,17 +23,20 @@ namespace Web.Areas.Identity.Pages.Account
         private readonly UserManager<ParkMateUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IMediator _mediator;
 
         public RegisterModel(
             UserManager<ParkMateUser> userManager,
             SignInManager<ParkMateUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _mediator = mediator;
         }
 
         [BindProperty]
@@ -75,6 +81,10 @@ namespace Web.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+
+                    var command = new RegisterCustomerCommand(user.Id, user.Email);
+                    await _mediator.Send(command);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

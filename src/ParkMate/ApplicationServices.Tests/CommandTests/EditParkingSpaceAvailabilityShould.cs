@@ -52,7 +52,7 @@ namespace ParkMate.ApplicationServices.Tests
                 var repository = new ParkingSpaceRepository(context);
 
                 var space = context.ParkingSpaces.FirstOrDefault();
-                var command = new EditParkingSpaceAvailabilityCommand(space.Id, times);
+                var command = new EditParkingSpaceAvailabilityCommand(space.Id, space.OwnerId, times);
                 var handler = new EditParkingSpaceAvailabilityCommandHandler(repository, new Mock<IMediator>().Object);
                 
                 await handler.Handle(command);
