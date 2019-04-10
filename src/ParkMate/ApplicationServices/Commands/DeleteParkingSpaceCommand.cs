@@ -13,11 +13,13 @@ namespace ParkMate.ApplicationServices.Commands
 {
     public class DeleteParkingSpaceCommand : IRequest<CommandResult>
     {
-        public DeleteParkingSpaceCommand(int parkingSpaceId)
+        public DeleteParkingSpaceCommand(int parkingSpaceId, string ownerId)
         {
             ParkingSpaceId = parkingSpaceId;
+            OwnerId = ownerId;
         }
         public int ParkingSpaceId { get; }
+        public string OwnerId { get; }
     }
 
     public class DeleteParkingSpaceCommandHandler
@@ -39,7 +41,7 @@ namespace ParkMate.ApplicationServices.Commands
             DeleteParkingSpaceCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId, command.OwnerId);
 
             _repository.Delete(parkingSpace);
 

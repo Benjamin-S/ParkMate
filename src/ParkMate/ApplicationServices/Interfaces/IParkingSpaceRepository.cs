@@ -6,6 +6,6 @@ namespace ParkMate.ApplicationServices.Interfaces
 {
     public interface IParkingSpaceRepository : IRepository<ParkingSpace>
     {
-        Task<ParkingSpace> GetByIdAsync(int id);
+        Task<ParkingSpace> GetByIdAsync(int id, string ownerId);
     }
 }

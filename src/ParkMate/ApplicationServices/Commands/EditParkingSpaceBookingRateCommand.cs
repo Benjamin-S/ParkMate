@@ -13,12 +13,14 @@ namespace ParkMate.ApplicationServices.Commands
 {
     public class EditParkingSpaceBookingRateCommand  : IRequest<CommandResult>
     {
-        public EditParkingSpaceBookingRateCommand(int parkingSpaceId, BookingRate bookingRate)
+        public EditParkingSpaceBookingRateCommand(int parkingSpaceId, string ownerId, BookingRate bookingRate)
         {
             ParkingSpaceId = parkingSpaceId;
+            OwnerId = ownerId;
             BookingRate = bookingRate;
         }
         public int ParkingSpaceId { get; }
+        public string OwnerId { get; }
         public BookingRate BookingRate { get; }
     }
     
@@ -41,7 +43,7 @@ namespace ParkMate.ApplicationServices.Commands
             EditParkingSpaceBookingRateCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId, command.OwnerId);
 
             parkingSpace.UpdateBookingRate(command.BookingRate);
             

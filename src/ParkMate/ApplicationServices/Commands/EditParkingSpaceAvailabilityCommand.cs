@@ -13,12 +13,14 @@ namespace ParkMate.ApplicationServices.Commands
 {
     public class EditParkingSpaceAvailabilityCommand  : IRequest<CommandResult>
     {
-        public EditParkingSpaceAvailabilityCommand(int parkingSpaceId, List<AvailabilityTime> times)
+        public EditParkingSpaceAvailabilityCommand(int parkingSpaceId, string ownerId, List<AvailabilityTime> times)
         {
             ParkingSpaceId = parkingSpaceId;
+            OwnerId = ownerId;
             AvailabilityTimes = times;
         }
         public int ParkingSpaceId { get; }
+        public string OwnerId { get; }
         public IReadOnlyList<AvailabilityTime> AvailabilityTimes { get; }
     
     }
@@ -42,7 +44,7 @@ namespace ParkMate.ApplicationServices.Commands
             EditParkingSpaceAvailabilityCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId, command.OwnerId);
 
             foreach (var time in command.AvailabilityTimes)
             {

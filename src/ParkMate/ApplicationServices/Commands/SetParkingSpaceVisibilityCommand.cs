@@ -11,12 +11,14 @@ namespace ParkMate.ApplicationServices.Commands
 {
     public class SetParkingSpaceVisibilityCommand  : IRequest<CommandResult>
     {
-        public SetParkingSpaceVisibilityCommand(int parkingSpaceId, bool isListed)
+        public SetParkingSpaceVisibilityCommand(int parkingSpaceId, string ownerId, bool isListed)
         {
             ParkingSpaceId = parkingSpaceId;
+            OwnerId = ownerId;
             IsListed = isListed;
         }
         public int ParkingSpaceId { get; }
+        public string OwnerId { get; }
         public bool IsListed { get; }
     }
     
@@ -39,7 +41,7 @@ namespace ParkMate.ApplicationServices.Commands
             SetParkingSpaceVisibilityCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId, command.OwnerId);
 
             parkingSpace.SetVisibility(command.IsListed);
             

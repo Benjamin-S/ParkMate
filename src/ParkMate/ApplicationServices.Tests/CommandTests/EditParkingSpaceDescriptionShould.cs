@@ -22,7 +22,7 @@ namespace ParkMate.ApplicationServices.Tests
                  var space = context.ParkingSpaces.FirstOrDefault();
                  var repository = new ParkingSpaceRepository(context);
                  var description = new ParkingSpaceDescription("New Test Title", "New Description", "newfile.jpg");
-                 var command = new EditParkingSpaceDescriptionCommand(space.Id, description);
+                 var command = new EditParkingSpaceDescriptionCommand(space.Id, space.OwnerId, description);
                  var handler = new EditParkingSpaceDescriptionCommandHandler(repository, new Mock<IMediator>().Object);
 
                  await handler.Handle(command);

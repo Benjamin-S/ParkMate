@@ -52,8 +52,8 @@ namespace ParkMate.Web.Controllers
 
         RegisterNewParkingSpaceCommand BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)
         {
-            return new RegisterNewParkingSpaceCommand("test"
-                , //User.FindFirst(ClaimTypes.NameIdentifier).ToString(),
+            return new RegisterNewParkingSpaceCommand(
+                User.FindFirst(ClaimTypes.NameIdentifier).Value,
 
                 new ParkingSpaceDescription(dto.Description.Title,
                     dto.Description.Description, dto.Description.ImageFile.FileName),

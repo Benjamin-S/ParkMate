@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +26,12 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm] VehicleDTO dto)
+        public async Task<IActionResult> Index([FromForm] VehicleDTO dto)
         {
             var customerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var vehicle = new Vehicle(dto.Make, dto.Model, dto.Color, dto.Registration);
             var command = new AddNewVehicleCommand(customerId, vehicle);
-            var result = _mediator.Send(command);
+            var result = await _mediator.Send(command);
             return View(result);
         }
     }

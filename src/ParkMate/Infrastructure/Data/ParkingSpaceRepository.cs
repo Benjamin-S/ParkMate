@@ -12,11 +12,11 @@ namespace ParkMate.Infrastructure.Data
             DbContext = dbContext;
         }
 
-        public async Task<ParkingSpace> GetByIdAsync(int id)
+        public async Task<ParkingSpace> GetByIdAsync(int id, string ownerId)
         {
             return await DbContext.ParkingSpaces
                 .Include(p => p.Availability).
-                SingleOrDefaultAsync(e => e.Id == id);
+                SingleOrDefaultAsync(e => e.Id == id && e.OwnerId.Equals(ownerId));
         }
     }
 }
