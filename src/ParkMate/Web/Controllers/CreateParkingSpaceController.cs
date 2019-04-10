@@ -42,7 +42,7 @@ namespace ParkMate.Web.Controllers
             {
                 return View(dto);
             }
-            //var imageResult =  await _imageProcessor.SaveImage(dto.Description.ImageFile);
+            var imageResult =  await _imageProcessor.SaveImage(dto.Description.ImageFile);
             dto.Description.ImageURL = "test.jpg"; //imageResult.FileName;
 
             var result = await _mediator.Send(BuildParkingSpaceCommand(dto)); 

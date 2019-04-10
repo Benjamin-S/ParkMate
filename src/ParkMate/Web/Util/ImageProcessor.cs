@@ -33,10 +33,11 @@ namespace ParkMate.Web.Util
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await image.CopyToAsync(stream);
+                using (var imageOutput = Image.Load(stream))
+                {
+                    ResizeImage(imageOutput).SaveAsJpeg(stream);
+                }
             }
-
-            // Resize image once streamed to server and overwrite previous file
-            ResizeImage(filePath);
 
             return new ImageValidationResult
             {
@@ -45,7 +46,7 @@ namespace ParkMate.Web.Util
             };
         }
 
-        public ImageValidationResult IsValidImage(IFormFile image)
+        private ImageValidationResult IsValidImage(IFormFile image)
         {
             // Maximum image size is 10MB, reject anything over that
             const long maxFileSize = 10 * 1024 * 1024;
@@ -60,42 +61,45 @@ namespace ParkMate.Web.Util
                     IsValid = false
                 };
             }
-
-            var tempImage = Image.Load(image.OpenReadStream());
-
-            return new ImageValidationResult
+            
+            // Load IFormFile to memory stream and create an image object to check for min size
+            using (var memoryStream = new MemoryStream())
             {
-                IsValid = !IsImageTooSmall((tempImage))
-            };
-
+                image.CopyTo(memoryStream);
+                using (Image<Rgba32> tempImage = Image.Load<Rgba32>(memoryStream.ToArray()))
+                {
+                    return new ImageValidationResult
+                    {
+                        IsValid = !IsImageTooSmall((tempImage))
+                    };
+                }
+            }
         }
 
-        private void ResizeImage(string fileName)
+        private Image<Rgba32> ResizeImage(Image<Rgba32> image)
         {
-            using (Image<Rgba32> image = Image.Load(fileName))
-            {
                 const int width = 1280;
                 const int height = 720;
                 var isLandscape = image.Width >= image.Height;
                 var isTooLarge = isLandscape ? image.Width > 1280 : image.Height > 1600;
 
-                if (isTooLarge)
+                if (!isTooLarge)
                 {
-                    if (isLandscape)
-                    {
-                        image.Mutate(x => x
-                            .Resize(width, 0)
-                        );
-                    }
-                    else
-                    {
-                        image.Mutate(x => x
-                            .Resize(0, height)
-                        );
-                    }
-                }   
-                image.Save(fileName);
-            }
+                    return image;
+                }
+                if (isLandscape)
+                {
+                    image.Mutate(x => x
+                        .Resize(width, 0)
+                    );
+                }
+                else
+                {
+                    image.Mutate(x => x
+                        .Resize(0, height)
+                    );
+                }
+                return image;
         }
 
         private bool IsImageTooSmall(Image<Rgba32> image)
