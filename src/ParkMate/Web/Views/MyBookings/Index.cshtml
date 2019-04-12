@@ -1,4 +1,4 @@
-@* @model QueryResult<IReadOnlyList<Booking>> *@
+@model QueryResult<Customer>;
 
 @{
     ViewData["Title"] = "My Bookings";
@@ -10,19 +10,31 @@
 
 <h2>My Bookings</h2>
 
-@*
 <div>    
     @{
-        if (Model.PayLoad != null)
+        @*
+        if (Model.Success != true)
         {
-            @foreach (var booking in Model.PayLoad)
-             {
-                 <p>@booking.Title</p>
-             }
+            <div class="alert alert-danger" role="alert">
+                @Model.Message
+            </div>
         }
+        else if (Model.PayLoad.Bookings.FutureBookings?.Any() != true)
+        {
+            <div class="alert alert-info" role="alert">
+                It appears you currently have no future bookings planned.
+            </div>
+        }
+        else
+        {
+            foreach (var booking in Model.PayLoad.Bookings.FutureBookings)
+            {
+                <p>@booking.BookingTime | @booking.ParkingSpace.Description.Title</p>
+            }
+        }     
+        *@
     }
 </div>
-*@
 
 @section Scripts
 {

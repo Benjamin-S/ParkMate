@@ -21,8 +21,6 @@
       <Content Remove="Areas\Identity\Pages\Account\ResetPassword.cshtml" />
       <Content Remove="Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml" />
       <Content Remove="Areas\Identity\Pages\Error.cshtml" />
-      <Content Remove="wwwroot\lib\clockpicker\dist\bootstrap-clockpicker.css" />
-      <Content Remove="Views\MyVehicles\Index.cshtml" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
