@@ -89,12 +89,14 @@ namespace ParkMate.Web
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDocumentWriteRepository, DocumentRepository>();
             services.AddScoped<IMongoContext, MongoDbContext>();
-            services.AddSingleton<ImageProcessor>();
+            services.AddScoped<ImageProcessor>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ParkMateDbContext context)
         {
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -120,6 +122,7 @@ namespace ParkMate.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            AddressDataLoader.LoadAddressData(env, context);
         }
     }
 }

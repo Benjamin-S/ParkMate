@@ -5,6 +5,7 @@ using ParkMate.ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.Infrastructure.Data
 {
@@ -21,6 +22,7 @@ namespace ParkMate.Infrastructure.Data
         public DbSet<Schedule> Schedule { get; set; }
         public DbSet<BookingHistory> BookingHistory { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<SearchAddressDTO> SearchAddresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
