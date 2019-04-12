@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -16,14 +15,14 @@ namespace Web.Controllers
 
         private IMediator _mediator;
         private readonly string _userId;
-        
-        
+
+
         public CreateBookingController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
             _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
-        
+
         // GET/id
         [HttpGet]
         public async Task<IActionResult> Index(int id)
@@ -35,7 +34,7 @@ namespace Web.Controllers
                 Customer = await _mediator.Send(customerQuery),
                 ParkingSpace = await _mediator.Send(parkingSpaceQuery)
             };
-            
+
             return View(viewModel);
         }
     }
