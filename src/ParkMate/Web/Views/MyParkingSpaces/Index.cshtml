@@ -1,4 +1,4 @@
-@model QueryResult<Customer>
+@model Web.Models.MyParkingSpacesViewModel
 
 @{
     ViewData["Title"] = "My Parking Spaces";
@@ -12,21 +12,41 @@
 
 <div>
     @{
-        if (Model.Success != true)
+        if (Model.PreviousCommandResult.HasValue)            
+        {
+            if (Model.PreviousCommandResult == true)
+            {
+                <div class="alert alert-success" role="alert">
+                    @Model.PreviousCommandResultMessage
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.PreviousCommandResultMessage
+                </div>   
+            }
+        }
+    }
+</div>
+
+<div>
+    @{
+        if (Model.QueryResult.Success != true)
         {
             <div class="alert alert-danger" role="alert">
-                @Model.Message
+                @Model.QueryResult.Message
             </div>
         }
-        else if (Model.PayLoad.ParkingSpaces?.Any() != true)
+        else if (Model.QueryResult.PayLoad.ParkingSpaces?.Any() != true)
         {
             <div class="alert alert-info" role="alert">
                 It appears you currently have no owned parking spaces.
             </div>
         }
-        // else
+        else
         {
-            foreach (var space in Model.PayLoad.ParkingSpaces)
+            foreach (var space in Model.QueryResult.PayLoad.ParkingSpaces)
             {
                 <div class="card">
                     <div class="row">

@@ -18,13 +18,13 @@
                 @Model.Message
             </div>
         }
-        //else if (Model.PayLoad.Vehicles?.Any() != true)
+        else if (Model.PayLoad.Vehicles?.Any() != true)
         {
             <div class="alert alert-info" role="alert">
-                It appears you currently have no future bookings planned.
+                It appears you currently have no vehicles added to your profile.
             </div>
         }
-        //else
+        else
         {
             foreach (var vehicle in Model.PayLoad.Vehicles)
             {

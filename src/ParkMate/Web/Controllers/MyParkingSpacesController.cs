@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Queries;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -24,11 +25,20 @@ namespace Web.Controllers
             _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool previousCommandResult, string previousCommandMessage)
         {
+            var viewModel = new MyParkingSpacesViewModel();
             var query = new GetCustomerQuery(_userId);
-            var result = await _mediator.Send(query);
-            return View(result);
+            
+            Console.WriteLine("Messages");
+            Console.WriteLine(previousCommandResult);
+            Console.WriteLine(previousCommandMessage);
+            
+            viewModel.QueryResult = await _mediator.Send(query);
+            viewModel.PreviousCommandResult = previousCommandResult;
+            viewModel.PreviousCommandResultMessage = previousCommandMessage;
+            
+            return View(viewModel);
         }
     }
 }
