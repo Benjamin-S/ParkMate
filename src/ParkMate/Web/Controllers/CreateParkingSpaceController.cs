@@ -50,8 +50,8 @@ namespace ParkMate.Web.Controllers
 
             return RedirectToAction("Index","MyParkingSpaces", new
                 {
-                    PreviousCommandResult = true,
-                    PreviousCommandMessage = "Parking space successfully added."
+                    PreviousCommandResult = result.Success,
+                    PreviousCommandMessage = result.Message
                 });
         }
 
