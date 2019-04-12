@@ -120,11 +120,6 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result.Success)
-            {
-                
-            }
-
             return RedirectToAction("Index","MyParkingSpaces", new
             {
                 PreviousCommandPresent = true,
