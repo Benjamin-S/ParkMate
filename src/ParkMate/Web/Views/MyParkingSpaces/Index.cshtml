@@ -33,13 +33,13 @@
 
 <div>
     @{
-        if (Model.QueryResult.Success != true)
+        if (!Model.QueryResult.Success)
         {
             <div class="alert alert-danger" role="alert">
                 @Model.QueryResult.Message
             </div>
         }
-        else if (Model.QueryResult.PayLoad.ParkingSpaces?.Any() != true)
+        else if (!Model.QueryResult.PayLoad.ParkingSpaces.Any())
         {
             <div class="alert alert-info" role="alert">
                 It appears you currently have no owned parking spaces.

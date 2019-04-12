@@ -12,13 +12,13 @@
 
 <div>    
     @{
-        if (Model.Success != true)
+        if (!Model.Success)
         {
             <div class="alert alert-danger" role="alert">
                 @Model.Message
             </div>
         }
-        else if (Model.PayLoad.Vehicles?.Any() != true)
+        else if (!Model.PayLoad.Vehicles.Any())
         {
             <div class="alert alert-info" role="alert">
                 It appears you currently have no vehicles added to your profile.
