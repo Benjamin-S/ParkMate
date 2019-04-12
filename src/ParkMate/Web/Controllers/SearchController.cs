@@ -1,26 +1,32 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ParkMate.ApplicationServices.Queries;
 
 namespace ParkMate.Web.Controllers
 
 {
     public class SearchController : Controller
     {
-        // GET
+        private IMediator _mediator;
+
+        public SearchController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         public IActionResult Index()
         {
             return View();
         }      
 
-        public IActionResult SearchAutoComplete(string searchInput)
+        public async Task<IActionResult> SearchAutoComplete(string searchInput)
         {
-            searchInput = searchInput?.ToLower().Trim();
-            var matchedObjects = new List<object>();
-            
-            // Match input to search terms, then return a list containing all matched objects and
-            // return it as JSON
+            var query = new GetAddressForStreetQuery(searchInput);
+            var result = await _mediator.Send(query);
 
-            return Json(matchedObjects);
+            return Json(result);
         }
     }
 }

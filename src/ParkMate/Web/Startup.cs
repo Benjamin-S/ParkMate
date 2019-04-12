@@ -23,6 +23,7 @@ using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.Web.Util;
+using SixLabors.ImageSharp.Web.DependencyInjection;
 
 namespace ParkMate.Web
 {
@@ -47,7 +48,7 @@ namespace ParkMate.Web
                 options.UseNpgsql(Configuration["ConnectionStrings:Identity"]));
 
             services.AddDbContext<ParkMateDbContext>(options =>
-                options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"], 
+                options.UseNpgsql(Configuration["ConnectionStrings:ParkMateDB"],
                 o => o.UseNetTopologySuite()));
 
             services.Configure<MongoSettings>(options =>
@@ -55,11 +56,11 @@ namespace ParkMate.Web
                 options.Database = "ParkMateReadDb";
                 options.ConnectionString = Configuration["ConnectionStrings:ParkMateReadDB"];
             });
-            
-            services.AddSingleton<IMongoClient, MongoClient>( 
+
+            services.AddSingleton<IMongoClient, MongoClient>(
                 _ => new MongoClient(Configuration["ConnectionStrings:ParkMateReadDB"]));
 
-            
+
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -80,19 +81,22 @@ namespace ParkMate.Web
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
-           
+            services.AddImageSharp();
+
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IDocumentWriteRepository, DocumentRepository>();
             services.AddScoped<IMongoContext, MongoDbContext>();
-            services.AddSingleton<ImageProcessor>();
+            services.AddScoped<ImageProcessor>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ParkMateDbContext context)
         {
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -118,6 +122,7 @@ namespace ParkMate.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            AddressDataLoader.LoadAddressData(env, context);
         }
     }
 }

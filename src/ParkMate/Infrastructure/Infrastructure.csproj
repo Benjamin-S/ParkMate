@@ -15,6 +15,7 @@
     <ItemGroup>
       <Folder Include="Identity\" />
       <Folder Include="Data\" />
+      <Folder Include="Util\" />
     </ItemGroup>
     
     <ItemGroup>
