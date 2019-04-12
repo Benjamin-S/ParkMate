@@ -12,6 +12,7 @@ using ParkMate.ApplicationServices.Queries;
 using ParkMate.Web.Models;
 using ParkMate.Web.Util;
 using Microsoft.AspNetCore.Authorization;
+using ParkMate.Web.Enums;
 
 namespace ParkMate.Web.Controllers
 {
@@ -64,6 +65,7 @@ namespace ParkMate.Web.Controllers
 
             return RedirectToAction("Index","MyParkingSpaces", new
             {
+                PreviousCommandPresent = true,
                 PreviousCommandResult = result.Success,
                 PreviousCommandMessage = result.Message
             });
@@ -84,6 +86,7 @@ namespace ParkMate.Web.Controllers
 
             return RedirectToAction("Index","MyParkingSpaces", new
             {
+                PreviousCommandPresent = true,
                 PreviousCommandResult = result.Success,
                 PreviousCommandMessage = result.Message
             });
@@ -101,6 +104,7 @@ namespace ParkMate.Web.Controllers
 
             return RedirectToAction("Index","MyParkingSpaces", new
             {
+                PreviousCommandPresent = true,
                 PreviousCommandResult = result.Success,
                 PreviousCommandMessage = result.Message
             });
@@ -114,9 +118,15 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
+            if (result.Success)
+            {
+                
+            }
+
             return RedirectToAction("Index","MyParkingSpaces", new
             {
-                PreviousCommandResult = result.Success,
+                PreviousCommandPresent = true,
+                PreviousCommandStatus = result.Success,
                 PreviousCommandMessage = result.Message
             });
         }
@@ -136,6 +146,7 @@ namespace ParkMate.Web.Controllers
 
             return RedirectToAction("Index","MyParkingSpaces", new
             {
+                PreviousCommandPresent = true,
                 PreviousCommandResult = result.Success,
                 PreviousCommandMessage = result.Message
             });
@@ -151,6 +162,7 @@ namespace ParkMate.Web.Controllers
 
             return RedirectToAction("Index","MyParkingSpaces", new
             {
+                PreviousCommandPresent = true,
                 PreviousCommandResult = result.Success,
                 PreviousCommandMessage = result.Message
             });

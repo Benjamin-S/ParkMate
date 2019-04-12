@@ -1,3 +1,4 @@
+@using ParkMate.Web.Enums
 @model Web.Models.MyParkingSpacesViewModel
 
 @{
@@ -12,9 +13,9 @@
 
 <div>
     @{
-        if (Model.PreviousCommandResult.HasValue)            
+        if (Model.PreviousCommandStatus != CommandStatus.NoCommand)            
         {
-            if (Model.PreviousCommandResult == true)
+            if (Model.PreviousCommandStatus == CommandStatus.Success)
             {
                 <div class="alert alert-success" role="alert">
                     @Model.PreviousCommandResultMessage
