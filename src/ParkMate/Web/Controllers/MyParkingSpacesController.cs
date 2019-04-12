@@ -30,10 +30,6 @@ namespace Web.Controllers
             var viewModel = new MyParkingSpacesViewModel();
             var query = new GetCustomerQuery(_userId);
             
-            Console.WriteLine("Messages");
-            Console.WriteLine(previousCommandResult);
-            Console.WriteLine(previousCommandMessage);
-            
             viewModel.QueryResult = await _mediator.Send(query);
             viewModel.PreviousCommandResult = previousCommandResult;
             viewModel.PreviousCommandResultMessage = previousCommandMessage;
