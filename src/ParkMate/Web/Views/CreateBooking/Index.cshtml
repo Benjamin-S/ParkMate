@@ -1,0 +1,28 @@
+@using Microsoft.AspNetCore.Identity
+@* Attach a model *@
+@{
+    ViewData["Title"] = "Create a Booking";
+}
+
+<!-- Date/time selector and select menu for user's car -->
+
+<h1>Create a Booking</h1>
+
+
+<form method="post" enctype="multipart/form-data" id="booking-form">
+    <div class="form-group">
+        <label for="booking-date">Booking Date</label>
+        <input type="date" id="booking-date "name="booking-date" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label for="car-select">Booking Date</label>
+        <select name="car-select" class="form-control" id="car-select">
+            <optgroup label="This is a group">
+                <option value="12" selected>This is item 1</option>
+                <option value="13">This is item 2</option>
+                <option value="14">This is item 3</option>
+            </optgroup>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
