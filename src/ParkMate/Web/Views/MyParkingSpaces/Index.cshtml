@@ -1,4 +1,5 @@
-@model QueryResult<IReadOnlyList<ParkingSpace>>
+@using ParkMate.Web.Enums
+@model Web.Models.MyParkingSpacesViewModel
 
 @{
     ViewData["Title"] = "My Parking Spaces";
@@ -10,31 +11,66 @@
 
 <h2>My Spaces</h2>
 
-
-@{
-    if (Model.PayLoad != null)
-    {
-        foreach (var space in Model.PayLoad)
+<div>
+    @{
+        if (Model.PreviousCommandStatus != CommandStatus.NoCommand)            
         {
-            <div class="card">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src=@space.Description.ImageURL class="card-img" alt="No Image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">@space.Description.Title</h5>
-                            <p class="card-text">@space.Description.Description</p>
-                            <small class="text-muted">
-                                <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View</a>
-                            </small>
+            if (Model.PreviousCommandStatus == CommandStatus.Success)
+            {
+                <div class="alert alert-success" role="alert">
+                    @Model.PreviousCommandResultMessage
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.PreviousCommandResultMessage
+                </div>   
+            }
+        }
+    }
+</div>
+
+<div>
+    @{
+        if (!Model.QueryResult.Success)
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.QueryResult.Message
+            </div>
+        }
+        else if (!Model.QueryResult.PayLoad.ParkingSpaces.Any())
+        {
+            <div class="alert alert-info" role="alert">
+                It appears you currently have no owned parking spaces.
+            </div>
+        }
+        else
+        {
+            foreach (var space in Model.QueryResult.PayLoad.ParkingSpaces)
+            {
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src=@space.Description.ImageURL class="card-img" alt="No Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@space.Description.Title</h5>
+                                <p class="card-text">@space.Description.Description</p>
+                                <small class="text-muted">
+                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View</a>
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }  
         }
-    }      
-}
+    }
+</div>
+
+<a asp-controller="CreateParkingSpace" asp-action="Index" class="btn btn-primary float-right">Add new</a>
              
 @section Scripts
 {
