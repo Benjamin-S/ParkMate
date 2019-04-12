@@ -12,6 +12,7 @@ using ParkMate.ApplicationServices.Queries;
 using ParkMate.Web.Models;
 using ParkMate.Web.Util;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using ParkMate.Web.Enums;
 
 namespace ParkMate.Web.Controllers
@@ -25,11 +26,12 @@ namespace ParkMate.Web.Controllers
 
         public EditParkingSpaceController(
             IMediator mediator,
-            ImageProcessor imageProcessor)
+            ImageProcessor imageProcessor,
+            IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
             _imageProcessor = imageProcessor;
-            _userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
         public IActionResult EditAddress()

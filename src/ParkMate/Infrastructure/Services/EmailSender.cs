@@ -19,7 +19,6 @@ namespace ParkMate.Infrastructure.Services
         public async Task SendEmailAsync(string emailAddress, string subject, string body)
         {
             var client = new SendGridClient(_sendGridApiKey);
-
             var fromEmail = new EmailAddress("mail@parkmate.com");
             var toEmail = new EmailAddress(emailAddress);
 

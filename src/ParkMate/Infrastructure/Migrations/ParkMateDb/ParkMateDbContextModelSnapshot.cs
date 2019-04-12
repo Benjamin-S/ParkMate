@@ -156,6 +156,28 @@ namespace Infrastructure.Migrations.ParkMateDb
                     b.ToTable("Vehicles");
                 });
 
+            modelBuilder.Entity("ParkMate.ApplicationServices.DTOs.SearchAddressDTO", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City");
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("Street");
+
+                    b.Property<string>("Zip");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SearchAddresses");
+                });
+
             modelBuilder.Entity("ParkMate.ApplicationCore.Entities.Booking", b =>
                 {
                     b.HasOne("ParkMate.ApplicationCore.Entities.BookingHistory")
