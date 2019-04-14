@@ -9,7 +9,7 @@ using ParkMate.ApplicationServices.Interfaces;
 namespace ParkMate.ApplicationServices.Queries
 {
     public class GetCustomerQuery
-        : IRequest<QueryResult<Customer>>
+        : IRequest<Result<Customer>>
     {
         public GetCustomerQuery(string customerId)
         {
@@ -19,7 +19,7 @@ namespace ParkMate.ApplicationServices.Queries
     }
 
     public class GetCustomerQueryHandler
-        : IRequestHandler<GetCustomerQuery, QueryResult<Customer>>
+        : IRequestHandler<GetCustomerQuery, Result<Customer>>
     {
         private IMongoContext _context;
 
@@ -28,7 +28,7 @@ namespace ParkMate.ApplicationServices.Queries
             _context = context;
         }
 
-        public async Task<QueryResult<Customer>> Handle(
+        public async Task<Result<Customer>> Handle(
             GetCustomerQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -38,9 +38,9 @@ namespace ParkMate.ApplicationServices.Queries
 
             if (customer != null)
             {
-                return QueryResult<Customer>.Succeed(customer);
+                return Result<Customer>.QuerySuccess(customer);
             }
-            return QueryResult<Customer>.Fail("Customer not found");
+            return Result<Customer>.QueryFail("Customer not found");
         }
     }
 }

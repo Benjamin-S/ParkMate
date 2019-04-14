@@ -9,7 +9,7 @@ using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class SetParkingSpaceVisibilityCommand  : IRequest<CommandResult>
+    public class SetParkingSpaceVisibilityCommand  : IRequest<Result>
     {
         public SetParkingSpaceVisibilityCommand(int parkingSpaceId, string ownerId, bool isListed)
         {
@@ -23,7 +23,7 @@ namespace ParkMate.ApplicationServices.Commands
     }
     
     public class SetParkingSpaceVisibilityCommandCommandHandler 
-        : IRequestHandler<SetParkingSpaceVisibilityCommand, CommandResult>
+        : IRequestHandler<SetParkingSpaceVisibilityCommand, Result>
     {
         private IParkingSpaceRepository _repository;
         private IMediator _mediator;
@@ -37,7 +37,7 @@ namespace ParkMate.ApplicationServices.Commands
             _mediator = mediator;
         }
 
-        public async Task<CommandResult> Handle(
+        public async Task<Result> Handle(
             SetParkingSpaceVisibilityCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -50,7 +50,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
 
-            return new CommandResult(true, "Parking Space has been " +
+            return Result.CommandSuccess("Parking Space has been " +
                 (command.IsListed ? "publicly listed" : "unlisted"));
         }
     }

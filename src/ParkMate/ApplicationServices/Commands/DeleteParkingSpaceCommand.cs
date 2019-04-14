@@ -11,7 +11,7 @@ using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class DeleteParkingSpaceCommand : IRequest<CommandResult>
+    public class DeleteParkingSpaceCommand : IRequest<Result>
     {
         public DeleteParkingSpaceCommand(int parkingSpaceId, string ownerId)
         {
@@ -23,7 +23,7 @@ namespace ParkMate.ApplicationServices.Commands
     }
 
     public class DeleteParkingSpaceCommandHandler
-        : IRequestHandler<DeleteParkingSpaceCommand, CommandResult>
+        : IRequestHandler<DeleteParkingSpaceCommand, Result>
     {
         private IParkingSpaceRepository _repository;
         private IMediator _mediator;
@@ -37,7 +37,7 @@ namespace ParkMate.ApplicationServices.Commands
             _mediator = mediator;
         }
 
-        public async Task<CommandResult> Handle(
+        public async Task<Result> Handle(
             DeleteParkingSpaceCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -49,7 +49,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _mediator.Publish(new ParkingSpaceDeletedEvent(parkingSpace));
 
-            return new CommandResult(true, "Parking Space address was successfully updated");
+            return Result.CommandSuccess("Parking Space address was successfully updated");
         }
     }
 }

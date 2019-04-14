@@ -10,7 +10,7 @@ using ParkMate.ApplicationServices.DTOs;
 namespace ParkMate.ApplicationServices.Queries
 {
     public class GetAddressForStreetQuery
-        : IRequest<QueryResult<IEnumerable<SearchAddressDTO>>>
+        : IRequest<Result<IEnumerable<SearchAddressDTO>>>
     {
         public GetAddressForStreetQuery(string partialStreet)
         {
@@ -19,7 +19,7 @@ namespace ParkMate.ApplicationServices.Queries
         public string PartialStreet { get; }
     }
     public class GetAddressForStreetQueryHandler
-        : IRequestHandler<GetAddressForStreetQuery, QueryResult<IEnumerable<SearchAddressDTO>>>
+        : IRequestHandler<GetAddressForStreetQuery, Result<IEnumerable<SearchAddressDTO>>>
     {
         private readonly IConfiguration _configuration;
 
@@ -28,7 +28,7 @@ namespace ParkMate.ApplicationServices.Queries
             _configuration = configuration;
         }
 
-        public async Task<QueryResult<IEnumerable<SearchAddressDTO>>> Handle(
+        public async Task<Result<IEnumerable<SearchAddressDTO>>> Handle(
             GetAddressForStreetQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -44,9 +44,9 @@ namespace ParkMate.ApplicationServices.Queries
 
             if (results != null)
             {
-                return QueryResult<IEnumerable<SearchAddressDTO>>.Succeed(results);
+                return Result<IEnumerable<SearchAddressDTO>>.QuerySuccess(results);
             }
-            return QueryResult<IEnumerable<SearchAddressDTO>>.Fail("No addresses match query");
+            return Result<IEnumerable<SearchAddressDTO>>.QueryFail("No addresses match query");
         }
     }
 }

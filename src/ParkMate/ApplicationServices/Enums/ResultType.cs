@@ -1,10 +1,8 @@
 ﻿using System;
 namespace ApplicationServices.Enums
 {
-    public class ResultType
+    public enum ResultType
     {
-        public ResultType()
-        {
-        }
+        None, Query, Command
     }
 }

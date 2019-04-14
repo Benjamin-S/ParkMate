@@ -15,6 +15,7 @@
       <Folder Include="Queries\" />
       <Folder Include="Events\" />
       <Folder Include="DTOs\" />
+      <Folder Include="Enums\" />
     </ItemGroup>
     <ItemGroup>
       <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
