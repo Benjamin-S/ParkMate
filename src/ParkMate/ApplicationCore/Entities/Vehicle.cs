@@ -14,11 +14,11 @@ namespace ParkMate.ApplicationCore.Entities
             Make = !string.IsNullOrWhiteSpace(make) ?
                 make : throw new ArgumentNullException(nameof(make));
             Model = !string.IsNullOrWhiteSpace(model) ?
-                make : throw new ArgumentNullException(nameof(model));
+                model : throw new ArgumentNullException(nameof(model));
             Colour = !string.IsNullOrWhiteSpace(colour) ?
-                make : throw new ArgumentNullException(nameof(make));
+                colour : throw new ArgumentNullException(nameof(colour));
             Registration = !string.IsNullOrWhiteSpace(registration) ?
-                make : throw new ArgumentNullException(nameof(registration));
+                registration : throw new ArgumentNullException(nameof(registration));
         }
 
         public string Make { get; private set; }

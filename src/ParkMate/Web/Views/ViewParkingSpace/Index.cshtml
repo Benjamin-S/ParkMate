@@ -1,7 +1,7 @@
-@model QueryResult<ParkingSpace>
+@model Result<ParkingSpace> 
 @{
     ViewData["Title"] = "Parking Space Details";
-    var space = Model.PayLoad;
+    var space = Model.Payload;
 }
 
 <h1>Parking Space Details</h1>
@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
+            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
             <h5 class="card-title">Description</h5>
             <h6 class="card-text">@space.Description.Title</h6>
             <p class="card-text">@space.Description.Description</p>
@@ -19,7 +19,7 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditAddress">Edit</a>
+            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditAddress">Edit</a>
             <h5 class="card-title">Address</h5>
             <p class="card-text">Street: @space.Address.Street</p>
             <p class="card-text">City: @space.Address.City</p>
@@ -30,7 +30,7 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
+            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
             <h5 class="card-title">Booking Rate</h5>
             <p class="card-text">Hourly Rate: @space.BookingRate.HourlyRate</p>
             <p class="card-text">Daily Rate: @space.BookingRate.DailyRate</p>
@@ -39,7 +39,7 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="EditParkingSpace" asp-action="EditAvailability" asp-route-id="@space.Id">Edit</a>
+            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditAvailability" asp-route-id="@space.Id">Edit</a>
             <h5 class="card-title">Availability</h5>
             <span class="badge" id="Monday">Monday</span>
             <span class="badge" id="Tuesday">Tuesday</span>

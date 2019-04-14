@@ -1,4 +1,5 @@
-@model QueryResult<Customer>;
+@using ApplicationServices.Enums
+@model Web.Models.ResultViewModel<Customer>
 
 @{
     ViewData["Title"] = "My Bookings";
@@ -10,30 +11,57 @@
 
 <h2>My Bookings</h2>
 
-<div>    
+<div>
     @{
-        @*
-        if (!Model.Success)
+        if (Model.Command.ResultType != ResultType.None)            
+        {
+            if (Model.Command.Success)
+            {
+                <div class="alert alert-success" role="alert">
+                    @Model.Command.Message
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.Command.Message
+                </div>   
+            }
+        }
+    }
+</div>
+
+<div>    
+    @*{
+        if (!Model.Query.Success)
         {
             <div class="alert alert-danger" role="alert">
-                @Model.Message
+                @Model.Query.Message
             </div>
         }
-        else if (!Model.PayLoad.Bookings.FutureBookings.Any())
-        {
+        else if (!Model.Query.Payload.Bookings.FutureBookings.Any())
+        { *@
             <div class="alert alert-info" role="alert">
-                It appears you currently have no future bookings planned.
-            </div>
-        }
+                It appears you currently have no planned future bookings.
+            </div> @*
+        } 
         else
         {
-            foreach (var booking in Model.PayLoad.Bookings.FutureBookings)
+            foreach (var booking in Model.Query.Payload.Bookings.FutureBookings)
             {
-                <p>@booking.BookingTime | @booking.ParkingSpace.Description.Title</p>
-            }
-        }     
-        *@
-    }
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@booking.ParkingSpace.Address.Street</h5>
+                                <p class="card-text">@booking.BookingTime.Day</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }  
+        }
+    } *@
 </div>
 
 @section Scripts
