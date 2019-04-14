@@ -27,7 +27,6 @@
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Views\CreateParkingSpace\" />
       <Folder Include="wwwroot\imageuploads\" />
       <Folder Include="Views\MyParkingSpaces\" />
     </ItemGroup>
