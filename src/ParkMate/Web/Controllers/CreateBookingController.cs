@@ -22,7 +22,7 @@ namespace Web.Controllers
             _mediator = mediator;
             _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
-
+        
         // GET/id
         [HttpGet]
         public async Task<IActionResult> Index(int id)
