@@ -1,4 +1,4 @@
-@model QueryResult<Customer>;
+@model Web.Models.CreateBookingViewModel;
 
 @{
     ViewData["Title"] = "Create a Booking";
@@ -8,13 +8,24 @@
 <h1>Create a Booking</h1>
 
 <div>
-    @if (!Model.Success)
+    @if (!Model.Customer.Success)
     {
         <div class="alert alert-danger" role="alert">
-            @Model.Message
+            @Model.Customer.Message
         </div>
     }
 </div>
+
+<div>
+    @if (!Model.ParkingSpace.Success)
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.ParkingSpace.Message
+        </div>
+    }
+</div>
+
+
 
 <form method="post" enctype="multipart/form-data" id="booking-form">
     <div class="form-group">
@@ -25,17 +36,17 @@
         <label for="car-select">Vehicle</label>
         <select name="car-select" class="form-control" id="car-select">
             @{
-                if (Model.Success)
+                if (Model.Customer.Success)
                 {
-                    if (Model.PayLoad.Vehicles.Count == 0)
+                    if (Model.Customer.PayLoad.Vehicles.Count == 0)
                     {
                         <option disabled="disabled">No vehicles found</option>
                     }
                     else
                     {
-                        foreach (var vehicle in Model.PayLoad.Vehicles)
+                        foreach (var vehicle in Model.Customer.PayLoad.Vehicles)
                         {
-                            <option value="@vehicle.Id">@vehicle.Model @vehicle.Registration</option>
+                            <option value="@vehicle.Id">@vehicle.Model - @vehicle.Registration</option>
                         }
                     }
                 }
