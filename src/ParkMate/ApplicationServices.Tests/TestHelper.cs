@@ -44,6 +44,10 @@ namespace ParkMate.ApplicationServices.Tests
             return new RegisterNewParkingSpaceCommand(userId, description, address, availability, rate);
         }
 
+        public static Customer GetTestCustomer(string id)
+        {
+            return new Customer(id, "test@test.com");
+        }
         public static DbContextOptions<ParkMateDbContext> GetUniqueDbContextOptions()
         {
             return GetNamedDbContextOptions(Guid.NewGuid().ToString());
@@ -58,11 +62,22 @@ namespace ParkMate.ApplicationServices.Tests
 
         public static async Task CreateTestParkingSpaceInDb(string name, string ownerName = "test-user")
         {
+            await CreateTestCustomerInDb(name, ownerName);
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions(name)))
             {
                 var command = GetTestCreateParkingSpaceCommand(ownerName);
-                var repository = new ParkingSpaceRepository(context);
+                var repository = new CustomerRepository(context);
                 var handler = new RegisterNewParkingSpaceCommandHandler(repository, new Mock<IMediator>().Object);
+                await handler.Handle(command);
+            }
+        }
+        public static async Task CreateTestCustomerInDb(string dbName, string id)
+        {
+            using (var context = new ParkMateDbContext(GetNamedDbContextOptions(dbName)))
+            {
+                var command = new RegisterCustomerCommand(id, "test@test.com");
+                var repository = new CustomerRepository(context);
+                var handler = new RegisterCustomerCommandHandler(repository, new Mock<IMediator>().Object);
                 await handler.Handle(command);
             }
         }

@@ -5,7 +5,6 @@ using MediatR;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
-using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
@@ -36,15 +35,15 @@ namespace ParkMate.ApplicationServices.Commands
     public class RegisterNewParkingSpaceCommandHandler 
         : IRequestHandler<RegisterNewParkingSpaceCommand, CommandResult>
     {
-        private IParkingSpaceRepository _repository;
+        ICustomerRepository _customerRepository;
         private IMediator _mediator;
 
         public RegisterNewParkingSpaceCommandHandler(
-            IParkingSpaceRepository repository, 
+            ICustomerRepository customerRepository,
             IMediator mediator)
         {
-            _repository = repository ??
-                throw new ArgumentNullException(nameof(repository));
+            _customerRepository = customerRepository ??
+                throw new ArgumentNullException(nameof(customerRepository));
             _mediator = mediator ??
                 throw new ArgumentNullException(nameof(mediator));
         }
@@ -56,11 +55,17 @@ namespace ParkMate.ApplicationServices.Commands
             var parkingSpace = new ParkingSpace(command.OwnerId, command.Description,
                 command.Address, command.Availability, command.BookingRate);
 
-            await _repository.AddAsync(parkingSpace);
-            await _repository.UnitOfWork.SaveEntitiesAsync();
+            var customer = await _customerRepository.GetByIdAsync(command.OwnerId);
+
+            customer.ParkingSpaces.Add(parkingSpace);
+
+            _customerRepository.Update(customer);
+
+            await _customerRepository.UnitOfWork.SaveEntitiesAsync();
 
             await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
-            
+            await _mediator.Publish(new CustomerUpdatedEvent(customer));
+
             return new CommandResult(true, "Parking Space was successfully registered");
         }
     }
