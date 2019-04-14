@@ -1,26 +1,58 @@
-﻿namespace ParkMate.ApplicationServices
+﻿using ApplicationServices.Enums;
+
+namespace ParkMate.ApplicationServices
 {
-    public class QueryResult<T>
+    public struct Result
     {
         public bool Success { get; set; }
         public string Message { get; set; }
-        public T PayLoad { get; set; }
+        public ResultType ResultType { get; set; }
 
-        public static QueryResult<T> Succeed(T payload)
+        public static Result CommandSuccess(string message)
         {
-            return new QueryResult<T>
+            return new Result
             {
-                PayLoad = payload,
-                Success = true
+                Success = true,
+                Message = message,
+                ResultType = ResultType.Command
             };
         }
-        public static QueryResult<T> Fail(string message)
+        public static Result CommandFail(string message)
         {
-            return new QueryResult<T>
+            return new Result
             {
                 Message = message,
-                Success = false
+                Success = false,
+                ResultType = ResultType.Command
             };
         }
+    }
+
+    public class Result<T> 
+    {
+        public T Payload { get; set; }
+        public bool Success { get; set; }
+        public string Message { get; set; }
+        public ResultType ResultType { get; set; }
+
+        public static Result<T> QuerySuccess(T payload)
+        {
+            return new Result<T>
+            {
+                Payload = payload,
+                Success = true,
+                ResultType = ResultType.Query
+            };
+        }
+        public static Result<T> QueryFail(string message)
+        {
+            return new Result<T>
+            {
+                Message = message,
+                Success = false,
+                ResultType = ResultType.Query
+            };
+        }
+       
     }
 }

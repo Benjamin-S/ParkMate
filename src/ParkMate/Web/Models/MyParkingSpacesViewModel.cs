@@ -9,6 +9,6 @@ namespace Web.Models
     {
         public string PreviousCommandResultMessage { get; set; }
         public CommandStatus PreviousCommandStatus { get; set; } = CommandStatus.NoCommand;
-        public QueryResult<Customer> QueryResult { get; set; }
+        public Result<Customer> QueryResult { get; set; }
     }
 }

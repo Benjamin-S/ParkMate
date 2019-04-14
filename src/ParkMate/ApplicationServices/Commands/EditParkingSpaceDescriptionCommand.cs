@@ -11,7 +11,7 @@ using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class EditParkingSpaceDescriptionCommand  : IRequest<CommandResult>
+    public class EditParkingSpaceDescriptionCommand  : IRequest<Result>
     {
         public EditParkingSpaceDescriptionCommand(int parkingSpaceId, string ownerId, ParkingSpaceDescription description)
         {
@@ -25,7 +25,7 @@ namespace ParkMate.ApplicationServices.Commands
     }
     
     public class EditParkingSpaceDescriptionCommandHandler 
-        : IRequestHandler<EditParkingSpaceDescriptionCommand, CommandResult>
+        : IRequestHandler<EditParkingSpaceDescriptionCommand, Result>
     {
         private IParkingSpaceRepository _repository;
         private IMediator _mediator;
@@ -39,7 +39,7 @@ namespace ParkMate.ApplicationServices.Commands
             _mediator = mediator;
         }
 
-        public async Task<CommandResult> Handle(
+        public async Task<Result> Handle(
             EditParkingSpaceDescriptionCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -52,7 +52,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
 
-            return new CommandResult(true, "Parking Space description was successfully updated");
+            return Result.CommandSuccess("Parking Space description was successfully updated");
         }
     }
 }

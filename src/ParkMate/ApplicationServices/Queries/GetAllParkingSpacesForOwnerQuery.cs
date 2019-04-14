@@ -9,7 +9,7 @@ using ParkMate.ApplicationServices.Interfaces;
 namespace ParkMate.ApplicationServices.Queries
 {
     public class GetAllParkingSpacesForOwnerQuery 
-        : IRequest<QueryResult<IReadOnlyList<ParkingSpace>>>
+        : IRequest<Result<IReadOnlyList<ParkingSpace>>>
     {
         public GetAllParkingSpacesForOwnerQuery(string ownerId)
         {
@@ -20,7 +20,7 @@ namespace ParkMate.ApplicationServices.Queries
 
     public class GetAllParkingSpacesForOwnerQueryHandler 
         : IRequestHandler<GetAllParkingSpacesForOwnerQuery, 
-            QueryResult<IReadOnlyList<ParkingSpace>>>
+            Result<IReadOnlyList<ParkingSpace>>>
     {
         private IMongoContext _context;
 
@@ -29,7 +29,7 @@ namespace ParkMate.ApplicationServices.Queries
             _context = context;
         }
 
-        public async Task<QueryResult<IReadOnlyList<ParkingSpace>>> Handle(
+        public async Task<Result<IReadOnlyList<ParkingSpace>>> Handle(
             GetAllParkingSpacesForOwnerQuery query, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -39,9 +39,9 @@ namespace ParkMate.ApplicationServices.Queries
 
             if (result != null && result.Count != 0)
             {
-                return QueryResult<IReadOnlyList<ParkingSpace>>.Succeed(result);
+                return Result<IReadOnlyList<ParkingSpace>>.QuerySuccess(result);
             }
-            return QueryResult<IReadOnlyList<ParkingSpace>>.Fail("Parking space not found");
+            return Result<IReadOnlyList<ParkingSpace>>.QueryFail("Parking space not found");
         }
     }
 }

@@ -9,7 +9,7 @@ using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class RegisterNewParkingSpaceCommand : IRequest<CommandResult>
+    public class RegisterNewParkingSpaceCommand : IRequest<Result>
     {
         public RegisterNewParkingSpaceCommand(
             string ownerId,
@@ -33,7 +33,7 @@ namespace ParkMate.ApplicationServices.Commands
     }
     
     public class RegisterNewParkingSpaceCommandHandler 
-        : IRequestHandler<RegisterNewParkingSpaceCommand, CommandResult>
+        : IRequestHandler<RegisterNewParkingSpaceCommand, Result>
     {
         ICustomerRepository _customerRepository;
         private IMediator _mediator;
@@ -48,7 +48,7 @@ namespace ParkMate.ApplicationServices.Commands
                 throw new ArgumentNullException(nameof(mediator));
         }
 
-        public async Task<CommandResult> Handle(
+        public async Task<Result> Handle(
             RegisterNewParkingSpaceCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -66,7 +66,7 @@ namespace ParkMate.ApplicationServices.Commands
             await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
             await _mediator.Publish(new CustomerUpdatedEvent(customer));
 
-            return new CommandResult(true, "Parking Space was successfully registered");
+            return Result.CommandSuccess("Parking Space was successfully registered");
         }
     }
 }
