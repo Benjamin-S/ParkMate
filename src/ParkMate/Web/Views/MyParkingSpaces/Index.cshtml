@@ -1,5 +1,6 @@
+@using ApplicationServices.Enums
 @using ParkMate.Web.Enums
-@model Web.Models.MyParkingSpacesViewModel
+@model Web.Models.ResultViewModel<Customer>
 
 @{
     ViewData["Title"] = "My Parking Spaces";
@@ -13,18 +14,18 @@
 
 <div>
     @{
-        if (Model.PreviousCommandStatus != CommandStatus.NoCommand)            
+        if (Model.Command.ResultType != ResultType.None)            
         {
-            if (Model.PreviousCommandStatus == CommandStatus.Success)
+            if (Model.Command.Success)
             {
                 <div class="alert alert-success" role="alert">
-                    @Model.PreviousCommandResultMessage
+                    @Model.Command.Message
                 </div>
             }
             else
             {
                 <div class="alert alert-danger" role="alert">
-                    @Model.PreviousCommandResultMessage
+                    @Model.Command.Message
                 </div>   
             }
         }
@@ -33,13 +34,13 @@
 
 <div>
     @{
-        if (!Model.QueryResult.Success)
+        if (!Model.Query.Success)
         {
             <div class="alert alert-danger" role="alert">
-                @Model.QueryResult.Message
+                @Model.Query.Message
             </div>
         }
-        else if (!Model.QueryResult.PayLoad.ParkingSpaces.Any())
+        else if (!Model.Query.Payload.ParkingSpaces.Any())
         {
             <div class="alert alert-info" role="alert">
                 It appears you currently have no owned parking spaces.
@@ -47,7 +48,7 @@
         }
         else
         {
-            foreach (var space in Model.QueryResult.PayLoad.ParkingSpaces)
+            foreach (var space in Model.Query.Payload.ParkingSpaces)
             {
                 <div class="card">
                     <div class="row">
@@ -70,7 +71,7 @@
     }
 </div>
 
-<a asp-controller="CreateParkingSpace" asp-action="Index" class="btn btn-primary float-right">Add new</a>
+<a asp-controller="MyParkingSpaces" asp-action="CreateParkingSpace" class="btn btn-primary float-right">Add new</a>
              
 @section Scripts
 {

@@ -7,8 +7,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Queries;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -24,11 +27,31 @@ namespace Web.Controllers
             _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Result previousCommand)
         {
             var query = new GetCustomerQuery(_userId);
-            var result = await _mediator.Send(query);
-            return View(result);
+            var viewModel = new ResultViewModel<Customer>
+            {
+                Command = previousCommand,
+                Query = await _mediator.Send(query)
+            };
+  
+            return View("Index", viewModel);
+        }
+
+        public IActionResult AddVehicle()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> AddVehicle([FromForm] VehicleDTO dto)
+        {
+            var customerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var vehicle = new Vehicle(dto.Make, dto.Model, dto.Color, dto.Registration);
+            var command = new AddNewVehicleCommand(customerId, vehicle);
+            var result = await _mediator.Send(command);
+            return await Index(result);
         }
     }
 }
