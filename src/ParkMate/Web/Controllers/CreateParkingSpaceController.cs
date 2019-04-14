@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ParkMate.ApplicationServices.Commands;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -45,9 +46,14 @@ namespace ParkMate.Web.Controllers
             //var imageResult =  await _imageProcessor.SaveImage(dto.Description.ImageFile);
             dto.Description.ImageURL = "test.jpg"; //imageResult.FileName;
 
-            var result = await _mediator.Send(BuildParkingSpaceCommand(dto)); 
+            var result = await _mediator.Send(BuildParkingSpaceCommand(dto));
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","MyParkingSpaces", new
+                {
+                    PreviousCommandPresent = true,
+                    PreviousCommandResult = result.Success,
+                    PreviousCommandMessage = result.Message
+                });
         }
 
         RegisterNewParkingSpaceCommand BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)

@@ -13,6 +13,7 @@ using ParkMate.Web.Models;
 using ParkMate.Web.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using ParkMate.Web.Enums;
 
 namespace ParkMate.Web.Controllers
 {
@@ -64,7 +65,12 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
+            return RedirectToAction("Index","MyParkingSpaces", new
+            {
+                PreviousCommandPresent = true,
+                PreviousCommandResult = result.Success,
+                PreviousCommandMessage = result.Message
+            });
         }
         
         [HttpPost]
@@ -80,7 +86,12 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
+            return RedirectToAction("Index","MyParkingSpaces", new
+            {
+                PreviousCommandPresent = true,
+                PreviousCommandResult = result.Success,
+                PreviousCommandMessage = result.Message
+            });
         }
         
         [HttpPost]
@@ -93,7 +104,12 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
+            return RedirectToAction("Index","MyParkingSpaces", new
+            {
+                PreviousCommandPresent = true,
+                PreviousCommandResult = result.Success,
+                PreviousCommandMessage = result.Message
+            });
         }
         
         [HttpPost]
@@ -104,7 +120,12 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
+            return RedirectToAction("Index","MyParkingSpaces", new
+            {
+                PreviousCommandPresent = true,
+                PreviousCommandStatus = result.Success,
+                PreviousCommandMessage = result.Message
+            });
         }
 
         [HttpPost]
@@ -120,7 +141,12 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return RedirectToAction("Index","ViewParkingSpace", new {id = parkingSpaceId});
+            return RedirectToAction("Index","MyParkingSpaces", new
+            {
+                PreviousCommandPresent = true,
+                PreviousCommandResult = result.Success,
+                PreviousCommandMessage = result.Message
+            });
         }
 
         [HttpPost]
@@ -131,7 +157,12 @@ namespace ParkMate.Web.Controllers
 
             var result = await _mediator.Send(command);
 
-            return RedirectToAction("Index","MyParkingSpaces");
+            return RedirectToAction("Index","MyParkingSpaces", new
+            {
+                PreviousCommandPresent = true,
+                PreviousCommandResult = result.Success,
+                PreviousCommandMessage = result.Message
+            });
         }
 
     }

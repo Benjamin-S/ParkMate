@@ -4,29 +4,31 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Queries;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class MyBookingsController : Controller
     {
         private IMediator _mediator;
         private string _userId; 
 
-        public MyBookingsController(IMediator mediator)
+        public MyBookingsController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
-            _userId = "test"; //User.FindFirst(ClaimTypes.NameIdentifier).ToString();
+            _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
         public async Task<IActionResult> Index()
         {
-            // var query = new GetAllBookingsForOwnerQuery(_userId);
-            // var result = await _mediator.Send(query);
-            // return View(result);
-            return View();
+            var query = new GetCustomerQuery(_userId);
+            var result = await _mediator.Send(query);
+            return View(result);
         }
     }
 }
