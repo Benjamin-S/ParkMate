@@ -8,7 +8,7 @@ using ParkMate.ApplicationServices.Events;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class RegisterCustomerCommand : IRequest<CommandResult>
+    public class RegisterCustomerCommand : IRequest<Result>
     { 
         public RegisterCustomerCommand(string identityId, string email)
         {
@@ -20,7 +20,7 @@ namespace ParkMate.ApplicationServices.Commands
     }
 
     public class RegisterCustomerCommandHandler
-        : IRequestHandler<RegisterCustomerCommand, CommandResult>
+        : IRequestHandler<RegisterCustomerCommand, Result>
     {
         private ICustomerRepository _repository;
         private IMediator _mediator;
@@ -34,7 +34,7 @@ namespace ParkMate.ApplicationServices.Commands
             _mediator = mediator;
         }
 
-        public async Task<CommandResult> Handle(
+        public async Task<Result> Handle(
             RegisterCustomerCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -45,7 +45,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _mediator.Publish(new NewCustomerRegisteredEvent(customer));
 
-            return new CommandResult(true, "Customer successfully added");
+            return Result.CommandSuccess("Customer successfully added");
         }
     }
 }
