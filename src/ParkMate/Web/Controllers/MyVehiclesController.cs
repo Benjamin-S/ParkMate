@@ -48,7 +48,7 @@ namespace Web.Controllers
         public async Task<IActionResult> AddVehicle([FromForm] VehicleDTO dto)
         {
             var customerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var vehicle = new Vehicle(dto.Make, dto.Model, dto.Color, dto.Registration);
+            var vehicle = new Vehicle(dto.Make , dto.Model,dto.Color, dto.Registration);
             var command = new AddNewVehicleCommand(customerId, vehicle);
             var result = await _mediator.Send(command);
             return await Index(result);

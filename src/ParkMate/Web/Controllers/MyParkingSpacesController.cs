@@ -72,16 +72,6 @@ namespace Web.Controllers
         {
             return View();
         }
-
-        public Task<IActionResult> ButtonAction()
-        {
-            var result = new Result();
-            result.ResultType = ResultType.Command;
-            result.Success = true;
-            result.Message = "YAYAYA";
-
-            return Index(result);
-        }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
