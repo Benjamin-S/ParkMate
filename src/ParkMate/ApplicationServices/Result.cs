@@ -2,10 +2,11 @@
 
 namespace ParkMate.ApplicationServices
 {
-    public struct Result
+    public class Result
     {
         public bool Success { get; set; }
-        public string Message { get; set; }
+        public string Message { get; set; } = "";
+        public object Payload { get; set; } = new object();
         public ResultType ResultType { get; set; }
 
         public static Result CommandSuccess(string message)
@@ -26,14 +27,18 @@ namespace ParkMate.ApplicationServices
                 ResultType = ResultType.Command
             };
         }
+        public static Result Default()
+        {
+            return new Result
+            {
+                Message = "",
+                ResultType = ResultType.None
+            };
+        }
     }
-
-    public class Result<T> 
+    public class Result<T> : Result
     {
-        public T Payload { get; set; }
-        public bool Success { get; set; }
-        public string Message { get; set; }
-        public ResultType ResultType { get; set; }
+        public new T Payload { get; set; }
 
         public static Result<T> QuerySuccess(T payload)
         {
