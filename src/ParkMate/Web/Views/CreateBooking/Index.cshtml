@@ -1,13 +1,20 @@
-@using Microsoft.AspNetCore.Identity
-@* Attach a model *@
+@model QueryResult<Customer>;
+
 @{
     ViewData["Title"] = "Create a Booking";
 }
 
 <!-- Date/time selector and select menu for user's car -->
-
 <h1>Create a Booking</h1>
 
+<div>
+    @if (!Model.Success)
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.Message
+        </div>
+    }
+</div>
 
 <form method="post" enctype="multipart/form-data" id="booking-form">
     <div class="form-group">
@@ -15,13 +22,24 @@
         <input type="date" id="booking-date "name="booking-date" class="form-control"/>
     </div>
     <div class="form-group">
-        <label for="car-select">Booking Date</label>
+        <label for="car-select">Vehicle</label>
         <select name="car-select" class="form-control" id="car-select">
-            <optgroup label="This is a group">
-                <option value="12" selected>This is item 1</option>
-                <option value="13">This is item 2</option>
-                <option value="14">This is item 3</option>
-            </optgroup>
+            @{
+                if (Model.Success)
+                {
+                    if (Model.PayLoad.Vehicles.Count == 0)
+                    {
+                        <option disabled="disabled">No vehicles found</option>
+                    }
+                    else
+                    {
+                        foreach (var vehicle in Model.PayLoad.Vehicles)
+                        {
+                            <option value="@vehicle.Id">@vehicle.Model @vehicle.Registration</option>
+                        }
+                    }
+                }
+            }
         </select>
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
