@@ -23,19 +23,14 @@ namespace Web.Controllers
             _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
         
-        // GET
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-        
         // GET/id
         [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
-            var query = new GetCustomerQuery(_userId);
-            var result = await _mediator.Send(query);
+            var vehicleQuery = new GetCustomerQuery(_userId);
+            //var spaceQuery = new GetSingleParkingSpaceQuery(id);
+            var result = await _mediator.Send(vehicleQuery);
+            
             return View(result);
         }
     }
