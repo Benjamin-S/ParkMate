@@ -32,7 +32,7 @@ namespace ApplicationCore.Tests
 
             space.AddBookingToSchedule(booking);
 
-            Assert.Single(space.Schedule.FutureBookings);
+            Assert.Single(space.Bookings);
         }
 
         [Fact]

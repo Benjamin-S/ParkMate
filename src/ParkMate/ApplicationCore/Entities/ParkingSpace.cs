@@ -37,8 +37,12 @@ namespace ParkMate.ApplicationCore.Entities
         public Address Address { get; private set; }
         public SpaceAvailability Availability { get; private set; }
         public BookingRate BookingRate { get; private set; }
-        public Schedule Schedule { get; private set; } = new Schedule();
-        public BookingHistory BookingHistory { get; private set; } = new BookingHistory();
+        public List<Booking> Bookings { get; private set; } = new List<Booking>();
+
+        public void AddBooking(Booking booking)
+        {
+            Bookings.Add(booking);
+        }
 
         public void UpdateAddress(Address address)
         {
@@ -69,19 +73,28 @@ namespace ParkMate.ApplicationCore.Entities
         public bool IsAvailable(BookingPeriod bookingPeriod)
         {
             return Availability.IsAvailable(bookingPeriod) && 
-                    Schedule.IsAvailable(bookingPeriod);
+                    !Overlaps(bookingPeriod);
         }
 
+        bool Overlaps(BookingPeriod bookingPeriod)
+        {
+            foreach (var booking in Bookings)
+            {
+                if (booking.BookingPeriod.Overlaps(bookingPeriod))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         public void AddBookingToSchedule(Booking booking)
         {
-            Schedule.AddBooking(booking);
+            if (Overlaps(booking.BookingPeriod))
+            {
+                throw new AlreadyBookedException(booking.BookingPeriod);
+            }
+            Bookings.Add(booking);
         }
-
-        public void ProcessLapsedBookings()
-        {
-            var lapsed = Schedule.RemoveLapsedBookings();
-            lapsed.ForEach(booking => BookingHistory.AddToHistory(booking));
-        }
-
     }
 }

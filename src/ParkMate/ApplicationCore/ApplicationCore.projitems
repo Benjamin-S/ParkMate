@@ -26,7 +26,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Customer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Booking.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\AlreadyBookedException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Entities\Schedule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\SystemTime.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\BookingHistory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\AvailabilityTime.cs" />

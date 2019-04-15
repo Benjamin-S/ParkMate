@@ -16,7 +16,7 @@ namespace ParkMate.ApplicationServices.Tests
         [Fact]
         public async Task ChangeParkingSpaceToCorrectAddress()
         {
-            await CreateTestParkingSpaceInDb("EditParkingSpaceAddress");
+            await CreateTestParkingSpaceInMemoryDb("EditParkingSpaceAddress");
 
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions("EditParkingSpaceAddress")))
             {

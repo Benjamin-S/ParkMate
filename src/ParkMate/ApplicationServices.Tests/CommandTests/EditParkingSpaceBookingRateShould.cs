@@ -16,7 +16,7 @@ namespace ParkMate.ApplicationServices.Tests
         public async Task ChangeParkingSpaceToCorrectBookingRate()
         {
 
-            await CreateTestParkingSpaceInDb("EditParkingSpaceBookingRate");
+            await CreateTestParkingSpaceInMemoryDb("EditParkingSpaceBookingRate");
 
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions("EditParkingSpaceBookingRate")))
             {

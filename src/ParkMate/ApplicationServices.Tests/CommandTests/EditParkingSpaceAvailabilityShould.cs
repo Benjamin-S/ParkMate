@@ -17,7 +17,7 @@ namespace ParkMate.ApplicationServices.Tests
         [Fact]
         public async Task ChangeToCorrectAvailability()
         {
-            await CreateTestParkingSpaceInDb("ChangeToCorrectAvailability");
+            await CreateTestParkingSpaceInMemoryDb("ChangeToCorrectAvailability");
 
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions("ChangeToCorrectAvailability")))
             {

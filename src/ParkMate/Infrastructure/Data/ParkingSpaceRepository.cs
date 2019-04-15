@@ -15,8 +15,7 @@ namespace ParkMate.Infrastructure.Data
         {
             return await DbContext.ParkingSpaces
                 .Include(p => p.Availability)
-                .Include(p => p.Schedule)
-                .Include(p => p.BookingHistory)
+                .Include(p => p.Bookings)
                 .SingleOrDefaultAsync(e => e.Id == id);
         }
     }
