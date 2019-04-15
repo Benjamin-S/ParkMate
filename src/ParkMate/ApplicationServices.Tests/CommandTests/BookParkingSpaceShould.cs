@@ -38,7 +38,15 @@ namespace ParkMate.ApplicationServices.Tests
                     new ParkingSpaceRepository(context), 
                     new Mock<IMediator>().Object);
 
-                await handler.Handle(command);
+                var result = await handler.Handle(command);
+                
+                Assert.True(result.Success);
+                Assert.Equal("Parking Space successfully booked", result.Message);
+                
+                result = await handler.Handle(command);
+                
+                Assert.False(result.Success);
+                Assert.Equal("Parking Space not available during requested period", result.Message);
             }
 
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions("BookingParkingSpaceShould")))
