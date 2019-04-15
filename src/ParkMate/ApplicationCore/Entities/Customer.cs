@@ -26,5 +26,16 @@ namespace ParkMate.ApplicationCore.Entities
         public List<ParkingSpace> ParkingSpaces { get; private set; } = new List<ParkingSpace>();
         public Schedule Bookings { get; private set; }
         public BookingHistory BookingHistory { get; private set; }
+
+        public void AddBooking(Booking booking)
+        {
+            Bookings.AddBooking(booking);
+        }
+        
+        public void ProcessLapsedBookings()
+        {
+            var lapsed = Bookings.RemoveLapsedBookings();
+            lapsed.ForEach(booking => BookingHistory.AddToHistory(booking));
+        }
     }
 }
