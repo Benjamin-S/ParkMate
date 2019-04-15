@@ -75,27 +75,27 @@ namespace Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateParkingSpace([FromForm] CreateParkingSpaceDTO dto)
+        public async Task<IActionResult> CreateParkingSpace([FromForm] CreateParkingSpaceViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(dto);
+                return View(model.ParkingSpace);
             }
-            //var imageResult =  await _imageProcessor.SaveImage(dto.Description.ImageFile);
-            dto.Description.ImageURL = "test.jpg"; //imageResult.FileName;
+            var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
+            model.ParkingSpace.Description.ImageURL = imageResult.FileName;
 
-            var result = await _mediator.Send(BuildParkingSpaceCommand(dto));
+            var result = await _mediator.Send(BuildParkingSpaceCommand(model.ParkingSpace));
 
             return await Index(result);
         }
 
-        RegisterNewParkingSpaceCommand BuildParkingSpaceCommand(CreateParkingSpaceDTO dto)
+        RegisterNewParkingSpaceCommand BuildParkingSpaceCommand(ParkingSpaceDTO dto)
         {
             return new RegisterNewParkingSpaceCommand(
                 User.FindFirst(ClaimTypes.NameIdentifier).Value,
 
                 new ParkingSpaceDescription(dto.Description.Title,
-                    dto.Description.Description, dto.Description.ImageFile.FileName),
+                    dto.Description.Description, dto.Description.ImageURL),
 
                 new Address(dto.Address.Street, dto.Address.City, dto.Address.State,
                     dto.Address.Zip, new Point(dto.Address.Latitude, dto.Address.Longitude)),
@@ -122,12 +122,12 @@ namespace Web.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditDescription([FromForm] DescriptionDTO dto, int parkingSpaceId)
+        public async Task<IActionResult> EditDescription([FromForm] ParkingSpaceDescriptionViewModel model, int parkingSpaceId)
         {
-            var imageResult =  await _imageProcessor.SaveImage(dto.ImageFile);
-            dto.ImageURL = imageResult.FileName;
+            var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
+            model.Description.ImageURL = imageResult.FileName;
             
-            var description = new ParkingSpaceDescription(dto.Title, dto.Description, dto.ImageURL);
+            var description = new ParkingSpaceDescription(model.Description.Title,  model.Description.Description,  model.Description.ImageURL);
             
             var command = new EditParkingSpaceDescriptionCommand(parkingSpaceId, _userId, description);
 

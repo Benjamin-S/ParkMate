@@ -16,9 +16,5 @@ namespace ParkMate.Web.Models
         public string Description { get; set; }
 
         public string ImageURL { get; set; }
-
-        [Required]
-        [Display(Name = "Image File")]
-        public IFormFile ImageFile { get; set; }
     }
 }
