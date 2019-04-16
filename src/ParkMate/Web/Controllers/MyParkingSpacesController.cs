@@ -87,7 +87,7 @@ namespace Web.Controllers
                 return View(model);
             }
             var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
-            model.ParkingSpace.Description.ImageURL = imageResult.FileName;
+            model.ParkingSpace.Description.ImageURL = "test"; //imageResult.FileName;
 
             var result = await _mediator.Send(BuildParkingSpaceCommand(model.ParkingSpace));
 
@@ -181,8 +181,6 @@ namespace Web.Controllers
             return await Index(result);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteParkingSpace(int parkingSpaceId)
         {
             var command = new DeleteParkingSpaceCommand(parkingSpaceId, _userId);
