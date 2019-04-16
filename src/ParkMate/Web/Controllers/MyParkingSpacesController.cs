@@ -87,7 +87,7 @@ namespace Web.Controllers
                 return View(model);
             }
             var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
-            model.ParkingSpace.Description.ImageURL = "test"; //imageResult.FileName;
+            model.ParkingSpace.Description.ImageURL = imageResult.FileName;
 
             var result = await _mediator.Send(BuildParkingSpaceCommand(model.ParkingSpace));
 
