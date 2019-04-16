@@ -10,12 +10,14 @@ namespace ParkMate.ApplicationServices.Commands
 {
     public class AddNewVehicleCommand : IRequest<Result>
     {
-        public AddNewVehicleCommand(string customerId, Vehicle vehicle)
-        {
-            Vehicle = vehicle;
-        }
         public string CustomerId { get; }
         public Vehicle Vehicle { get; }
+        
+        public AddNewVehicleCommand(string customerId, Vehicle vehicle)
+        {
+            CustomerId = customerId;
+            Vehicle = vehicle;
+        }
     }
 
     public class AddNewVehicleCommandHandler

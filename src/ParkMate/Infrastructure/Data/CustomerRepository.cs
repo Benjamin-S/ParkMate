@@ -18,7 +18,6 @@ namespace ParkMate.Infrastructure.Data
                 .Include(c => c.Vehicles)
                 .Include(c => c.ParkingSpaces)
                 .Include(c => c.Bookings)
-                .Include(c => c.BookingHistory)
                 .SingleOrDefaultAsync(c => c.IdentityId.Equals(id));
         }
     }

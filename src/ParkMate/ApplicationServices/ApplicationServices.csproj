@@ -10,12 +10,14 @@
       <PackageReference Include="MongoDB.Driver" Version="2.8.0" />
       <PackageReference Include="Dapper" Version="1.60.6" />
       <PackageReference Include="Npgsql" Version="4.0.6" />
+      <PackageReference Include="AutoMapper" Version="8.0.0" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Queries\" />
       <Folder Include="Events\" />
       <Folder Include="DTOs\" />
       <Folder Include="Enums\" />
+      <Folder Include="Config\" />
     </ItemGroup>
     <ItemGroup>
       <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />

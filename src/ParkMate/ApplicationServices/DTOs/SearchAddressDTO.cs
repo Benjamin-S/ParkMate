@@ -7,6 +7,7 @@ namespace ParkMate.ApplicationServices.DTOs
     public class SearchAddressDTO
     {
         public int Id { get; set; }
+        
         public string Street { get; set; }
 
         public string City { get; set; }

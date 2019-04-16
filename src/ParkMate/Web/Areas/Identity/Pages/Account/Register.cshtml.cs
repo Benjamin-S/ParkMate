@@ -82,7 +82,7 @@ namespace Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    var command = new RegisterCustomerCommand(user.Id, user.Email);
+                    var command = new RegisterCustomerCommand(user.Id, user.Email, user.Name);
                     await _mediator.Send(command);
 
                     _logger.LogInformation("User created a new account with password.");

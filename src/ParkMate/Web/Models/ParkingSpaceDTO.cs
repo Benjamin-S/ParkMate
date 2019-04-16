@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ParkMate.Web.Models
 {
-    public class CreateParkingSpaceDTO
+    public class ParkingSpaceDTO
     {
         public AddressDTO Address { get; set;}
         public BookingRateDTO BookingRate { get; set; }

@@ -19,7 +19,6 @@ namespace ParkMate.Infrastructure.Data
         public DbSet<SpaceAvailability> SpaceAvailability { get; private set; }
         public DbSet<Booking> Bookings { get; private set; }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Schedule> Schedule { get; set; }
         public DbSet<BookingHistory> BookingHistory { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<SearchAddressDTO> SearchAddresses { get; set; }

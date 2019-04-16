@@ -34,6 +34,11 @@ namespace ParkMate.ApplicationServices.Tests
             return SpaceAvailability.Create247Availability();
         }
 
+        public static Vehicle GetTestVehicle()
+        {
+            return new Vehicle("Testyota", "CamryUnit", "Green", "TDD123");
+        }
+
         public static RegisterNewParkingSpaceCommand GetTestCreateParkingSpaceCommand(string userId)
         {
             var address = GetTestAddress();
@@ -46,7 +51,7 @@ namespace ParkMate.ApplicationServices.Tests
 
         public static Customer GetTestCustomer(string id)
         {
-            return new Customer(id, "test@test.com");
+            return new Customer(id, "test@test.com", "Mr. Test");
         }
         public static DbContextOptions<ParkMateDbContext> GetUniqueDbContextOptions()
         {
@@ -60,9 +65,9 @@ namespace ParkMate.ApplicationServices.Tests
                 .Options;
         }
 
-        public static async Task CreateTestParkingSpaceInDb(string name, string ownerName = "test-user")
+        public static async Task CreateTestParkingSpaceInMemoryDb(string name, string ownerName = "test-user")
         {
-            await CreateTestCustomerInDb(name, ownerName);
+            await CreateTestCustomerInMemoryDb(name, ownerName);
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions(name)))
             {
                 var command = GetTestCreateParkingSpaceCommand(ownerName);
@@ -71,14 +76,18 @@ namespace ParkMate.ApplicationServices.Tests
                 await handler.Handle(command);
             }
         }
-        public static async Task CreateTestCustomerInDb(string dbName, string id)
+        public static async Task CreateTestCustomerInMemoryDb(string dbName, string id)
         {
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions(dbName)))
             {
-                var command = new RegisterCustomerCommand(id, "test@test.com");
+                var command = new RegisterCustomerCommand(id, "test@test.com", "Mr. Test");
                 var repository = new CustomerRepository(context);
                 var handler = new RegisterCustomerCommandHandler(repository, new Mock<IMediator>().Object);
                 await handler.Handle(command);
+
+                var vehicleCommand = new AddNewVehicleCommand(id, GetTestVehicle());
+                var vehicleHandler = new AddNewVehicleCommandHandler(repository, new Mock<IMediator>().Object);
+                await vehicleHandler.Handle(vehicleCommand);
             }
         }
     }

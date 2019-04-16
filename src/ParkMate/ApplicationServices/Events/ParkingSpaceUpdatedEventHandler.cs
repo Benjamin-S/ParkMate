@@ -1,26 +1,26 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ParkMate.ApplicationCore.Entities;
-using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.Commands;
 
 namespace ParkMate.ApplicationServices.Events
 {
     public class ParkingSpaceUpdatedEventHandler :
         INotificationHandler<ParkingSpaceUpdatedEvent>
     {
-        private IDocumentWriteRepository _repository;
+        private IMediator _mediator;
 
-        public ParkingSpaceUpdatedEventHandler(IDocumentWriteRepository repository)
+        public ParkingSpaceUpdatedEventHandler(IMediator mediator)
         {
-            _repository = repository;
+            _mediator = mediator;
         }
 
         public async Task Handle(
             ParkingSpaceUpdatedEvent notification,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _repository.ReplaceOneAsync(notification.ParkingSpace, "ParkingSpace");
+            var command = new ReplaceParkingSpaceInDocumentDbCommand(notification.ParkingSpace);
+            await _mediator.Send(command);
         }
     }
 }
