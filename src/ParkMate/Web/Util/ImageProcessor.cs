@@ -21,6 +21,20 @@ namespace ParkMate.Web.Util
 
         public ImageValidationResult SaveImage(IFormFile img)
         {
+            try
+            {
+                return ProcessImage(img);
+            }
+            catch(NotSupportedException)
+            {
+                return new ImageValidationResult
+                {
+                    FileName = "Not a valid image file. Please upload a JPG, PNG, BMP or GIF"
+                };
+            }
+        }
+        ImageValidationResult ProcessImage(IFormFile img)
+        {
             if (img.Length > 10 * 1024 * 1024)
             {
                 return new ImageValidationResult
@@ -28,7 +42,8 @@ namespace ParkMate.Web.Util
                     FileName = "Upload can not be larger than 10MB. Please upload a smaller image."
                 };
             }
-            using (Image<Rgba32> image = Image.Load(img.OpenReadStream()))
+            using (var stream = img.OpenReadStream())
+            using (Image<Rgba32> image = Image.Load(stream))
             {
 
                 if (image.Height < 480 || image.Width < 480)
@@ -52,9 +67,9 @@ namespace ParkMate.Web.Util
                 var fileName = Guid.NewGuid() + Path.GetExtension(img.FileName);
                 var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var file = new FileStream(filePath, FileMode.Create))
                 {
-                    image.SaveAsJpeg(stream);
+                    image.SaveAsJpeg(file);
 
                     return new ImageValidationResult
                     {
