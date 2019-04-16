@@ -53,7 +53,12 @@ namespace Web.Controllers
             return View();
         }
         
-        public IActionResult EditAvailability()
+        public IActionResult EditAvailableDays()
+        {
+            return View();
+        }
+        
+        public IActionResult EditAvailableTimes()
         {
             return View();
         }
