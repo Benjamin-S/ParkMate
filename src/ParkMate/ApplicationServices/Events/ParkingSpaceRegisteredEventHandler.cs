@@ -1,7 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.ApplicationServices.Events
@@ -9,18 +11,19 @@ namespace ParkMate.ApplicationServices.Events
     public class ParkingSpaceRegisteredEventHandler : 
         INotificationHandler<ParkingSpaceRegisteredEvent>
     {
-        private IDocumentWriteRepository _repository;
+        private IMediator _mediator;
 
-        public ParkingSpaceRegisteredEventHandler(IDocumentWriteRepository repository)
+        public ParkingSpaceRegisteredEventHandler(IMediator mediator)
         {
-            _repository = repository;
+            _mediator = mediator;
         }
 
         public async Task Handle(
             ParkingSpaceRegisteredEvent notification, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _repository.InsertOneAsync(notification.ParkingSpace, "ParkingSpace");
+            var command = new AddParkingSpaceToDocumentDBCommand(notification.ParkingSpace);
+            await _mediator.Send(command);
         }
     }
 }

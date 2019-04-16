@@ -2,25 +2,26 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.Commands;
 
 namespace ParkMate.ApplicationServices.Events
 {
     public class NewCustomerRegisteredEventHandler :
         INotificationHandler<NewCustomerRegisteredEvent>
     {
-        private IDocumentWriteRepository _repository;
+        private IMediator _mediator;
 
-        public NewCustomerRegisteredEventHandler(IDocumentWriteRepository repository)
+        public NewCustomerRegisteredEventHandler(IMediator mediator)
         {
-            _repository = repository;
+            _mediator = mediator;
         }
 
         public async Task Handle(
             NewCustomerRegisteredEvent notification,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _repository.InsertOneAsync(notification.Customer, "Customer");
+            var command = new AddCustomerInDocumentDbCommand(notification.Customer);
+            await _mediator.Send(command);
         }
     }
 }
