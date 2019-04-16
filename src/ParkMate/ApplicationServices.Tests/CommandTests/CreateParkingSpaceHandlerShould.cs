@@ -12,7 +12,7 @@ namespace ParkMate.ApplicationServices.Tests
         [Fact]
         public async Task CreateNewParkingSpace()
         {
-            await CreateTestParkingSpaceInDb("CreateNewParkingSpace");
+            await CreateTestParkingSpaceInMemoryDb("CreateNewParkingSpace");
 
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions("CreateNewParkingSpace")))
             {

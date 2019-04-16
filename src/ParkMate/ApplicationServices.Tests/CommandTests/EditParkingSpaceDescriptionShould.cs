@@ -15,7 +15,7 @@ namespace ParkMate.ApplicationServices.Tests
          [Fact]
          public async Task ChangeToCorrectDescription()
          {
-             await CreateTestParkingSpaceInDb("EditParkingSpaceDescription");
+             await CreateTestParkingSpaceInMemoryDb("EditParkingSpaceDescription");
 
              using (var context = new ParkMateDbContext(GetNamedDbContextOptions("EditParkingSpaceDescription")))
              {

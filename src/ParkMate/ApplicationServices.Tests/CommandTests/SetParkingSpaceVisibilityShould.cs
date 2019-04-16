@@ -15,7 +15,7 @@ namespace ParkMate.ApplicationServices.Tests
         [Fact]
         public async Task ChangeUnlistedSpaceToListed()
         {
-            await CreateTestParkingSpaceInDb("SetParkingSpaceVisibilityShould");
+            await CreateTestParkingSpaceInMemoryDb("SetParkingSpaceVisibilityShould");
 
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions("SetParkingSpaceVisibilityShould")))
             {

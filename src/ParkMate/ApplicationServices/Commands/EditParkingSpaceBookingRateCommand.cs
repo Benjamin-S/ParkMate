@@ -43,7 +43,12 @@ namespace ParkMate.ApplicationServices.Commands
             EditParkingSpaceBookingRateCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId, command.OwnerId);
+            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+
+            if (!parkingSpace.OwnerId.Equals(command.OwnerId))
+            {
+                return Result.CommandFail("Not authorized to modify this Parking Space");
+            }
 
             parkingSpace.UpdateBookingRate(command.BookingRate);
             

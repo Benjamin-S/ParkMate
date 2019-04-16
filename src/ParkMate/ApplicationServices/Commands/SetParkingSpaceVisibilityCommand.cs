@@ -41,11 +41,17 @@ namespace ParkMate.ApplicationServices.Commands
             SetParkingSpaceVisibilityCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId, command.OwnerId);
+            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+
+            if (!parkingSpace.OwnerId.Equals(command.OwnerId))
+            {
+                return Result.CommandFail("Not authorized to modify this Parking Space");
+            }
 
             parkingSpace.SetVisibility(command.IsListed);
             
             _repository.Update(parkingSpace);
+
             await _repository.UnitOfWork.SaveEntitiesAsync();
 
             await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
