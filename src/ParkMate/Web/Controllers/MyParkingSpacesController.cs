@@ -86,7 +86,7 @@ namespace Web.Controllers
             {
                 return View(model);
             }
-            var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
+            var imageResult = _imageProcessor.SaveImage(model.ImageFile);
             model.ParkingSpace.Description.ImageURL = imageResult.FileName;
 
             var result = await _mediator.Send(BuildParkingSpaceCommand(model.ParkingSpace));
@@ -129,7 +129,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditDescription([FromForm] ParkingSpaceDescriptionViewModel model, int parkingSpaceId)
         {
-            var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
+            var imageResult = _imageProcessor.SaveImage(model.ImageFile);
             model.Description.ImageURL = imageResult.FileName;
             
             var description = new ParkingSpaceDescription(model.Description.Title,  model.Description.Description,  model.Description.ImageURL);
