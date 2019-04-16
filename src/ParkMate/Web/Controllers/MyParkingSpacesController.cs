@@ -53,7 +53,12 @@ namespace Web.Controllers
             return View();
         }
         
-        public IActionResult EditAvailability()
+        public IActionResult EditAvailableDays()
+        {
+            return View();
+        }
+        
+        public IActionResult EditAvailableTimes()
         {
             return View();
         }
@@ -79,7 +84,7 @@ namespace Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model.ParkingSpace);
+                return View(model);
             }
             var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
             model.ParkingSpace.Description.ImageURL = imageResult.FileName;

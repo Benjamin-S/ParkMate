@@ -1,0 +1,31 @@
+@model AvailableTimeDTO
+
+
+<br />
+<h4>Availability Hours</h4>
+<hr />
+
+<div class="form-group">
+    <label asp-for="AvailableFrom"></label>
+    <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+        <input asp-for="AvailableFrom" class="form-control" type="text" value="13:14" id="AvailableFrom" />
+    </div>
+    <span asp-validation-for="AvailableFrom" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="AvailableTo"></label>
+    <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+        <input asp-for="AvailableTo" class="form-control" type="text" value="13:14" id="AvailableTo" />
+    </div>
+    <span asp-validation-for="AvailableTo" class="text-danger"></span>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ClockPickerPartial"/>
+
+    <script>
+        $('.clockpicker').clockpicker();
+    </script>
+}
