@@ -1,4 +1,4 @@
-﻿@model ParkingSpaceDTO
+﻿@model CreateParkingSpaceViewModel
 @{
     ViewData["Title"] = "Register a New Parking Space";
 }
@@ -23,23 +23,23 @@
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Address.Street"></label>
-                    <input asp-for="Address.Street" class="form-control" />
-                    <span asp-validation-for="Address.Street" class="text-danger"></span>
+                    <label asp-for="ParkingSpace.Address.Street"></label>
+                    <input asp-for="ParkingSpace.Address.Street" class="form-control" />
+                    <span asp-validation-for="ParkingSpace.Address.Street" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Address.City"></label>
-                    <input asp-for="Address.City" class="form-control" />
-                    <span asp-validation-for="Address.City" class="text-danger"></span>
+                    <label asp-for="ParkingSpace.Address.City"></label>
+                    <input asp-for="ParkingSpace.Address.City" class="form-control" />
+                    <span asp-validation-for="ParkingSpace.Address.City" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Address.Zip"></label>
-                    <input asp-for="Address.Zip" class="form-control" />
-                    <span asp-validation-for="Address.Zip" class="text-danger"></span>
+                    <label asp-for="ParkingSpace.Address.Zip"></label>
+                    <input asp-for="ParkingSpace.Address.Zip" class="form-control" />
+                    <span asp-validation-for="ParkingSpace.Address.Zip" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Address.State"></label>
-                    <select asp-for="Address.State" class="form-control">
+                    <label asp-for="ParkingSpace.Address.State"></label>
+                    <select asp-for="ParkingSpace.Address.State" class="form-control">
                         <option>New South Wales</option>
                         <option>Victoria</option>
                         <option>Queensland</option>
@@ -48,7 +48,7 @@
                         <option>Tasmania</option>
                         <option>Northern Territory</option>
                     </select>
-                    <span asp-validation-for="Address.State" class="text-danger"></span>
+                    <span asp-validation-for="ParkingSpace.Address.State" class="text-danger"></span>
                 </div>
             </div>
 
@@ -58,22 +58,22 @@
                 <hr />
 
                 <div class="form-group">
-                    <label asp-for="Description.Title"></label>
-                    <input asp-for="Description.Title" class="form-control" />
-                    <span asp-validation-for="Description.Title" class="text-danger"></span>
+                    <label asp-for="ParkingSpace.Description.Title"></label>
+                    <input asp-for="ParkingSpace.Description.Title" class="form-control" />
+                    <span asp-validation-for="ParkingSpace.Description.Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description.Description"></label>
-                    <input asp-for="Description.Description" class="form-control" />
-                    <span asp-validation-for="Description.Description" class="text-danger"></span>
+                    <label asp-for="ParkingSpace.Description.Description"></label>
+                    <input asp-for="ParkingSpace.Description.Description" class="form-control" />
+                    <span asp-validation-for="ParkingSpace.Description.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description.ImageFile"></label>
+                    <label asp-for="ImageFile"></label>
                     <div class="custom-file">
-                        <input asp-for="Description.ImageFile" type="file" class="custom-file-input" id="customFile" />
+                        <input asp-for="ImageFile" type="file" class="custom-file-input" id="customFile" />
                         <label class="custom-file-label" for="customFile">Choose file...</label>
                     </div>
-                    <span asp-validation-for="Description.ImageFile" class="text-danger"></span>
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>
             </div>
 
@@ -83,24 +83,24 @@
                 <hr />
 
                 <div class="form-group">
-                    <label asp-for="BookingRate.HourlyRate"></label>
+                    <label asp-for="ParkingSpace.BookingRate.HourlyRate"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input asp-for="BookingRate.HourlyRate" class="form-control" />
+                        <input asp-for="ParkingSpace.BookingRate.HourlyRate" class="form-control" />
                     </div>
-                    <span asp-validation-for="BookingRate.HourlyRate" class="text-danger"></span>
+                    <span asp-validation-for="ParkingSpace.BookingRate.HourlyRate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="BookingRate.DailyRate"></label>
+                    <label asp-for="ParkingSpace.BookingRate.DailyRate"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input asp-for="BookingRate.DailyRate" class="form-control" />
+                        <input asp-for="ParkingSpace.BookingRate.DailyRate" class="form-control" />
                     </div>
-                    <span asp-validation-for="BookingRate.DailyRate" class="text-danger"></span>
+                    <span asp-validation-for="ParkingSpace.BookingRate.DailyRate" class="text-danger"></span>
                 </div>
             </div>
 
@@ -110,18 +110,18 @@
                 <hr />
 
                 <div class="form-group">
-                    <label asp-for="AvailableTime.AvailableFrom"></label>
+                    <label asp-for="ParkingSpace.AvailableTime.AvailableFrom"></label>
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                        <input asp-for="AvailableTime.AvailableFrom" class="form-control" type="text" value="13:14" id="AvailableFrom" />
+                        <input asp-for="ParkingSpace.AvailableTime.AvailableFrom" class="form-control" type="text" value="13:14" id="AvailableFrom" />
                     </div>
-                    <span asp-validation-for="AvailableTime.AvailableFrom" class="text-danger"></span>
+                    <span asp-validation-for="ParkingSpace.AvailableTime.AvailableFrom" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="AvailableTime.AvailableTo"></label>
+                    <label asp-for="ParkingSpace.AvailableTime.AvailableTo"></label>
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                        <input asp-for="AvailableTime.AvailableTo" class="form-control" type="text" value="13:14" id="AvailableTo" />
+                        <input asp-for="ParkingSpace.AvailableTime.AvailableTo" class="form-control" type="text" value="13:14" id="AvailableTo" />
                     </div>
-                    <span asp-validation-for="AvailableTime.AvailableTo" class="text-danger"></span>
+                    <span asp-validation-for="ParkingSpace.AvailableTime.AvailableTo" class="text-danger"></span>
                 </div>
             </div>
 
@@ -131,39 +131,39 @@
                 <hr />
 
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="AvailableDays.IsAvailableMonday" class="custom-control-input" type="checkbox" />
-                    <label asp-for="AvailableDays.IsAvailableMonday" class="custom-control-label"></label>
-                    <span asp-validation-for="AvailableDays.IsAvailableMonday" class="text-danger "></span>
+                    <input asp-for="ParkingSpace.AvailableDays.IsAvailableMonday" class="custom-control-input" type="checkbox" />
+                    <label asp-for="ParkingSpace.AvailableDays.IsAvailableMonday" class="custom-control-label"></label>
+                    <span asp-validation-for="ParkingSpace.AvailableDays.IsAvailableMonday" class="text-danger "></span>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="AvailableDays.IsAvailableTuesday" class="custom-control-input" type="checkbox" />
-                    <label asp-for="AvailableDays.IsAvailableTuesday" class="custom-control-label"></label>
-                    <span asp-validation-for="AvailableDays.IsAvailableTuesday" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.AvailableDays.IsAvailableTuesday" class="custom-control-input" type="checkbox" />
+                    <label asp-for="ParkingSpace.AvailableDays.IsAvailableTuesday" class="custom-control-label"></label>
+                    <span asp-validation-for="ParkingSpace.AvailableDays.IsAvailableTuesday" class="text-danger"></span>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="AvailableDays.IsAvailableWednesday" class="custom-control-input" type="checkbox" />
-                    <label asp-for="AvailableDays.IsAvailableWednesday" class="custom-control-label"></label>
-                    <span asp-validation-for="AvailableDays.IsAvailableWednesday" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.AvailableDays.IsAvailableWednesday" class="custom-control-input" type="checkbox" />
+                    <label asp-for="ParkingSpace.AvailableDays.IsAvailableWednesday" class="custom-control-label"></label>
+                    <span asp-validation-for="ParkingSpace.AvailableDays.IsAvailableWednesday" class="text-danger"></span>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="AvailableDays.IsAvailableThursday" class="custom-control-input" type="checkbox" />
-                    <label asp-for="AvailableDays.IsAvailableThursday" class="custom-control-label"></label>
-                    <span asp-validation-for="AvailableDays.IsAvailableThursday" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.AvailableDays.IsAvailableThursday" class="custom-control-input" type="checkbox" />
+                    <label asp-for="ParkingSpace.AvailableDays.IsAvailableThursday" class="custom-control-label"></label>
+                    <span asp-validation-for="ParkingSpace.AvailableDays.IsAvailableThursday" class="text-danger"></span>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="AvailableDays.IsAvailableFriday" class="custom-control-input" type="checkbox" />
-                    <label asp-for="AvailableDays.IsAvailableFriday" class="custom-control-label"></label>
-                    <span asp-validation-for="AvailableDays.IsAvailableFriday" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.AvailableDays.IsAvailableFriday" class="custom-control-input" type="checkbox" />
+                    <label asp-for="ParkingSpace.AvailableDays.IsAvailableFriday" class="custom-control-label"></label>
+                    <span asp-validation-for="ParkingSpace.AvailableDays.IsAvailableFriday" class="text-danger"></span>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="AvailableDays.IsAvailableSaturday" class="custom-control-input" type="checkbox" />
-                    <label asp-for="AvailableDays.IsAvailableSaturday" class="custom-control-label"></label>
-                    <span asp-validation-for="AvailableDays.IsAvailableSaturday" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.AvailableDays.IsAvailableSaturday" class="custom-control-input" type="checkbox" />
+                    <label asp-for="ParkingSpace.AvailableDays.IsAvailableSaturday" class="custom-control-label"></label>
+                    <span asp-validation-for="ParkingSpace.AvailableDays.IsAvailableSaturday" class="text-danger"></span>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="AvailableDays.IsAvailableSunday" class="custom-control-input" type="checkbox" />
-                    <label asp-for="AvailableDays.IsAvailableSunday" class="custom-control-label"></label>
-                    <span asp-validation-for="AvailableDays.IsAvailableSunday" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.AvailableDays.IsAvailableSunday" class="custom-control-input" type="checkbox" />
+                    <label asp-for="ParkingSpace.AvailableDays.IsAvailableSunday" class="custom-control-label"></label>
+                    <span asp-validation-for="ParkingSpace.AvailableDays.IsAvailableSunday" class="text-danger"></span>
                 </div>
                 <br />
             </div>

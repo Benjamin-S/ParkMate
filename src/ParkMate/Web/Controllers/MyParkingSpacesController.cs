@@ -79,7 +79,7 @@ namespace Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model.ParkingSpace);
+                return View(model);
             }
             var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
             model.ParkingSpace.Description.ImageURL = imageResult.FileName;
