@@ -31,8 +31,16 @@ namespace ParkMate.ApplicationServices
         {
             return new Result
             {
-                Message = "",
                 ResultType = ResultType.None
+            };
+        }
+        public static Result Ok()
+        {
+            return new Result
+            {
+                ResultType = ResultType.Command,
+                Success = true,
+                Message = "The action was successful"
             };
         }
     }

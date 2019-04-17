@@ -71,8 +71,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _customerRepository.UnitOfWork.SaveEntitiesAsync();
 
-            await _mediator.Publish(new CustomerUpdatedEvent(customer));
-            await _mediator.Publish(new ParkingSpaceUpdatedEvent(parkingSpace));
+            await _mediator.Publish(new NewBookingCreatedEvent(customer, parkingSpace));
 
             return Result.CommandSuccess("Parking Space successfully booked");
         }

@@ -24,6 +24,8 @@ using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.Web.Util;
 using SixLabors.ImageSharp.Web.DependencyInjection;
+using AutoMapper;
+using ApplicationServices.Config;
 
 namespace ParkMate.Web
 {
@@ -60,6 +62,13 @@ namespace ParkMate.Web
             services.AddSingleton<IMongoClient, MongoClient>(
                 _ => new MongoClient(Configuration["ConnectionStrings:ParkMateReadDB"]));
 
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddIdentity<ParkMateUser, IdentityRole>(options =>
             {
@@ -87,7 +96,6 @@ namespace ParkMate.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IDocumentWriteRepository, DocumentRepository>();
             services.AddScoped<IMongoContext, MongoDbContext>();
             services.AddScoped<ImageProcessor>();
 

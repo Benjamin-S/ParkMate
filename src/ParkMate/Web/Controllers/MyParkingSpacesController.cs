@@ -53,7 +53,12 @@ namespace Web.Controllers
             return View();
         }
         
-        public IActionResult EditAvailability()
+        public IActionResult EditAvailableDays()
+        {
+            return View();
+        }
+        
+        public IActionResult EditAvailableTimes()
         {
             return View();
         }
@@ -79,9 +84,9 @@ namespace Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model.ParkingSpace);
+                return View(model);
             }
-            var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
+            var imageResult = _imageProcessor.SaveImage(model.ImageFile);
             model.ParkingSpace.Description.ImageURL = imageResult.FileName;
 
             var result = await _mediator.Send(BuildParkingSpaceCommand(model.ParkingSpace));
@@ -124,7 +129,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditDescription([FromForm] ParkingSpaceDescriptionViewModel model, int parkingSpaceId)
         {
-            var imageResult =  await _imageProcessor.SaveImage(model.ImageFile);
+            var imageResult = _imageProcessor.SaveImage(model.ImageFile);
             model.Description.ImageURL = imageResult.FileName;
             
             var description = new ParkingSpaceDescription(model.Description.Title,  model.Description.Description,  model.Description.ImageURL);
@@ -176,8 +181,6 @@ namespace Web.Controllers
             return await Index(result);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteParkingSpace(int parkingSpaceId)
         {
             var command = new DeleteParkingSpaceCommand(parkingSpaceId, _userId);

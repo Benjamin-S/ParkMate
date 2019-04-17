@@ -19,108 +19,64 @@ namespace ParkMate.Web.Util
             _environment = environment;
         }
 
-        public async Task<ImageValidationResult> SaveImage(IFormFile image)
+        public ImageValidationResult SaveImage(IFormFile img)
         {
-            var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-            var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
-
-            Image<Rgba32> finalImage = null;
-
-            using (var memoryStream = new MemoryStream())
+            try
             {
-                await image.CopyToAsync(memoryStream);
-                var fileBytes = memoryStream.ToArray();
-                using (var readStream = image.OpenReadStream())
-                {
-                    finalImage = Image.Load(fileBytes);
-                }
-
-                var validation = IsValidImage(image);
-                var smallImage = IsImageTooSmall(finalImage);
-
-                if (!validation.IsValid || smallImage)
-                {
-                    return new ImageValidationResult
-                    {
-                        IsValid = false
-                    };
-                }
-                finalImage = ResizeImage(finalImage);
+                return ProcessImage(img);
             }
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                finalImage.SaveAsJpeg(stream);
-            }
-
-            return new ImageValidationResult
-            {
-                IsValid = true,
-                FileName = fileName
-            };
-        }
-
-        private ImageValidationResult IsValidImage(IFormFile image)
-        {
-            // Maximum image size is 10MB, reject anything over that
-            const long maxFileSize = 10 * 1024 * 1024;
-
-            var isImage = image.ContentType.IndexOf("image", StringComparison.OrdinalIgnoreCase) < 0;
-            var isValidSize = image.Length < maxFileSize;
-
-            if (!isImage || !isValidSize)
+            catch(NotSupportedException)
             {
                 return new ImageValidationResult
                 {
-                    IsValid = false
+                    Message = "Not a valid image file. Please upload a JPG, PNG, BMP or GIF"
                 };
             }
-
-            return new ImageValidationResult
-            {
-                IsValid = true
-            };
         }
-
-        private Image<Rgba32> ResizeImage(Image<Rgba32> image)
+        ImageValidationResult ProcessImage(IFormFile img)
         {
-            const int width = 1280;
-            const int height = 720;
-            var isLandscape = image.Width >= image.Height;
-            var isTooLarge = isLandscape ? image.Width > width : image.Height > height;
+            if (img.Length > 10 * 1024 * 1024)
+            {
+                return new ImageValidationResult
+                {
+                    Message = "Upload can not be larger than 10MB. Please upload a smaller image."
+                };
+            }
+            using (var stream = img.OpenReadStream())
+            using (Image<Rgba32> image = Image.Load(stream))
+            {
 
-            if (!isTooLarge)
-            {
-                return image;
-            }
-            if (isLandscape)
-            {
-                image.Mutate(x => x
-                    .Resize(width, 0)
-                );
-            }
-            else
-            {
-                image.Mutate(x => x
-                    .Resize(0, height)
-                );
-            }
-            return image;
-        }
+                if (image.Height < 480 || image.Width < 480)
+                {
+                    return new ImageValidationResult
+                    {
+                        Message = "Image is too small. Please upload a large image."
+                    };
+                }
 
-        private bool IsImageTooSmall(Image<Rgba32> image)
-        {
-            const int minWidth = 640;
-            const int minHeight = 480;
-            var isLandscape = image.Width >= image.Height;
+                if (image.Width > 1280)
+                {
+                    image.Mutate(x => x.Resize(1280, 0));
+                }
 
-            if (isLandscape)
-            {
-                return image.Width < minWidth || image.Height < minHeight;
-            }
-            else
-            {
-                return image.Width < minHeight || image.Height < minWidth;
+                if (image.Height > 1280)
+                {
+                    image.Mutate(x => x.Resize(0, 1280));
+                }
+
+                var fileName = Guid.NewGuid() + Path.GetExtension(img.FileName);
+                var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
+
+                using (var file = new FileStream(filePath, FileMode.Create))
+                {
+                    image.SaveAsJpeg(file);
+
+                    return new ImageValidationResult
+                    {
+                        IsValid = true,
+                        FileName = fileName
+                    };
+                }
             }
         }
     }

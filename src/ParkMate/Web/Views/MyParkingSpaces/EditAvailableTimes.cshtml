@@ -1,0 +1,44 @@
+@model AvailableTimeDTO
+
+@section Styles {
+    <link href="@Url.Content("~/css/createParkingSpace.css")" rel="stylesheet" type="text/css" />
+    <environment include="Development">
+        <link href="~/lib/clockpicker/dist/bootstrap-clockpicker.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/clockpicker/dist/bootstrap-clockpicker.css" rel="stylesheet" />
+    </environment> 
+}
+
+<br />
+<h4>Availability Hours</h4>
+<hr />
+
+<form method="post" enctype="multipart/form-data" id="form">
+    <div class="form-group">
+        <label asp-for="AvailableFrom"></label>
+        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+            <input asp-for="AvailableFrom" class="form-control" type="text" value="13:14" id="AvailableFrom" />
+        </div>
+        <span asp-validation-for="AvailableFrom" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="AvailableTo"></label>
+        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+            <input asp-for="AvailableTo" class="form-control" type="text" value="13:14" id="AvailableTo" />
+        </div>
+        <span asp-validation-for="AvailableTo" class="text-danger"></span>
+    </div>
+    
+    <button type="submit" class="btn btn-primary mt-1">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ClockPickerPartial"/>
+
+    <script>
+        $('.clockpicker').clockpicker();
+    </script>
+}

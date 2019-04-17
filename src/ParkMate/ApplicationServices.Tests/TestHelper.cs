@@ -51,7 +51,7 @@ namespace ParkMate.ApplicationServices.Tests
 
         public static Customer GetTestCustomer(string id)
         {
-            return new Customer(id, "test@test.com");
+            return new Customer(id, "test@test.com", "Mr. Test");
         }
         public static DbContextOptions<ParkMateDbContext> GetUniqueDbContextOptions()
         {
@@ -80,7 +80,7 @@ namespace ParkMate.ApplicationServices.Tests
         {
             using (var context = new ParkMateDbContext(GetNamedDbContextOptions(dbName)))
             {
-                var command = new RegisterCustomerCommand(id, "test@test.com");
+                var command = new RegisterCustomerCommand(id, "test@test.com", "Mr. Test");
                 var repository = new CustomerRepository(context);
                 var handler = new RegisterCustomerCommandHandler(repository, new Mock<IMediator>().Object);
                 await handler.Handle(command);

@@ -53,14 +53,20 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src=@space.Description.ImageURL class="card-img" alt="No Image">
+                            <img src="/imageuploads/@space.Description.ImageURL" class="card-img" alt="No Image">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">@space.Description.Title</h5>
-                                <p class="card-text">@space.Description.Description</p>
+                                <p class="card-text">@space.Description.Description</p>                              
                                 <small class="text-muted">
-                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View</a>
+                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View |</a>
+                                </small>
+                                <small class="text-muted">
+                                    <a asp-action="Index" asp-route-id="@space.Id"> List |</a>
+                                </small>
+                                <small class="text-muted">
+                                    <a asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id"> Delete</a>
                                 </small>
                             </div>
                         </div>

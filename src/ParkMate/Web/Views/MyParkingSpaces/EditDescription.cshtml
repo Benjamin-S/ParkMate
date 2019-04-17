@@ -1,4 +1,4 @@
- @model DescriptionDTO
+ @model ParkingSpaceDescriptionViewModel
  @{
      ViewData["Title"] = "Edit Description";
  }
@@ -12,14 +12,14 @@
      <hr />
 
      <div class="form-group">
-         <label asp-for="Title"></label>
-         <input asp-for="Title" class="form-control" />
-         <span asp-validation-for="Title" class="text-danger"></span>
+         <label asp-for="Description.Title"></label>
+         <input asp-for="Description.Title" class="form-control" />
+         <span asp-validation-for="Description.Title" class="text-danger"></span>
      </div>
      <div class="form-group">
-         <label asp-for="Description"></label>
-         <input asp-for="Description" class="form-control" />
-         <span asp-validation-for="Description" class="text-danger"></span>
+         <label asp-for="Description.Description"></label>
+         <input asp-for="Description.Description" class="form-control" />
+         <span asp-validation-for="Description.Description" class="text-danger"></span>
      </div>
      <div class="form-group">
          <label asp-for="ImageFile"></label>

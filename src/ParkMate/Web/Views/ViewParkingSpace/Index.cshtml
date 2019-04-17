@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
 @model Result<ParkingSpace> 
 @{
     ViewData["Title"] = "Parking Space Details";
@@ -10,7 +12,7 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
+            <a  class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
             <h5 class="card-title">Description</h5>
             <h6 class="card-text">@space.Description.Title</h6>
             <p class="card-text">@space.Description.Description</p>
@@ -19,7 +21,7 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditAddress">Edit</a>
+            <a  class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAddress" asp-route-id="@space.Id">Edit</a>
             <h5 class="card-title">Address</h5>
             <p class="card-text">Street: @space.Address.Street</p>
             <p class="card-text">City: @space.Address.City</p>
@@ -30,7 +32,7 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
+            <a  class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
             <h5 class="card-title">Booking Rate</h5>
             <p class="card-text">Hourly Rate: @space.BookingRate.HourlyRate</p>
             <p class="card-text">Daily Rate: @space.BookingRate.DailyRate</p>
@@ -39,25 +41,69 @@
     <div class="card">
         <div class="card-body">
             @* Check if UserId == space.OwnerId *@
-            <a  class="btn btn-primary float-right" asp-controller="MyParkingSpaces" asp-action="EditAvailability" asp-route-id="@space.Id">Edit</a>
+            <a  class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableTimes" asp-route-id="@space.Id">Edit</a>
+            <h5 class="card-title">Availability Times</h5>
+            <p class="card-text">Available From: @space.Availability.Monday.AvailableFrom</p>
+            <p class="card-text">Available To: @space.Availability.Monday.AvailableTo</p>            
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            @* Check if UserId == space.OwnerId *@
+            <a  class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableDays" asp-route-id="@space.Id">Edit</a>
             <h5 class="card-title">Availability</h5>
-            <span class="badge" id="Monday">Monday</span>
-            <span class="badge" id="Tuesday">Tuesday</span>
-            <span class="badge" id="Wednesday">Wednesday</span>
-            <span class="badge" id="Thursday">Thursday</span>
-            <span class="badge" id="Friday">Friday</span>
-            <span class="badge" id="Saturday">Saturday</span>
-            <span class="badge" id="Sunday">Sunday</span>
+            <div class="custom-control custom-checkbox">
+                <input asp-for="Payload.Availability.Monday.IsAvailable" class="custom-control-input" type="checkbox" />
+                <label class="custom-control-label">Monday</label>  
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input asp-for="Payload.Availability.Tuesday.IsAvailable" class="custom-control-input" type="checkbox" /> 
+                <label class="custom-control-label">Tuesday</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input asp-for="Payload.Availability.Wednesday.IsAvailable" class="custom-control-input" type="checkbox" /> 
+                <label class="custom-control-label">Wednesday</label>
+            </div>           
+            <div class="custom-control custom-checkbox">        
+                <input asp-for="Payload.Availability.Thursday.IsAvailable" class="custom-control-input" type="checkbox" /> 
+                <label class="custom-control-label">Thursday</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input asp-for="Payload.Availability.Friday.IsAvailable" class="custom-control-input" type="checkbox" />
+                <label class="custom-control-label">Friday</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input asp-for="Payload.Availability.Saturday.IsAvailable" class="custom-control-input" type="checkbox" />
+                <label class="custom-control-label">Saturday</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input asp-for="Payload.Availability.Sunday.IsAvailable" class="custom-control-input" type="checkbox" /> 
+                <label class="custom-control-label">Sunday</label>
+            </div>
         </div>
     </div>
 </div>
 
-@* Check if UserId == space.OwnerId *@
-<span class="switch-lg">
-    <input type="checkbox" class="switch" id="switch-id">
-    <label for="switch-id">List Space</label>
-</span>
 
-<button type="button" class="btn btn-danger float-right">Delete</button>
+<br/>
+<a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" 
+        asp-action="DeleteParkingSpace"  asp-route-parkingSpaceId="@space.Id" asp-route-parkingSpaceId="@space.Availability.IsVisible"
+        id="listingButton"></a>
+<a class="btn btn-danger float-right owner-only" asp-controller="MyParkingSpaces" 
+        asp-action="DeleteParkingSpace"  asp-route-parkingSpaceId="@space.Id">Delete</a>
+<br/>
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $('input[type="checkbox"]').click(function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+    </script>
+}
 
 

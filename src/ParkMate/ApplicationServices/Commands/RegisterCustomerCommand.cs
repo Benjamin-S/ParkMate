@@ -10,13 +10,15 @@ namespace ParkMate.ApplicationServices.Commands
 {
     public class RegisterCustomerCommand : IRequest<Result>
     { 
-        public RegisterCustomerCommand(string identityId, string email)
+        public RegisterCustomerCommand(string identityId, string email, string name)
         {
             IdentityId = identityId;
             Email = email;
+            Name = name;
         }
         public string IdentityId { get; }
         public string Email { get; }
+        public string Name { get; }
     }
 
     public class RegisterCustomerCommandHandler
@@ -31,14 +33,15 @@ namespace ParkMate.ApplicationServices.Commands
         {
             _repository = repository ??
                 throw new ArgumentNullException(nameof(repository));
-            _mediator = mediator;
+            _mediator = mediator  ??
+                throw new ArgumentNullException(nameof(mediator));
         }
 
         public async Task<Result> Handle(
             RegisterCustomerCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var customer = new Customer(command.IdentityId, command.Email);
+            var customer = new Customer(command.IdentityId, command.Email, command.Name);
 
             await _repository.AddAsync(customer);
             await _repository.UnitOfWork.SaveEntitiesAsync();
