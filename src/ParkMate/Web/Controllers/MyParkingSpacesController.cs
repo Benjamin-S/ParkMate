@@ -181,8 +181,6 @@ namespace Web.Controllers
             return await Index(result);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteParkingSpace(int parkingSpaceId)
         {
             var command = new DeleteParkingSpaceCommand(parkingSpaceId, _userId);
