@@ -18,7 +18,7 @@
     <div class="form-group">
         <label asp-for="AvailableFrom"></label>
         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-            <input asp-for="AvailableFrom" class="form-control" type="text" value="13:14" id="AvailableFrom" />
+            <input asp-for="AvailableFrom" class="form-control" type="text" value="09:00" id="AvailableFrom" />
         </div>
         <span asp-validation-for="AvailableFrom" class="text-danger"></span>
     </div>
@@ -26,9 +26,14 @@
     <div class="form-group">
         <label asp-for="AvailableTo"></label>
         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-            <input asp-for="AvailableTo" class="form-control" type="text" value="13:14" id="AvailableTo" />
+            <input asp-for="AvailableTo" class="form-control" type="text" value="17:00" id="AvailableTo" />
         </div>
         <span asp-validation-for="AvailableTo" class="text-danger"></span>
+    </div>
+    
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="24hrCheck">
+        <label class="custom-control-label" for="24hrCheck">Set 24-hr Availability</label>
     </div>
     
     <button type="submit" class="btn btn-primary mt-1">Submit</button>
@@ -37,8 +42,35 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
     <partial name="_ClockPickerPartial"/>
-
     <script>
-        $('.clockpicker').clockpicker();
+
+        $("#24hrCheck").on('change',
+            function() {
+                if ($("#24hrCheck").prop("checked")) {
+                    $("#AvailableFrom, #AvailableTo").prop("disabled", true);
+                    $("#AvailableFrom, #AvailableTo").val("00:00");
+                } else {
+                    $("#AvailableFrom, #AvailableTo").prop("disabled", false);
+                    $("#AvailableTo").val("01:00");
+                }
+        });
+
+        $("#AvailableFrom, #AvailableTo").on('change',
+            function() {
+                var start = new Date('01/01/1970 ' + $("#AvailableFrom").val());
+                var end = new Date('01/01/1970 ' + $("#AvailableTo").val());
+
+
+                if ((end - start) < 3600000 && (end - start) >= 0) {
+                    start.setHours(start.getHours() + 1);
+                    var newHours = formatLeading0(start.getHours());
+                    var newMinutes = formatLeading0(start.getMinutes());
+                    $("#AvailableTo").val(newHours + ":" + newMinutes);
+                }
+        });
+
+        function formatLeading0(n) {
+            return n < 10 ? '0' + n : n;
+        }
     </script>
 }
