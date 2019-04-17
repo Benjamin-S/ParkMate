@@ -39,7 +39,7 @@ namespace ParkMate.ApplicationServices.Commands
             AddParkingSpaceToDocumentDBCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var listing = _mapper.Map<ParkingSpaceListingDTO>(command.ParkingSpace);
+            var listing = _mapper.Map<ParkingSpace, ParkingSpaceListingDTO>(command.ParkingSpace);
             
             await _context.ParkingSpaces.InsertOneAsync(command.ParkingSpace);
             await _context.ParkingSpaceListings.InsertOneAsync(listing);
