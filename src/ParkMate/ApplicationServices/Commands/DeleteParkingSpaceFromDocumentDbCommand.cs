@@ -24,16 +24,12 @@ namespace ParkMate.ApplicationServices.Commands
         : IRequestHandler<DeleteParkingSpaceFromDocumentDbCommand, Result>
     {
         private IMongoContext _context;
-        private IMapper _mapper;
 
         public DeleteParkingSpaceFromDocumentDbCommandHandler(
-            IMongoContext context,
-            IMapper mapper)
+            IMongoContext context)
         {
             _context = context ??
                 throw new ArgumentNullException(nameof(context));
-            _mapper = mapper ??
-                throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<Result> Handle(
@@ -41,11 +37,11 @@ namespace ParkMate.ApplicationServices.Commands
             CancellationToken cancellationToken = default(CancellationToken))
         {
             await _context.ParkingSpaceListings.DeleteOneAsync(ps => 
-                ps.ParkingSpaceId == command.ParkingSpace.Id);
-            
-            await _context.ParkingSpaces.DeleteOneAsync(ps => 
-                ps.Id == command.ParkingSpace.Id);
-            
+                        ps.ParkingSpaceId == command.ParkingSpace.Id);
+
+            await _context.ParkingSpaces.DeleteOneAsync(
+                        ps => ps.Id == command.ParkingSpace.Id);
+
             return Result.Ok();
         }
     }

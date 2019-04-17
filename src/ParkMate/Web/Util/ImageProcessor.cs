@@ -29,7 +29,7 @@ namespace ParkMate.Web.Util
             {
                 return new ImageValidationResult
                 {
-                    FileName = "Not a valid image file. Please upload a JPG, PNG, BMP or GIF"
+                    Message = "Not a valid image file. Please upload a JPG, PNG, BMP or GIF"
                 };
             }
         }
@@ -39,7 +39,7 @@ namespace ParkMate.Web.Util
             {
                 return new ImageValidationResult
                 {
-                    FileName = "Upload can not be larger than 10MB. Please upload a smaller image."
+                    Message = "Upload can not be larger than 10MB. Please upload a smaller image."
                 };
             }
             using (var stream = img.OpenReadStream())
@@ -50,7 +50,7 @@ namespace ParkMate.Web.Util
                 {
                     return new ImageValidationResult
                     {
-                        FileName = "Image is too small. Please upload a large image."
+                        Message = "Image is too small. Please upload a large image."
                     };
                 }
 

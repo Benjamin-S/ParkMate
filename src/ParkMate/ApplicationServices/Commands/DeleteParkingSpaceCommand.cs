@@ -25,15 +25,19 @@ namespace ParkMate.ApplicationServices.Commands
     public class DeleteParkingSpaceCommandHandler
         : IRequestHandler<DeleteParkingSpaceCommand, Result>
     {
-        private IParkingSpaceRepository _repository;
+        private IParkingSpaceRepository _parkingSpaceRepository;
+        private ICustomerRepository _customerRepository;
         private IMediator _mediator;
 
         public DeleteParkingSpaceCommandHandler(
-            IParkingSpaceRepository repository,
+            IParkingSpaceRepository parkingSpaceRepository,
+            ICustomerRepository customerRepository,
             IMediator mediator)
         {
-            _repository = repository ??
-                throw new ArgumentNullException(nameof(repository));
+            _parkingSpaceRepository = parkingSpaceRepository ??
+                throw new ArgumentNullException(nameof(parkingSpaceRepository));
+            _customerRepository = customerRepository ??
+                throw new ArgumentNullException(nameof(customerRepository));
             _mediator = mediator;
         }
 
@@ -41,18 +45,20 @@ namespace ParkMate.ApplicationServices.Commands
             DeleteParkingSpaceCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
+            var parkingSpace = await _parkingSpaceRepository.GetByIdAsync(command.ParkingSpaceId);
+            var customer = await _customerRepository.GetByIdAsync(command.OwnerId);
 
-            if(!parkingSpace.OwnerId.Equals(command.OwnerId))
+            if (!parkingSpace.OwnerId.Equals(command.OwnerId))
             {
                 return Result.CommandFail("Not authorized to modify this Parking Space");
             }
 
-            _repository.Delete(parkingSpace);
+            _parkingSpaceRepository.Delete(parkingSpace);
 
-            await _repository.UnitOfWork.SaveEntitiesAsync();
+            await _parkingSpaceRepository.UnitOfWork.SaveEntitiesAsync();
 
             await _mediator.Publish(new ParkingSpaceDeletedEvent(parkingSpace));
+            await _mediator.Publish(new CustomerUpdatedEvent(customer));
 
             return Result.CommandSuccess("Parking Space address was successfully updated");
         }
