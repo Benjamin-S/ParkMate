@@ -1,3 +1,4 @@
+@using ApplicationServices.Enums;
 @model Web.Models.CreateBookingViewModel;
 
 @{
@@ -8,23 +9,42 @@
 <h1>Create a Booking</h1>
 
 <div>
-    @if (!Model.Customer.Success)
+    @{
+        if (Model.Customer.Command.ResultType != ResultType.None)            
+        {
+            if (Model.Customer.Command.Success)
+            {
+                <div class="alert alert-success" role="alert">
+                    @Model.Customer.Command.Message
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.Customer.Command.Message
+                </div>   
+            }
+        }
+    }
+</div>
+
+<div>
+    @if (!Model.ParkingSpace.Query.Success)
     {
         <div class="alert alert-danger" role="alert">
-            @Model.Customer.Message
+            @Model.ParkingSpace.Query.Message
         </div>
     }
 </div>
 
 <div>
-    @if (!Model.ParkingSpace.Success)
+    @if (!Model.Customer.Query.Success)
     {
         <div class="alert alert-danger" role="alert">
-            @Model.ParkingSpace.Message
+            @Model.Customer.Query.Message
         </div>
     }
 </div>
-
 
 
 <form method="post" enctype="multipart/form-data" id="booking-form">
@@ -36,15 +56,15 @@
         <label for="car-select">Vehicle</label>
         <select name="car-select" class="form-control" id="car-select">
             @{
-                if (Model.Customer.Success)
+                if (Model.Customer.Query.Success)
                 {
-                    if (Model.Customer.PayLoad.Vehicles.Count == 0)
+                    if (Model.Customer.Query.Payload.Vehicles.Count == 0)
                     {
                         <option disabled="disabled">No vehicles found</option>
                     }
                     else
                     {
-                        foreach (var vehicle in Model.Customer.PayLoad.Vehicles)
+                        foreach (var vehicle in Model.Customer.Query.Payload.Vehicles)
                         {
                             <option value="@vehicle.Id">@vehicle.Model - @vehicle.Registration</option>
                         }

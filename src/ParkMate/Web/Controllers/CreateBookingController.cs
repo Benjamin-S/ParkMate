@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkMate.ApplicationServices.Queries;
 using Web.Models;
+using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices;
+using ParkMate.ApplicationServices.Commands;
 
 namespace Web.Controllers
 {
@@ -24,19 +27,39 @@ namespace Web.Controllers
             _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         }
 
-        // GET/id
-        [HttpGet]
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(Result previousCommand, int id)
         {
             var customerQuery = new GetCustomerQuery(_userId);
             var parkingSpaceQuery = new GetSingleParkingSpaceQuery(id);
             var viewModel = new CreateBookingViewModel
             {
-                Customer = await _mediator.Send(customerQuery),
-                ParkingSpace = await _mediator.Send(parkingSpaceQuery)
+                Customer = new ResultViewModel<Customer>(){
+                Command = previousCommand,
+                Query = await _mediator.Send(customerQuery)
+                },
+
+                ParkingSpace = new ResultViewModel<ParkingSpace>{
+                Command = previousCommand,
+                Query = await _mediator.Send(parkingSpaceQuery)
+                }
             };
 
-            return View(viewModel);
+            return View("Index", viewModel);
         }
+
+        // // GET/id
+        // [HttpGet]
+        // public async Task<IActionResult> Index(int id)
+        // {
+        //     var customerQuery = new GetCustomerQuery(_userId);
+        //     var parkingSpaceQuery = new GetSingleParkingSpaceQuery(id);
+        //     var viewModel = new CreateBookingViewModel
+        //     {
+        //         Customer = await _mediator.Send(customerQuery),
+        //         ParkingSpace = await _mediator.Send(parkingSpaceQuery)
+        //     };
+
+        //     return View(viewModel);
+        // }
     }
 }
