@@ -112,14 +112,14 @@
                 <div class="form-group">
                     <label asp-for="ParkingSpace.AvailableTime.AvailableFrom"></label>
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                        <input asp-for="ParkingSpace.AvailableTime.AvailableFrom" class="form-control" type="text" value="13:14" id="AvailableFrom" />
+                        <input asp-for="ParkingSpace.AvailableTime.AvailableFrom" class="form-control" type="text" value="09:00" id="AvailableFrom" />
                     </div>
                     <span asp-validation-for="ParkingSpace.AvailableTime.AvailableFrom" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ParkingSpace.AvailableTime.AvailableTo"></label>
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                        <input asp-for="ParkingSpace.AvailableTime.AvailableTo" class="form-control" type="text" value="13:14" id="AvailableTo" />
+                        <input asp-for="ParkingSpace.AvailableTime.AvailableTo" class="form-control" type="text" value="17:00" id="AvailableTo" />
                     </div>
                     <span asp-validation-for="ParkingSpace.AvailableTime.AvailableTo" class="text-danger"></span>
                 </div>
@@ -189,12 +189,18 @@
     <partial name="_ClockPickerPartial" />
 
     <script>
-        $('.clockpicker').clockpicker();
         var currentTab = 0;
         showTab(currentTab);
 
         $("#prevBtn").on("click", function () { nextPrev(-1); });
         $("#nextBtn").on("click", function () { nextPrev(1); });
+
+        $("#AvailableFrom, #AvailableTo").on('change',
+            function() {
+                if (($("#AvailableTo") - $("#AvailableFrom")) > 1) {
+                    $("#AvailableTo").value($("#AvailableFrom") + 1);
+                }
+            });
 
         $('#customFile').on('change',
             function () {
@@ -223,7 +229,7 @@
             var tabs = document.getElementsByClassName("formTab");
             tabs[currentTab].classList.add("currentTab");
 
-            if (direction == 1 && !($(".currentTab input").valid())) {
+            if ((direction == 1) && !($(".currentTab input").valid())) {
                 return false;
             }
 

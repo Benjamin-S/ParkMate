@@ -4,4 +4,24 @@
 <environment exclude="Development">
     <script src="~/lib/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
 </environment>
+<script>
+    $('.clockpicker').clockpicker();
+    
+    function limitAvailabilityInput1Hr(availableFromInput, availableToInput) {
+        var start =  new Date('01/01/1970 ' + availableFromInput.val());
+        var end = new Date('01/01/1970 ' + availableToInput.val());
+                
+        $("#test").text(start.toString());
 
+        if ((end - start) < 3600000 && (end - start) > 0) {
+            start.setHours(start.getHours() + 1);
+            var newHours = formatHH(start.getHours());
+            var newMinutes = formatHH(start.getMinutes());
+            availableToInput.val(newHours + ":" + newMinutes);
+        }
+    }
+    
+    function formatHH(n) {
+        return n < 10 ? '0' + n : n;
+    }
+</script>
