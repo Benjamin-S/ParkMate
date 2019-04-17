@@ -38,12 +38,12 @@ namespace ParkMate.ApplicationServices.Commands
             ReplaceCustomerInDocumentDbCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _context.Customers.ReplaceOneAsync(
-                doc => doc.Id == command.Customer.Id, 
+            await _context.Customers.ReplaceOneAsync(doc => 
+                doc.Id == command.Customer.Id, 
                 command.Customer,
                 new UpdateOptions { IsUpsert = true }); 
 
-            return Result.CommandSuccess("Customer was successfully replaced in DocumentDB");
+            return Result.Ok();
         }
     }
 }

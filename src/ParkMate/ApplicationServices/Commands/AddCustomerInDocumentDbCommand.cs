@@ -40,7 +40,7 @@ namespace ParkMate.ApplicationServices.Commands
         {
             await _context.Customers.InsertOneAsync(command.Customer);
 
-            return Result.CommandSuccess("Customer was successfully added to DocumentDB");
+            return Result.Ok();
         }
     }
 }

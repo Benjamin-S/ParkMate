@@ -40,12 +40,13 @@ namespace ParkMate.ApplicationServices.Commands
             DeleteParkingSpaceFromDocumentDbCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter1 = Builders<ParkingSpaceListingDTO>.Filter.Eq(ps => ps.ParkingSpaceId, command.ParkingSpace.Id);
-            var filter2 = Builders<ParkingSpace>.Filter.Eq(ps => ps.Id, command.ParkingSpace.Id);
-            await _context.ParkingSpaceListings.DeleteOneAsync(filter1);
-            await _context.ParkingSpaces.DeleteOneAsync(filter2);
-
-            return Result.CommandSuccess("Parking Space was successfully deleted from DocumentDB");
+            await _context.ParkingSpaceListings.DeleteOneAsync(ps => 
+                ps.ParkingSpaceId == command.ParkingSpace.Id);
+            
+            await _context.ParkingSpaces.DeleteOneAsync(ps => 
+                ps.Id == command.ParkingSpace.Id);
+            
+            return Result.Ok();
         }
     }
 }

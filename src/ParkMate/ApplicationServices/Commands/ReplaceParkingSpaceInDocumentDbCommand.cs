@@ -42,17 +42,17 @@ namespace ParkMate.ApplicationServices.Commands
         {
             var listing = _mapper.Map<ParkingSpaceListingDTO>(command.ParkingSpace);
             
-            await _context.ParkingSpaces.ReplaceOneAsync(
-                doc => doc.Id == command.ParkingSpace.Id, 
+            await _context.ParkingSpaces.ReplaceOneAsync(doc => 
+                doc.Id == command.ParkingSpace.Id, 
                 command.ParkingSpace,
                 new UpdateOptions { IsUpsert = true });
             
-            await _context.ParkingSpaceListings.ReplaceOneAsync(
-                doc => doc.ParkingSpaceId == command.ParkingSpace.Id, 
+            await _context.ParkingSpaceListings.ReplaceOneAsync(doc => 
+                doc.ParkingSpaceId == command.ParkingSpace.Id, 
                 listing,
                 new UpdateOptions { IsUpsert = true });
-            
-            return Result.CommandSuccess("Parking Space was successfully updated in DocumentDB");
+
+            return Result.Ok();
         }
     }
 }
