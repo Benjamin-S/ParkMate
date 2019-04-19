@@ -23,5 +23,8 @@
     <ItemGroup>
       <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Commands\ParkingSpaceDescriptionDTO.cs" />
+    </ItemGroup>
     <Import Project="..\ApplicationCore\ApplicationCore.projitems" Label="Shared" Condition="Exists('..\ApplicationCore\ApplicationCore.projitems')" />
 </Project>

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ParkMate.Web.Models
+namespace ParkMate.ApplicationServices.DTOs
 {
     public class AvailableTimeDTO
     {

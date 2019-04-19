@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Commands;
+using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
 using Web.Models;
 
@@ -48,8 +49,7 @@ namespace Web.Controllers
         public async Task<IActionResult> AddVehicle([FromForm] VehicleDTO dto)
         {
             var customerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var vehicle = new Vehicle(dto.Make , dto.Model,dto.Color, dto.Registration);
-            var command = new AddNewVehicleCommand(customerId, vehicle);
+            var command = new AddNewVehicleCommand(customerId, dto);
             var result = await _mediator.Send(command);
             return await Index(result);
         }

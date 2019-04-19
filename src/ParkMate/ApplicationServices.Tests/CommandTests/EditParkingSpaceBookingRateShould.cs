@@ -7,6 +7,7 @@ using ParkMate.ApplicationServices.Commands;
 using static ParkMate.ApplicationServices.Tests.TestHelper;
 using Moq;
 using MediatR;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -23,13 +24,13 @@ namespace ParkMate.ApplicationServices.Tests
                 var space = context.ParkingSpaces.FirstOrDefault();
                 var repository = new ParkingSpaceRepository(context);
                 var bookingRate = new BookingRate(new Money(12), new Money(34));
-                var command = new EditParkingSpaceBookingRateCommand(space.Id, space.OwnerId, bookingRate);
+                var bookingRateDto = new BookingRateDTO { HourlyRate = 12, DailyRate = 34 };
+                var command = new EditParkingSpaceBookingRateCommand(space.Id, space.OwnerId, bookingRateDto);
                 var handler = new EditParkingSpaceBookingRateCommandHandler(repository, new Mock<IMediator>().Object);
                 
                 await handler.Handle(command);
                 
                 Assert.NotNull(space.BookingRate);
-                Assert.NotEqual(GetTestBookingRate(), space.BookingRate);
                 Assert.Equal(bookingRate, space.BookingRate);
             }
         }       

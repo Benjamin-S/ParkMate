@@ -5,15 +5,16 @@ using MediatR;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.Events;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
     public class AddNewVehicleCommand : IRequest<Result>
     {
         public string CustomerId { get; }
-        public Vehicle Vehicle { get; }
+        public VehicleDTO Vehicle { get; }
         
-        public AddNewVehicleCommand(string customerId, Vehicle vehicle)
+        public AddNewVehicleCommand(string customerId, VehicleDTO vehicle)
         {
             CustomerId = customerId;
             Vehicle = vehicle;
@@ -40,7 +41,14 @@ namespace ParkMate.ApplicationServices.Commands
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var customer = await _repository.GetByIdAsync(command.CustomerId);
-            customer.Vehicles.Add(command.Vehicle);
+
+            var vehicle = new Vehicle(
+                command.Vehicle.Make, 
+                command.Vehicle.Model, 
+                command.Vehicle.Color, 
+                command.Vehicle.Registration);
+
+            customer.Vehicles.Add(vehicle);
 
             _repository.Update(customer);
 

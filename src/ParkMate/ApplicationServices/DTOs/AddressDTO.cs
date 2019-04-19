@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ParkMate.Web.Models
+namespace ParkMate.ApplicationServices.DTOs
 {
     public class AddressDTO
     {
@@ -25,11 +25,11 @@ namespace ParkMate.Web.Models
         public string Zip { get; set; }
 
         [Required]
-        [Range(-180.999999999, 180.999999999)]
+        [Range(-90d, 90d)]
         public double Latitude { get; set; }
 
         [Required]
-        [Range(-180.999999999, 180.999999999)]
+        [Range(-180d, 180d)]
         public double Longitude { get; set; }
 
     }

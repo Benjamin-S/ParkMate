@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
-namespace ParkMate.Web.Models
+namespace ParkMate.ApplicationServices.DTOs
 {
     public class DescriptionDTO
     {

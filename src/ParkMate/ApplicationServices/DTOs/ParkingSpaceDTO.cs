@@ -1,14 +1,12 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 
-namespace ParkMate.Web.Models
+namespace ParkMate.ApplicationServices.DTOs
 {
     public class ParkingSpaceDTO
     {
+        public string OwnerId { get; set; }
         public AddressDTO Address { get; set;}
         public BookingRateDTO BookingRate { get; set; }
         public DescriptionDTO Description { get; set; }
-        public AvailableTimeDTO AvailableTime { get; set; }
-        public AvailableDaysDTO AvailableDays { get; set; }
     } 
 }
