@@ -10,10 +10,9 @@
 
 <form method="post" enctype="multipart/form-data" id="form">
     <div class="input-group">
-        <input class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
-        <ul class="list-group" id="results"></ul>
+        <input class="form-control" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
         <div class="input-group-append">
-            <select asp-for="DistanceInMeters" id="stateInput" class="form-control" readonly>
+            <select asp-for="DistanceInMeters" id="stateInput" class="custom-select">
                 <option value="100">+100m</option>
                 <option value="250">+250m</option>
                 <option value="500">+500m</option>
@@ -21,11 +20,12 @@
                 <option value="1000">+1km</option>
                 <option value="2000">+2km</option>
             </select>
-        </div>
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary mt-1">Search</button>
-        </div>
+        </div>           
     </div>
+    
+    <button type="submit" class="btn btn-primary mt-1">Search</button>
+    
+    <ul class="list-group" id="results"></ul>
     <div class="form-group">
         <input asp-for="Latitude" id="latitudeInput" type="hidden" class="form-control"/>
         <span asp-validation-for="Latitude" class="text-danger"></span>
@@ -36,6 +36,7 @@
         <span asp-validation-for="Longitude" class="text-danger"></span>
     </div>
 </form>
+
 
 @section Scripts {
     <script>
