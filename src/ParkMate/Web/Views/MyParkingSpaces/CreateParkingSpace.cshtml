@@ -9,34 +9,29 @@
 
 <h1>Register New Parking Space</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data" id="form">
-            <div class="formTab">
-                <h4>Parking Space Address</h4>
-                <hr />
-                
-                <input class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
-                <ul class="list-group" id="results"></ul>
-                <hr />
+<div>
+    <form method="post" enctype="multipart/form-data" id="form">
+        <div class="formTab">
+            <h4>Parking Space Address</h4>
+            <hr />
+            
+            <input class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
+            <ul class="list-group" id="results"></ul>
+            <hr />
 
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="ParkingSpace.Address.Street"></label>
-                    <input asp-for="ParkingSpace.Address.Street" id="streetInput" class="form-control" readonly/>
-                    <span asp-validation-for="ParkingSpace.Address.Street" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ParkingSpace.Address.Street"></label>
+                <input asp-for="ParkingSpace.Address.Street" id="streetInput" class="form-control" readonly/>
+                <span asp-validation-for="ParkingSpace.Address.Street" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <label asp-for="ParkingSpace.Address.City"></label>
                     <input asp-for="ParkingSpace.Address.City" id="cityInput" class="form-control" readonly/>
                     <span asp-validation-for="ParkingSpace.Address.City" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ParkingSpace.Address.Zip"></label>
-                    <input asp-for="ParkingSpace.Address.Zip" id="zipInput" class="form-control" readonly/>
-                    <span asp-validation-for="ParkingSpace.Address.Zip" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+                <div class="form-group col-md-4">
                     <label asp-for="ParkingSpace.Address.State"></label>
                     <select asp-for="ParkingSpace.Address.State" id="stateInput" class="form-control" readonly>
                         <option>New South Wales</option>
@@ -49,82 +44,87 @@
                     </select>
                     <span asp-validation-for="ParkingSpace.Address.State" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <input asp-for="ParkingSpace.Address.Latitude" id="latitudeInput" type="hidden" class="form-control"/>
-                    <span asp-validation-for="ParkingSpace.Address.Latitude" class="text-danger"></span>
-                </div>  
-                <div class="form-group">
-                    <input asp-for="ParkingSpace.Address.Longitude" id="longitudeInput" type="hidden" class="form-control"/>
-                    <span asp-validation-for="ParkingSpace.Address.Longitude" class="text-danger"></span>
+                <div class="form-group col-md-2">
+                    <label asp-for="ParkingSpace.Address.Zip"></label>
+                    <input asp-for="ParkingSpace.Address.Zip" id="zipInput" class="form-control" readonly/>
+                    <span asp-validation-for="ParkingSpace.Address.Zip" class="text-danger"></span>
                 </div>
             </div>
+            <div class="form-group">
+                <input asp-for="ParkingSpace.Address.Latitude" id="latitudeInput" type="hidden" class="form-control"/>
+                <span asp-validation-for="ParkingSpace.Address.Latitude" class="text-danger"></span>
+            </div>  
+            <div class="form-group">
+                <input asp-for="ParkingSpace.Address.Longitude" id="longitudeInput" type="hidden" class="form-control"/>
+                <span asp-validation-for="ParkingSpace.Address.Longitude" class="text-danger"></span>
+            </div>
+        </div>
 
-            <div class="formTab">
-                <br />
-                <h4>Parking Space Description</h4>
-                <hr />
+        <div class="formTab">
+            <br />
+            <h4>Parking Space Description</h4>
+            <hr />
 
-                <div class="form-group">
-                    <label asp-for="ParkingSpace.Description.Title"></label>
-                    <input asp-for="ParkingSpace.Description.Title" class="form-control" />
-                    <span asp-validation-for="ParkingSpace.Description.Title" class="text-danger"></span>
+            <div class="form-group">
+                <label asp-for="ParkingSpace.Description.Title"></label>
+                <input asp-for="ParkingSpace.Description.Title" class="form-control" />
+                <span asp-validation-for="ParkingSpace.Description.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParkingSpace.Description.Description"></label>
+                <input asp-for="ParkingSpace.Description.Description" class="form-control" />
+                <span asp-validation-for="ParkingSpace.Description.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile"></label>
+                <div class="custom-file">
+                    <input asp-for="ImageFile" type="file" class="custom-file-input" id="customFile" />
+                    <label class="custom-file-label" for="customFile">Choose file...</label>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ParkingSpace.Description.Description"></label>
-                    <input asp-for="ParkingSpace.Description.Description" class="form-control" />
-                    <span asp-validation-for="ParkingSpace.Description.Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ImageFile"></label>
-                    <div class="custom-file">
-                        <input asp-for="ImageFile" type="file" class="custom-file-input" id="customFile" />
-                        <label class="custom-file-label" for="customFile">Choose file...</label>
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="formTab">
+            <br />
+            <h4>Booking Rates</h4>
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="ParkingSpace.BookingRate.HourlyRate"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
                     </div>
-                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.BookingRate.HourlyRate" class="form-control" />
                 </div>
+                <span asp-validation-for="ParkingSpace.BookingRate.HourlyRate" class="text-danger"></span>
             </div>
-
-            <div class="formTab">
-                <br />
-                <h4>Booking Rates</h4>
-                <hr />
-
-                <div class="form-group">
-                    <label asp-for="ParkingSpace.BookingRate.HourlyRate"></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
-                        </div>
-                        <input asp-for="ParkingSpace.BookingRate.HourlyRate" class="form-control" />
+            <div class="form-group">
+                <label asp-for="ParkingSpace.BookingRate.DailyRate"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
                     </div>
-                    <span asp-validation-for="ParkingSpace.BookingRate.HourlyRate" class="text-danger"></span>
+                    <input asp-for="ParkingSpace.BookingRate.DailyRate" class="form-control" />
                 </div>
-                <div class="form-group">
-                    <label asp-for="ParkingSpace.BookingRate.DailyRate"></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
-                        </div>
-                        <input asp-for="ParkingSpace.BookingRate.DailyRate" class="form-control" />
-                    </div>
-                    <span asp-validation-for="ParkingSpace.BookingRate.DailyRate" class="text-danger"></span>
-                </div>
+                <span asp-validation-for="ParkingSpace.BookingRate.DailyRate" class="text-danger"></span>
             </div>
+        </div>
 
-            <div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped" id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="clearfix">
-                    <button type="button" id="prevBtn" class="btn btn-primary mt-1">Previous</button>
-                    <button type="button" id="nextBtn" class="btn btn-primary float-right mt-1">Next</button>
-                </div>
-                <div class="alert alert-danger mt-2" id="alert" role="alert">
-                    Please ensure all details are completed before continuing.
-                </div>
+        <div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped" id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-        </form>
-    </div>
+            <div class="clearfix">
+                <button type="button" id="prevBtn" class="btn btn-primary mt-1">Previous</button>
+                <button type="button" id="nextBtn" class="btn btn-primary float-right mt-1">Next</button>
+            </div>
+            <div class="alert alert-danger mt-2" id="alert" role="alert">
+                Please ensure all details are completed before continuing.
+            </div>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
