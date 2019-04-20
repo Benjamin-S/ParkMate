@@ -11,8 +11,8 @@ using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.ApplicationServices.Queries
 {
-    public class FindSpacesWithinDistanceQuery 
-        : IRequest<Result<IReadOnlyList<ParkingSpaceListingDTO>>>
+    public class FindSpacesWithinDistanceQuery
+        : IRequest<Result<IReadOnlyList<ParkingSpaceViewModel>>>
     {
         public FindSpacesWithinDistanceQuery(DistanceSearchDTO query)
         {
@@ -23,7 +23,7 @@ namespace ParkMate.ApplicationServices.Queries
 
     public class FindSpacesWithinDistanceQueryHandler
     : IRequestHandler<FindSpacesWithinDistanceQuery,
-        Result<IReadOnlyList<ParkingSpaceListingDTO>>>
+        Result<IReadOnlyList<ParkingSpaceViewModel>>>
     {
         private IMongoContext _context;
 
@@ -32,23 +32,23 @@ namespace ParkMate.ApplicationServices.Queries
             _context = context;
         }
 
-        public async Task<Result<IReadOnlyList<ParkingSpaceListingDTO>>> Handle(
+        public async Task<Result<IReadOnlyList<ParkingSpaceViewModel>>> Handle(
             FindSpacesWithinDistanceQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var point = GeoJson.Point(
                 GeoJson.Geographic(query.Paramaters.Longitude, query.Paramaters.Latitude));
 
-            var locationQuery = new FilterDefinitionBuilder<ParkingSpaceListingDTO>()
+            var locationQuery = new FilterDefinitionBuilder<ParkingSpaceViewModel>()
                 .Near(ps => ps.Location, point, query.Paramaters.DistanceInMeters);
 
-            var result = await _context.ParkingSpaceListings.FindAsync(locationQuery).Result.ToListAsync();
+            var result = await _context.ParkingSpaces.FindAsync(locationQuery).Result.ToListAsync();
 
             if (result != null && result.Count != 0)
             {
-                return Result<IReadOnlyList<ParkingSpaceListingDTO>>.QuerySuccess(result);
+                return Result<IReadOnlyList<ParkingSpaceViewModel>>.QuerySuccess(result);
             }
-            return Result<IReadOnlyList<ParkingSpaceListingDTO>>.QueryFail("Parking space not found");
+            return Result<IReadOnlyList<ParkingSpaceViewModel>>.QueryFail("Parking space not found");
         }
     }
 }

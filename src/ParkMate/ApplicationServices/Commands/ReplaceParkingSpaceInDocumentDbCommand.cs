@@ -40,18 +40,13 @@ namespace ParkMate.ApplicationServices.Commands
             ReplaceParkingSpaceInDocumentDbCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var listing = _mapper.Map<ParkingSpaceListingDTO>(command.ParkingSpace);
-            
-            await _context.ParkingSpaces.ReplaceOneAsync(doc => 
-                doc.Id == command.ParkingSpace.Id, 
-                command.ParkingSpace,
-                new UpdateOptions { IsUpsert = true });
-            
-            await _context.ParkingSpaceListings.ReplaceOneAsync(doc => 
-                doc.ParkingSpaceId == command.ParkingSpace.Id, 
-                listing,
-                new UpdateOptions { IsUpsert = true });
+            var parkingSpace = _mapper.Map<ParkingSpaceViewModel>(command.ParkingSpace);
 
+            await _context.ParkingSpaces.ReplaceOneAsync(doc => 
+                doc.ParkingSpaceId == command.ParkingSpace.Id,
+                parkingSpace,
+                new UpdateOptions { IsUpsert = true });
+        
             return Result.Ok();
         }
     }

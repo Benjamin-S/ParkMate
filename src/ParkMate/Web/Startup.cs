@@ -1,30 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MediatR;
-using ParkMate.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using ParkMate.Infrastructure.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using SixLabors.ImageSharp.Web.DependencyInjection;
+using AutoMapper;
+using MediatR;
 using MongoDB.Driver;
+using ParkMate.Infrastructure.Identity;
+using ParkMate.Infrastructure.Services;
 using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Interfaces;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.Web.Util;
-using SixLabors.ImageSharp.Web.DependencyInjection;
-using AutoMapper;
+
 using ApplicationServices.Config;
 
 namespace ParkMate.Web
@@ -64,7 +58,7 @@ namespace ParkMate.Web
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new MappingProfile());
+                mc.AddProfile(new ParkingSpaceMappingProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

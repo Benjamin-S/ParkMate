@@ -48,7 +48,7 @@ namespace Web.Controllers
   
             return View("Index", viewModel);
         }
-        
+
         public IActionResult EditAddress()
         {
             return View();
@@ -78,7 +78,7 @@ namespace Web.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateParkingSpace([FromForm] CreateParkingSpaceViewModel model)

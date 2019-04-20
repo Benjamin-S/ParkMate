@@ -7,9 +7,9 @@ using ParkMate.ApplicationServices.DTOs;
 
 namespace ApplicationServices.Config
 {
-    public class MappingProfile : Profile
+    public class ParkingSpaceListingMappingProfile : Profile
     {
-        public MappingProfile()
+        public ParkingSpaceListingMappingProfile()
         {
             CreateMap<Point, GeoJsonPoint<GeoJson2DGeographicCoordinates>>()
                 .ConvertUsing<LocationConverter>();
@@ -23,17 +23,6 @@ namespace ApplicationServices.Config
                 .ForMember(d => d.ParkingSpaceId, s => s.MapFrom(src => src.Id))
                 .ForMember(d => d.Location, s => s.MapFrom(src => src.Address.Location))
                 .ForMember(d => d.IsListed, s => s.MapFrom(src => src.Availability.IsVisible));
-        }
-    }
-    public class LocationConverter 
-        : ITypeConverter<Point, GeoJsonPoint<GeoJson2DGeographicCoordinates>>
-    {
-        public GeoJsonPoint<GeoJson2DGeographicCoordinates> Convert(
-            Point source, 
-            GeoJsonPoint<GeoJson2DGeographicCoordinates> destination, ResolutionContext context)
-        {
-            return new GeoJsonPoint<GeoJson2DGeographicCoordinates>(
-                new GeoJson2DGeographicCoordinates(source.Longitude, source.Latitude));
         }
     }
 }

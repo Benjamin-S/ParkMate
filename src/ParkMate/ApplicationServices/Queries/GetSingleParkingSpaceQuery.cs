@@ -5,11 +5,12 @@ using MediatR;
 using MongoDB.Driver;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Queries
 {
     public class GetSingleParkingSpaceQuery
-        : IRequest<Result<ParkingSpace>>
+        : IRequest<Result<ParkingSpaceViewModel>>
     {
         public GetSingleParkingSpaceQuery(int parkingSpaceId)
         {
@@ -19,7 +20,7 @@ namespace ParkMate.ApplicationServices.Queries
     }
 
     public class GetSingleParkingSpaceQueryHandler
-        : IRequestHandler<GetSingleParkingSpaceQuery, Result<ParkingSpace>>
+        : IRequestHandler<GetSingleParkingSpaceQuery, Result<ParkingSpaceViewModel>>
     {
         private IMongoContext _context;
 
@@ -28,19 +29,19 @@ namespace ParkMate.ApplicationServices.Queries
             _context = context;
         }
 
-        public async Task<Result<ParkingSpace>> Handle(
+        public async Task<Result<ParkingSpaceViewModel>> Handle(
             GetSingleParkingSpaceQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = Builders<ParkingSpace>.Filter.Eq(ps => ps.Id, query.ParkingSpaceId);
-
-            var space = await _context.ParkingSpaces.FindAsync(filter).Result.FirstOrDefaultAsync();
+            var space = await _context.ParkingSpaces
+                .FindAsync(ps => ps.ParkingSpaceId == query.ParkingSpaceId)
+                .Result.FirstOrDefaultAsync();
 
             if (space != null)
             {
-                return Result<ParkingSpace>.QuerySuccess(space);
+                return Result<ParkingSpaceViewModel>.QuerySuccess(space);
             }
-            return Result<ParkingSpace>.QueryFail("Parking space not found");
+            return Result<ParkingSpaceViewModel>.QueryFail("Parking space not found");
         }
     }
 }

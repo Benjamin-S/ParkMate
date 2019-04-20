@@ -18,22 +18,20 @@ namespace ParkMate.Infrastructure.Data
         }
         public IMongoDatabase MongoDatabase { get; }
 
-        public IMongoCollection<ParkingSpace> ParkingSpaces => 
-            MongoDatabase.GetCollection<ParkingSpace>("ParkingSpace");
+        public IMongoCollection<ParkingSpaceViewModel> ParkingSpaces => 
+            MongoDatabase.GetCollection<ParkingSpaceViewModel>("ParkingSpaces");
 
         public IMongoCollection<Customer> Customers =>
             MongoDatabase.GetCollection<Customer>("Customer");
 
-        public IMongoCollection<ParkingSpaceListingDTO> ParkingSpaceListings =>
-            MongoDatabase.GetCollection<ParkingSpaceListingDTO>("ParkingSpaceListings");
 
         void CreateIndexes()
         {
-            var index = new CreateIndexModel<ParkingSpaceListingDTO>(
-                new IndexKeysDefinitionBuilder<ParkingSpaceListingDTO>()
+            var index = new CreateIndexModel<ParkingSpaceViewModel>(
+                new IndexKeysDefinitionBuilder<ParkingSpaceViewModel>()
                 .Geo2DSphere(x => x.Location));
 
-            ParkingSpaceListings.Indexes.CreateOne(index);
+            ParkingSpaces.Indexes.CreateOne(index);
         }
     }
 }

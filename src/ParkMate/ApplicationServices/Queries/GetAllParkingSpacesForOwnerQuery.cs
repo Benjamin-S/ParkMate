@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using MediatR;
 using MongoDB.Driver;
 using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.ApplicationServices.Queries
 {
     public class GetAllParkingSpacesForOwnerQuery 
-        : IRequest<Result<IReadOnlyList<ParkingSpace>>>
+        : IRequest<Result<IReadOnlyList<ParkingSpaceViewModel>>>
     {
         public GetAllParkingSpacesForOwnerQuery(string ownerId)
         {
@@ -20,7 +21,7 @@ namespace ParkMate.ApplicationServices.Queries
 
     public class GetAllParkingSpacesForOwnerQueryHandler 
         : IRequestHandler<GetAllParkingSpacesForOwnerQuery, 
-            Result<IReadOnlyList<ParkingSpace>>>
+            Result<IReadOnlyList<ParkingSpaceViewModel>>>
     {
         private IMongoContext _context;
 
@@ -29,19 +30,17 @@ namespace ParkMate.ApplicationServices.Queries
             _context = context;
         }
 
-        public async Task<Result<IReadOnlyList<ParkingSpace>>> Handle(
+        public async Task<Result<IReadOnlyList<ParkingSpaceViewModel>>> Handle(
             GetAllParkingSpacesForOwnerQuery query, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = Builders<ParkingSpace>.Filter.Eq(o => o.OwnerId, query.OwnerId);
-
-            var result = await _context.ParkingSpaces.FindAsync(filter).Result.ToListAsync();
+            var result = await _context.ParkingSpaces.FindAsync(o => o.OwnerId == query.OwnerId).Result.ToListAsync();
 
             if (result != null && result.Count != 0)
             {
-                return Result<IReadOnlyList<ParkingSpace>>.QuerySuccess(result);
+                return Result<IReadOnlyList<ParkingSpaceViewModel>>.QuerySuccess(result);
             }
-            return Result<IReadOnlyList<ParkingSpace>>.QueryFail("Parking space not found");
+            return Result<IReadOnlyList<ParkingSpaceViewModel>>.QueryFail("Parking space not found");
         }
     }
 }

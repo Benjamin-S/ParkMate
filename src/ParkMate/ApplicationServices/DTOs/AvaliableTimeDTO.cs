@@ -5,7 +5,8 @@ namespace ParkMate.ApplicationServices.DTOs
 {
     public class AvailableTimeDTO
     {
-        public DayOfWeek Day { get; set; }
+        public DayOfWeek DayOfWeek { get; set; }
+        public bool IsAvailable { get; set; }
 
         [Required]
         [Display(Name = "Availability Start Time")]
