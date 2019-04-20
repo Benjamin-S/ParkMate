@@ -14,14 +14,26 @@ namespace ParkMate.Infrastructure.Data
         public MongoDbContext(IOptions<MongoSettings> options, IMongoClient client)
         {
             MongoDatabase = client.GetDatabase(options.Value.Database);
+            CreateIndexes();
         }
         public IMongoDatabase MongoDatabase { get; }
 
         public IMongoCollection<ParkingSpace> ParkingSpaces => 
             MongoDatabase.GetCollection<ParkingSpace>("ParkingSpace");
+
         public IMongoCollection<Customer> Customers =>
             MongoDatabase.GetCollection<Customer>("Customer");
+
         public IMongoCollection<ParkingSpaceListingDTO> ParkingSpaceListings =>
             MongoDatabase.GetCollection<ParkingSpaceListingDTO>("ParkingSpaceListings");
+
+        void CreateIndexes()
+        {
+            var index = new CreateIndexModel<ParkingSpaceListingDTO>(
+                new IndexKeysDefinitionBuilder<ParkingSpaceListingDTO>()
+                .Geo2DSphere(x => x.Location));
+
+            ParkingSpaceListings.Indexes.CreateOne(index);
+        }
     }
 }
