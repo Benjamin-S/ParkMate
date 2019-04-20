@@ -2,10 +2,11 @@
     ViewData["Title"] = "Search";
 }
 
+<br/>
 <h1> Search </h1>
+<br/>
 
-
-<input id="searchBar" type="text" placeholder="Search" >
+<input class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
 <ul class="list-group" id="results"></ul>
 
 @section Scripts {
@@ -14,18 +15,18 @@
             function() {
                 var inputText = $(this).val();
 
-                if (inputText.length >= 2) {
+                if (inputText.match("[a-zA-Z]")) { 
                     $.get('@Url.Action("SearchAutoComplete")',
                         { searchInput: inputText },
                         function(data) {
                             $("#results").empty();
 
-                            for (i = 0; i < data.length; i++) {
+                            for (i = 0; i < data.length; i++) {                           
                                 $("#results").append('<a href="#" class="list-group-item list-group-item-action" ' +
-                                    'id="' +
-                                    data[i].id +
-                                    '">' +
-                                    data[i].address +
+                                    'id="' + data[i].id +'">' +
+                                    data[i].street + ", " +
+                                    data[i].city + ", " +
+                                    data[i].state +
                                     "</li>");
                             }
 
@@ -37,8 +38,9 @@
             });
 
         $(document).on("click", "#results > a", function() {
-            $("#searchBar").val($(this).text);
-            $("#results").empty().hide();
+            
+            $("#searchBar").val($(this).text());
+            $("#results").empty();
 
             //POST function for selection goes here
         });

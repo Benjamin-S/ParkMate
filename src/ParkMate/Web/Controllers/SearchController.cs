@@ -26,7 +26,7 @@ namespace ParkMate.Web.Controllers
             var query = new GetAddressForStreetQuery(searchInput);
             var result = await _mediator.Send(query);
 
-            return Json(result);
+            return Json(result.Payload);
         }
     }
 }
