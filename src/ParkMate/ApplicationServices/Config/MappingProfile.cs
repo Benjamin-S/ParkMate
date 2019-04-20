@@ -33,7 +33,7 @@ namespace ApplicationServices.Config
             GeoJsonPoint<GeoJson2DGeographicCoordinates> destination, ResolutionContext context)
         {
             return new GeoJsonPoint<GeoJson2DGeographicCoordinates>(
-                new GeoJson2DGeographicCoordinates(source.Latitude, source.Longitude));
+                new GeoJson2DGeographicCoordinates(source.Longitude, source.Latitude));
         }
     }
 }
