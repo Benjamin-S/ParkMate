@@ -66,7 +66,7 @@
      function() {
          var inputText = $(this).val();
     
-         if (inputText.length >= 2) {
+         if (inputText.match("[a-zA-Z]")) {
             $.get('@Url.Action("SearchAutoComplete", "Search")',
              { searchInput: inputText },
              function(data) {
