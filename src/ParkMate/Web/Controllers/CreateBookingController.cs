@@ -33,33 +33,50 @@ namespace Web.Controllers
             var parkingSpaceQuery = new GetSingleParkingSpaceQuery(id);
             var viewModel = new CreateBookingViewModel
             {
-                Customer = new ResultViewModel<Customer>(){
-                Command = previousCommand,
-                Query = await _mediator.Send(customerQuery)
+                Customer = new ResultViewModel<Customer>()
+                {
+                    Command = previousCommand,
+                    Query = await _mediator.Send(customerQuery)
                 },
 
-                ParkingSpace = new ResultViewModel<ParkingSpace>{
-                Command = previousCommand,
-                Query = await _mediator.Send(parkingSpaceQuery)
+                ParkingSpace = new ResultViewModel<ParkingSpace>
+                {
+                    Command = previousCommand,
+                    Query = await _mediator.Send(parkingSpaceQuery)
                 }
             };
 
             return View("Index", viewModel);
         }
 
-        // // GET/id
-        // [HttpGet]
-        // public async Task<IActionResult> Index(int id)
-        // {
-        //     var customerQuery = new GetCustomerQuery(_userId);
-        //     var parkingSpaceQuery = new GetSingleParkingSpaceQuery(id);
-        //     var viewModel = new CreateBookingViewModel
-        //     {
-        //         Customer = await _mediator.Send(customerQuery),
-        //         ParkingSpace = await _mediator.Send(parkingSpaceQuery)
-        //     };
+        public IActionResult EditBooking()
+        {
+            return View();
+        }
 
-        //     return View(viewModel);
+        public IActionResult RemoveBooking()
+        {
+            return View();
+        }
+
+        public IActionResult CreateBooking()
+        {
+            return View();
+        }
+
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> CreateBooking([FromForm] CreateBookingViewModel model)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return View(model);
+        //     }
+
+        //     // var result = await _mediator.Send(new BookParkingSpaceCommand(_userId, ));
+        //     var query = new GetCustomerQuery(_userId);
+        //     var result = await _mediator.Send(query);
+        //     return await Index(result);
         // }
     }
 }

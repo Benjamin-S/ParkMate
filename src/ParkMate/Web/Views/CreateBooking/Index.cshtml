@@ -29,6 +29,26 @@
 </div>
 
 <div>
+    @{
+        if (Model.ParkingSpace.Command.ResultType != ResultType.None)            
+        {
+            if (Model.ParkingSpace.Command.Success)
+            {
+                <div class="alert alert-success" role="alert">
+                    @Model.ParkingSpace.Command.Message
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.ParkingSpace.Command.Message
+                </div>   
+            }
+        }
+    }
+</div>
+
+<div>
     @if (!Model.ParkingSpace.Query.Success)
     {
         <div class="alert alert-danger" role="alert">
@@ -45,6 +65,26 @@
         </div>
     }
 </div>
+
+@{
+    if(Model.ParkingSpace.Query.Success)
+    {
+        var parkingSpace = Model.ParkingSpace.Query.Payload;
+        <div class="card">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="card-img" src="/imageuploads/@Model.ParkingSpace.Query.Payload.Description.ImageURL" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.ParkingSpace.Query.Payload.Description.Title</h5>
+                        <p class="card-text">Description: @Model.ParkingSpace.Query.Payload.Description.Description</p>
+                        <p class="card-text">Hourly Rate: @Model.ParkingSpace.Query.Payload.BookingRate.HourlyRate</p>
+                        <p class="card-text">Daily Rate: @Model.ParkingSpace.Query.Payload.BookingRate.DailyRate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
 
 
 <form method="post" enctype="multipart/form-data" id="booking-form">
