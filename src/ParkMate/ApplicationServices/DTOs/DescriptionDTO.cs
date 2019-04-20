@@ -4,6 +4,7 @@ namespace ParkMate.ApplicationServices.DTOs
 {
     public class DescriptionDTO
     {
+        [Required]
         [StringLength(255)]
         [Display(Name = "Parking Space Title")]
         public string Title { get; set; }
