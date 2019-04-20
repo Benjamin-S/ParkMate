@@ -9,8 +9,7 @@ namespace ParkMate.ApplicationServices.Interfaces
     public interface IMongoContext
     {
         IMongoDatabase MongoDatabase { get; }
-        IMongoCollection<ParkingSpace> ParkingSpaces { get; }
+        IMongoCollection<ParkingSpaceViewModel> ParkingSpaces { get; }
         IMongoCollection<Customer> Customers { get; }
-        IMongoCollection<ParkingSpaceListingDTO> ParkingSpaceListings { get; }
     }
 }

@@ -57,7 +57,7 @@ namespace ParkMate.ApplicationServices.Commands
             }
             var updatedDays = command.AvailabilityTimes
                 .Select(d => AvailabilityTime
-                .CreateAvailabilityWithHours(d.Day, d.AvailableFrom, d.AvailableTo))
+                .CreateAvailabilityWithHours(d.DayOfWeek, d.AvailableFrom, d.AvailableTo))
                 .ToList();
 
             foreach (var time in updatedDays)

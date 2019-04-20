@@ -25,6 +25,7 @@
     </ItemGroup>
     <ItemGroup>
       <Compile Remove="Commands\ParkingSpaceDescriptionDTO.cs" />
+      <Compile Remove="Config\MappingProfile.cs" />
     </ItemGroup>
     <Import Project="..\ApplicationCore\ApplicationCore.projitems" Label="Shared" Condition="Exists('..\ApplicationCore\ApplicationCore.projitems')" />
 </Project>

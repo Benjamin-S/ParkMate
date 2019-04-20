@@ -1,0 +1,86 @@
+@model Result<IReadOnlyList<ParkingSpaceListingDTO>>
+
+@{
+    ViewData["Title"] = "Search Result";
+}
+
+@section Styles
+{
+    <link href="@Url.Content("~/css/SearchResult.css")" rel="stylesheet" type="text/css" />
+}
+
+@{
+    if (!Model.Success)
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.Message
+        </div>
+    }
+    else if (!Model.Payload.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            Your search returned no results.
+        </div>
+    }
+    else
+    {
+        <div class="container my-3">
+            <div class="row mx-auto my-auto">
+                <div id="cardCarousel" class="carousel slide w-100" data-ride="carousel">
+                    <div class="carousel-inner w-100" id="cardCarouselRow" role="listbox">
+                        @{
+                            foreach (var space in Model.Payload)
+                            {
+                                <div class="carousel-item">
+                                    <div class="card col-md-3">
+                                        <img class="card-img-top img-fluid" src="/imageuploads/@space.ImageURL" alt="No image">
+                                        <div class="card-body">
+                                            <h4 class="card-title">@space.Title</h4>
+                                            <p class="card-text">@space.Description</p>
+                                            <a class="btn btn-primary" asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.ParkingSpaceId">View</a>
+                                            <a class="btn btn-primary float-right">Book</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>  
+                    <a class="carousel-control-prev" href="#cardCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#cardCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#cardCarouselRow div:first-child").addClass("active");
+        });
+
+        $('.carousel .carousel-item').each(function(){
+            var next = $(this).next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+    
+            for (var i=0;i<2;i++) {
+                next=next.next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
+                }
+        
+                next.children(':first-child').clone().appendTo($(this));
+            }
+        });
+    </script>
+}
