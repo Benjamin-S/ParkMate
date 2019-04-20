@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.Web.Models
 {

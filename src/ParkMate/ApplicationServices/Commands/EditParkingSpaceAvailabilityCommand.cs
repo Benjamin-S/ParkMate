@@ -8,23 +8,28 @@ using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.Events;
+using ParkMate.ApplicationServices.DTOs;
+using System.Linq;
 
 namespace ParkMate.ApplicationServices.Commands
 {
     public class EditParkingSpaceAvailabilityCommand  : IRequest<Result>
     {
-        public EditParkingSpaceAvailabilityCommand(int parkingSpaceId, string ownerId, List<AvailabilityTime> times)
+        public EditParkingSpaceAvailabilityCommand(
+            int parkingSpaceId, 
+            string ownerId, 
+            List<AvailableTimeDTO> times)
         {
             ParkingSpaceId = parkingSpaceId;
             OwnerId = ownerId;
             AvailabilityTimes = times;
         }
+
         public int ParkingSpaceId { get; }
         public string OwnerId { get; }
-        public IReadOnlyList<AvailabilityTime> AvailabilityTimes { get; }
-    
+        public IReadOnlyList<AvailableTimeDTO> AvailabilityTimes { get; }
     }
-    
+
     public class EditParkingSpaceAvailabilityCommandHandler 
         : IRequestHandler<EditParkingSpaceAvailabilityCommand, Result>
     {
@@ -50,13 +55,18 @@ namespace ParkMate.ApplicationServices.Commands
             {
                 return Result.CommandFail("Not authorized to modify this Parking Space");
             }
+            var updatedDays = command.AvailabilityTimes
+                .Select(d => AvailabilityTime
+                .CreateAvailabilityWithHours(d.Day, d.AvailableFrom, d.AvailableTo))
+                .ToList();
 
-            foreach (var time in command.AvailabilityTimes)
+            foreach (var time in updatedDays)
             {
                 parkingSpace.Availability.SetAvailabilityForDay(time);
             }
             
             _repository.Update(parkingSpace);
+
             await _repository.UnitOfWork.SaveEntitiesAsync();
 
             await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));

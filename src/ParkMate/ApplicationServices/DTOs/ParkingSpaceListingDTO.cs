@@ -12,6 +12,9 @@ namespace ParkMate.ApplicationServices.DTOs
         public decimal HourlyRate { get; set; }
         public decimal DailyRate { get; set; }
         public int ParkingSpaceId  { get; set; }
+        public bool IsListed { get; set; }
         public GeoJsonPoint<GeoJson2DGeographicCoordinates> Location { get; set; }
+
+        public int MetersFromLocation { get; set; }
     }
 }

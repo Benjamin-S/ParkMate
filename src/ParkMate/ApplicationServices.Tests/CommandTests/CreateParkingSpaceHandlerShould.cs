@@ -27,7 +27,7 @@ namespace ParkMate.ApplicationServices.Tests
                 Assert.Equal("test-user", space.OwnerId);
             }
         }        
-        
+
        
     }
 }

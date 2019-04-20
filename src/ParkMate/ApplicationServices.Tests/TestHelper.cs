@@ -7,6 +7,7 @@ using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.Infrastructure.Data;
 using Moq;
 using MediatR;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -36,17 +37,72 @@ namespace ParkMate.ApplicationServices.Tests
 
         public static Vehicle GetTestVehicle()
         {
-            return new Vehicle("Testyota", "CamryUnit", "Green", "TDD123");
+            return new Vehicle("Testla", "Test3", "Blue", "TSTR");
+        }
+
+        public static AddressDTO GetTestAddressDTO()
+        {
+            return new AddressDTO
+            {
+                Street = "123 Test Street", 
+                City = "TestVille", 
+                State = "ABC", 
+                Zip = "12345", 
+                Latitude = 1.2d, 
+                Longitude = 3.4
+            };
+        }
+        public static AddressDTO GetTestAddressWithStreet(string street)
+        {
+            var address = GetTestAddressDTO();
+            address.Street = street;
+            return address;
+        }
+        public static BookingRateDTO GetTestBookingRateDTO()
+        {
+            return new BookingRateDTO
+            {
+                HourlyRate = 11,
+                DailyRate = 22
+            };
+        }
+
+        public static DescriptionDTO GetTestDescriptionDTO()
+        {
+            return new DescriptionDTO
+            {
+                Title = "Test Title",
+                Description = "Test Description",
+                ImageURL = "http://www.test.com/test.png"
+            };
+        }
+
+
+        public static VehicleDTO GetTestVehicleDTO()
+        {
+            return new VehicleDTO 
+            { 
+                Make = "Testyota", 
+                Model = "CamryUnit", 
+                Color = "Green", 
+                Registration = "TDD123" 
+            };
+        }
+
+        public static ParkingSpaceDTO GetTestParkingSpaceDTO(string userId)
+        {
+            return new ParkingSpaceDTO
+            {
+                OwnerId = userId,
+                Description = GetTestDescriptionDTO(),
+                Address = GetTestAddressDTO(),
+                BookingRate = GetTestBookingRateDTO()
+            };
         }
 
         public static RegisterNewParkingSpaceCommand GetTestCreateParkingSpaceCommand(string userId)
         {
-            var address = GetTestAddress();
-            var rate = GetTestBookingRate();
-            var description = GetTestDescription();
-            var availability = GetTestAvailability();
-
-            return new RegisterNewParkingSpaceCommand(userId, description, address, availability, rate);
+            return new RegisterNewParkingSpaceCommand(GetTestParkingSpaceDTO(userId));
         }
 
         public static Customer GetTestCustomer(string id)
@@ -85,7 +141,7 @@ namespace ParkMate.ApplicationServices.Tests
                 var handler = new RegisterCustomerCommandHandler(repository, new Mock<IMediator>().Object);
                 await handler.Handle(command);
 
-                var vehicleCommand = new AddNewVehicleCommand(id, GetTestVehicle());
+                var vehicleCommand = new AddNewVehicleCommand(id, GetTestVehicleDTO());
                 var vehicleHandler = new AddNewVehicleCommandHandler(repository, new Mock<IMediator>().Object);
                 await vehicleHandler.Handle(vehicleCommand);
             }

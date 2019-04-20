@@ -6,30 +6,19 @@ using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices.Events;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
     public class RegisterNewParkingSpaceCommand : IRequest<Result>
     {
         public RegisterNewParkingSpaceCommand(
-            string ownerId,
-            ParkingSpaceDescription description,
-            Address address,
-            SpaceAvailability availability,
-            BookingRate bookingRate)
+            ParkingSpaceDTO parkingSpace)
         {
-            OwnerId = ownerId;
-            Description = description;
-            Address = address;
-            Availability = availability;
-            BookingRate = bookingRate;
+            ParkingSpace = parkingSpace;
         }
 
-        public string OwnerId { get; }
-        public ParkingSpaceDescription Description { get; }
-        public Address Address { get; }
-        public SpaceAvailability Availability { get; }
-        public BookingRate BookingRate { get; }
+        public ParkingSpaceDTO ParkingSpace { get; set; }
     }
     
     public class RegisterNewParkingSpaceCommandHandler 
@@ -52,10 +41,30 @@ namespace ParkMate.ApplicationServices.Commands
             RegisterNewParkingSpaceCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = new ParkingSpace(command.OwnerId, command.Description,
-                command.Address, command.Availability, command.BookingRate);
+            var parkingSpace = new ParkingSpace(
+                command.ParkingSpace.OwnerId,
 
-            var customer = await _customerRepository.GetByIdAsync(command.OwnerId);
+                new ParkingSpaceDescription(
+                    command.ParkingSpace.Description.Title,
+                    command.ParkingSpace.Description.Description, 
+                    command.ParkingSpace.Description.ImageURL),
+
+                new Address(
+                    command.ParkingSpace.Address.Street, 
+                    command.ParkingSpace.Address.City, 
+                    command.ParkingSpace.Address.State,
+                    command.ParkingSpace.Address.Zip, 
+                    new Point(
+                        command.ParkingSpace.Address.Latitude, 
+                        command.ParkingSpace.Address.Longitude)),
+
+                SpaceAvailability.Create247Availability(),
+
+                new BookingRate(
+                    new Money(command.ParkingSpace.BookingRate.HourlyRate),
+                    new Money(command.ParkingSpace.BookingRate.DailyRate)));
+
+            var customer = await _customerRepository.GetByIdAsync(command.ParkingSpace.OwnerId);
 
             customer.ParkingSpaces.Add(parkingSpace);
 

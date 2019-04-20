@@ -12,6 +12,7 @@ using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Commands;
+using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
 using ParkMate.Web.Enums;
 using ParkMate.Web.Models;
@@ -89,36 +90,20 @@ namespace Web.Controllers
             var imageResult = _imageProcessor.SaveImage(model.ImageFile);
             model.ParkingSpace.Description.ImageURL = imageResult.FileName;
 
-            var result = await _mediator.Send(BuildParkingSpaceCommand(model.ParkingSpace));
+            model.ParkingSpace.OwnerId = _userId;
+
+            var command = new RegisterNewParkingSpaceCommand(model.ParkingSpace);
+
+            var result = await _mediator.Send(command);
 
             return await Index(result);
-        }
-
-        RegisterNewParkingSpaceCommand BuildParkingSpaceCommand(ParkingSpaceDTO dto)
-        {
-            return new RegisterNewParkingSpaceCommand(
-                User.FindFirst(ClaimTypes.NameIdentifier).Value,
-
-                new ParkingSpaceDescription(dto.Description.Title,
-                    dto.Description.Description, dto.Description.ImageURL),
-
-                new Address(dto.Address.Street, dto.Address.City, dto.Address.State,
-                    dto.Address.Zip, new Point(dto.Address.Latitude, dto.Address.Longitude)),
-
-                SpaceAvailability.Create247Availability(),
-                new BookingRate(
-                    new Money(dto.BookingRate.HourlyRate),
-                    new Money(dto.BookingRate.DailyRate)));
-
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAddress([FromForm] AddressDTO dto, int parkingSpaceId)
         {
-            var address = new Address(dto.Street, dto.City, dto.State, dto.Zip, new Point(dto.Latitude, dto.Longitude));
-            
-            var command = new EditParkingSpaceAddressCommand(parkingSpaceId, _userId, address);
+            var command = new EditParkingSpaceAddressCommand(parkingSpaceId, _userId, dto);
 
             var result = await _mediator.Send(command);
 
@@ -132,9 +117,7 @@ namespace Web.Controllers
             var imageResult = _imageProcessor.SaveImage(model.ImageFile);
             model.Description.ImageURL = imageResult.FileName;
             
-            var description = new ParkingSpaceDescription(model.Description.Title,  model.Description.Description,  model.Description.ImageURL);
-            
-            var command = new EditParkingSpaceDescriptionCommand(parkingSpaceId, _userId, description);
+            var command = new EditParkingSpaceDescriptionCommand(parkingSpaceId, _userId, model.Description);
 
             var result = await _mediator.Send(command);
 
@@ -145,9 +128,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditBookingRate([FromForm] BookingRateDTO dto, int parkingSpaceId)
         {
-            var rate = new BookingRate(new Money(dto.HourlyRate), new Money(dto.DailyRate));
-            
-            var command = new EditParkingSpaceBookingRateCommand(parkingSpaceId, _userId, rate);
+            var command = new EditParkingSpaceBookingRateCommand(parkingSpaceId, _userId, dto);
 
             var result = await _mediator.Send(command);
 
@@ -169,12 +150,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAvailability(List<AvailableTimeDTO> days, int parkingSpaceId)
         {
-            var updatedDays = days
-                .Select(d => AvailabilityTime
-                .CreateAvailabilityWithHours(d.Day, d.AvailableFrom, d.AvailableTo))
-                .ToList();
-
-            var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, updatedDays);
+            var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, days);
 
             var result = await _mediator.Send(command);
 
