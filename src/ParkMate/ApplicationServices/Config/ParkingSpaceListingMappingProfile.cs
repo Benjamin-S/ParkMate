@@ -14,7 +14,7 @@ namespace ApplicationServices.Config
             CreateMap<Point, GeoJsonPoint<GeoJson2DGeographicCoordinates>>()
                 .ConvertUsing<LocationConverter>();
 
-            CreateMap<ParkingSpace, ParkingSpaceListingDTO>()
+            CreateMap<ParkingSpace, ParkingSpaceViewModel>()
                 .ForMember(d => d.Title, s => s.MapFrom(src => src.Description.Title))
                 .ForMember(d => d.Description, s => s.MapFrom(src => src.Description.Description))
                 .ForMember(d => d.ImageURL, s => s.MapFrom(src => src.Description.ImageURL))
@@ -22,7 +22,7 @@ namespace ApplicationServices.Config
                 .ForMember(d => d.DailyRate, s => s.MapFrom(src => src.BookingRate.DailyRate.Value))
                 .ForMember(d => d.ParkingSpaceId, s => s.MapFrom(src => src.Id))
                 .ForMember(d => d.Location, s => s.MapFrom(src => src.Address.Location))
-                .ForMember(d => d.IsListed, s => s.MapFrom(src => src.Availability.IsVisible));
+                .ForMember(d => d.IsVisible, s => s.MapFrom(src => src.Availability.IsVisible));
         }
     }
 }

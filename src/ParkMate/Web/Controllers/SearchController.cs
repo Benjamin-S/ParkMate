@@ -24,7 +24,7 @@ namespace ParkMate.Web.Controllers
             return View();
         }
 
-        public IActionResult SearchResult(Result<IReadOnlyList<ParkingSpaceListingDTO>> dto)
+        public IActionResult SearchResult(Result<IReadOnlyList<ParkingSpaceViewModel>> dto)
         {
             return View("SearchResult", dto);
         }
