@@ -8,12 +8,16 @@ using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.Events;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
     public class EditParkingSpaceBookingRateCommand  : IRequest<Result>
     {
-        public EditParkingSpaceBookingRateCommand(int parkingSpaceId, string ownerId, BookingRate bookingRate)
+        public EditParkingSpaceBookingRateCommand(
+            int parkingSpaceId, 
+            string ownerId, 
+            BookingRateDTO bookingRate)
         {
             ParkingSpaceId = parkingSpaceId;
             OwnerId = ownerId;
@@ -21,7 +25,7 @@ namespace ParkMate.ApplicationServices.Commands
         }
         public int ParkingSpaceId { get; }
         public string OwnerId { get; }
-        public BookingRate BookingRate { get; }
+        public BookingRateDTO BookingRate { get; }
     }
     
     public class EditParkingSpaceBookingRateCommandHandler 
@@ -50,9 +54,14 @@ namespace ParkMate.ApplicationServices.Commands
                 return Result.CommandFail("Not authorized to modify this Parking Space");
             }
 
-            parkingSpace.UpdateBookingRate(command.BookingRate);
+            var rate = new BookingRate(
+                new Money(command.BookingRate.HourlyRate), 
+                new Money(command.BookingRate.DailyRate));
+
+            parkingSpace.UpdateBookingRate(rate);
             
             _repository.Update(parkingSpace);
+
             await _repository.UnitOfWork.SaveEntitiesAsync();
 
             await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));

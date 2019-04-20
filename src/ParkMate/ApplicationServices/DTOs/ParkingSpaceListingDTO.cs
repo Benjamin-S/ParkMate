@@ -14,5 +14,7 @@ namespace ParkMate.ApplicationServices.DTOs
         public int ParkingSpaceId  { get; set; }
         public bool IsListed { get; set; }
         public GeoJsonPoint<GeoJson2DGeographicCoordinates> Location { get; set; }
+
+        public int MetersFromLocation { get; set; }
     }
 }

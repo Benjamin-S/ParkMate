@@ -8,6 +8,7 @@ using ParkMate.ApplicationServices.Commands;
 using static ParkMate.ApplicationServices.Tests.TestHelper;
 using Moq;
 using MediatR;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Tests
 {
@@ -22,16 +23,25 @@ namespace ParkMate.ApplicationServices.Tests
             {
                 var space = context.ParkingSpaces.FirstOrDefault();
                 var repository = new ParkingSpaceRepository(context);
-                var address = new Address("567 Test Road", "TestVille", "Tst", "56789", new Point(9,10));
-                var command = new EditParkingSpaceAddressCommand(space.Id, space.OwnerId, address);
+                var addressDto = new AddressDTO
+                {
+                    Street = "123 Test Street",
+                    City = "TestVille",
+                    State = "ABC",
+                    Zip = "12345",
+                    Latitude = 1.2d,
+                    Longitude = 3.4
+                };
+                var address = new Address(addressDto.Street, addressDto.City, addressDto.State, 
+                    addressDto.Zip, new Point(addressDto.Latitude, addressDto.Longitude));
+
+                var command = new EditParkingSpaceAddressCommand(space.Id, space.OwnerId, addressDto);
                 var handler = new EditParkingSpaceAddressCommandHandler(repository, new Mock<IMediator>().Object);
                
                 await handler.Handle(command);
                              
                 Assert.NotNull(space.Address);
-                Assert.NotEqual(GetTestAddress(), space.Address);
                 Assert.Equal(address, space.Address);
-                
             }
         }       
     }

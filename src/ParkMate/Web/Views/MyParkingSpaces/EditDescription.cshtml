@@ -35,4 +35,11 @@
  
  @section Scripts {
      <partial name="_ValidationScriptsPartial"/>
+     <script>
+         $('#customFile').on('change',
+             function (e) {
+                 var fileName = e.target.files[0].name;
+                 $(this).next('.custom-file-label').html(fileName);
+             });
+     </script>
  }
