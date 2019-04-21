@@ -14,6 +14,6 @@ namespace ParkMate.ApplicationServices.DTOs
         [Display(Name = "Parking Space Description")]
         public string Description { get; set; }
 
-        public string ImageURL { get; set; }
+        public string ImageURL { get; set; } = "default.jpg";
     }
 }

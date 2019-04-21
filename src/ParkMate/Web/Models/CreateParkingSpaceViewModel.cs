@@ -8,7 +8,6 @@ namespace ParkMate.Web.Models
     {
         public ParkingSpaceDTO ParkingSpace { get; set; }
         
-        [Required]
         [Display(Name = "Image File")]
         public IFormFile ImageFile { get; set; }
     }
