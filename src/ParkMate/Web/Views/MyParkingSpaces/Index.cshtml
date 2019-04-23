@@ -60,13 +60,18 @@
                                 <h5 class="card-title">@space.Description.Title</h5>
                                 <p class="card-text">@space.Description.Description</p>                              
                                 <small class="text-muted">
-                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View |</a>
+                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View</a>
+                                    <span> | </span>
                                 </small>
                                 <small class="text-muted">
-                                    <a asp-action="Index" asp-route-id="@space.Id"> List |</a>
+                                    <a asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" 
+                                       asp-route-isVisible="@(space.Availability.IsVisible)">
+                                        @(@space.Availability.IsVisible ? "Unlist" : "List")
+                                    </a>
+                                    <span> | </span>
                                 </small>
                                 <small class="text-muted">
-                                    <a asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id"> Delete</a>
+                                    <a asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id">Delete</a>
                                 </small>
                             </div>
                         </div>

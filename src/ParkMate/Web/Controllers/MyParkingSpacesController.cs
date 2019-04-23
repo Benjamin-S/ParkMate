@@ -134,23 +134,21 @@ namespace Web.Controllers
 
             return await Index(result);
         }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SetVisibility(bool isVisible, int parkingSpaceId)
-        {
-            var command = new SetParkingSpaceVisibilityCommand(parkingSpaceId, _userId, isVisible);
-
-            var result = await _mediator.Send(command);
-
-            return await Index(result);
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAvailability(List<AvailableTimeDTO> days, int parkingSpaceId)
         {
             var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, days);
+
+            var result = await _mediator.Send(command);
+
+            return await Index(result);
+        }
+        
+        public async Task<IActionResult> SetVisibility(bool isVisible, int parkingSpaceId)
+        {
+            var command = new SetParkingSpaceVisibilityCommand(parkingSpaceId, _userId, isVisible);
 
             var result = await _mediator.Send(command);
 
