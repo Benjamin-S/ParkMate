@@ -94,8 +94,9 @@
     
         <br/>
         <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces"
-           asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id" asp-route-parkingSpaceId="@space.IsVisible"
-           id="listingButton"></a>
+           asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" asp-route-isAvaliable="@(!space.IsVisible)">
+            @(@space.IsVisible ? "Unlist" : "List") 
+        </a>
         <a class="btn btn-danger float-right owner-only" asp-controller="MyParkingSpaces"
            asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id">Delete</a>
             <br/>
