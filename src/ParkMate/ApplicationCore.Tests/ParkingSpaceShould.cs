@@ -27,8 +27,8 @@ namespace ApplicationCore.Tests
         public void AddNewBooking()
         {
             var space = GetTestParkingSpace("test");
-            var booking = new Booking(space, GetTestVehicle(),
-                new BookingPeriod(DateTime.Now, DateTime.Now.AddHours(1), new Money()));
+            var booking = new Booking("userid", space, GetTestVehicle(),
+                BookingInfo.CreateHourlyBooking(DateTime.Now, DateTime.Now.AddHours(1), new Money()));
 
             space.AddBookingToSchedule(booking);
 
@@ -39,10 +39,10 @@ namespace ApplicationCore.Tests
         public void ThrowExceptionWhenAddingOverlappingBooking()
         {
             var space = GetTestParkingSpace("test");
-            var booking = new Booking(space, GetTestVehicle(),
-                new BookingPeriod(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money()));
-            var booking2 = new Booking(space, GetTestVehicle(),
-                new BookingPeriod(SystemTime.Now().AddHours(1), SystemTime.Now().AddHours(3), new Money()));
+            var booking = new Booking("userid", space, GetTestVehicle(),
+                BookingInfo.CreateHourlyBooking(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money()));
+            var booking2 = new Booking("userid", space, GetTestVehicle(),
+                BookingInfo.CreateHourlyBooking(SystemTime.Now().AddHours(1), SystemTime.Now().AddHours(3), new Money()));
 
             space.AddBookingToSchedule(booking);
 
@@ -53,10 +53,10 @@ namespace ApplicationCore.Tests
         public void ReturnTrueWhenSpaceIsAvailable()
         {
             var space = GetTestParkingSpace("test");
-            space.AddBookingToSchedule(new Booking(space, GetTestVehicle(),
-                new BookingPeriod(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money())));
+            space.AddBookingToSchedule(new Booking("userid", space, GetTestVehicle(),
+                BookingInfo.CreateHourlyBooking(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money())));
 
-            var period = new BookingPeriod(SystemTime.Now().AddHours(3), SystemTime.Now().AddHours(4), new Money());
+            var period = BookingInfo.CreateHourlyBooking(SystemTime.Now().AddHours(3), SystemTime.Now().AddHours(4), new Money());
 
             Assert.True(space.IsAvailable(period));
         }
@@ -65,9 +65,9 @@ namespace ApplicationCore.Tests
         public void ReturnFalseWhenSpaceIsAlreadyBooked()
         {
             var space = GetTestParkingSpace("test");
-            var booking = new Booking(space, GetTestVehicle(),
-                new BookingPeriod(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money()));
-            var period = new BookingPeriod(SystemTime.Now().AddHours(1), SystemTime.Now().AddHours(3), new Money());
+            var booking = new Booking("userid", space, GetTestVehicle(),
+                BookingInfo.CreateHourlyBooking(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money()));
+            var period = BookingInfo.CreateHourlyBooking(SystemTime.Now().AddHours(1), SystemTime.Now().AddHours(3), new Money());
 
             space.AddBookingToSchedule(booking);
 
@@ -79,7 +79,7 @@ namespace ApplicationCore.Tests
         {
             var space = GetTestParkingSpace("test");
             space.Availability.SetAvailabilityForDay(AvailabilityTime.CreateUnavailableDay(DayOfWeek.Tuesday));
-            var period = new BookingPeriod(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money());
+            var period = BookingInfo.CreateHourlyBooking(SystemTime.Now(), SystemTime.Now().AddHours(2), new Money());
 
             Assert.False(space.IsAvailable(period));
         }

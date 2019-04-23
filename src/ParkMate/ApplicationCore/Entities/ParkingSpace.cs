@@ -70,17 +70,17 @@ namespace ParkMate.ApplicationCore.Entities
             Availability.SetVisible(isListed);
         }
 
-        public bool IsAvailable(BookingPeriod bookingPeriod)
+        public bool IsAvailable(BookingInfo bookingPeriod)
         {
             return Availability.IsAvailable(bookingPeriod) && 
                     !Overlaps(bookingPeriod);
         }
 
-        bool Overlaps(BookingPeriod bookingPeriod)
+        bool Overlaps(BookingInfo bookingPeriod)
         {
             foreach (var booking in Bookings)
             {
-                if (booking.BookingPeriod.Overlaps(bookingPeriod))
+                if (booking.BookingInfo.Overlaps(bookingPeriod))
                 {
                     return true;
                 }
@@ -90,9 +90,9 @@ namespace ParkMate.ApplicationCore.Entities
         
         public void AddBookingToSchedule(Booking booking)
         {
-            if (Overlaps(booking.BookingPeriod))
+            if (Overlaps(booking.BookingInfo))
             {
-                throw new AlreadyBookedException(booking.BookingPeriod);
+                throw new AlreadyBookedException(booking.BookingInfo);
             }
             Bookings.Add(booking);
         }

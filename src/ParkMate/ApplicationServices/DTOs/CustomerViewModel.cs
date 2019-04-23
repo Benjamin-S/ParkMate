@@ -5,7 +5,7 @@ namespace ParkMate.ApplicationServices.DTOs
 {
     public class CustomerViewModel
     {
-        public string IdentityId { get; set; }
+        public string CustomerId { get; set; }
         public string PhoneNumber { get; set; } 
         public string Email { get; set; }
         public string Name { get; set; }

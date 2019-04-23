@@ -59,7 +59,7 @@ namespace ParkMate.ApplicationCore.Entities
             IsVisible = isVisible;
         }
 
-        public bool IsAvailable(BookingPeriod period)
+        public bool IsAvailable(BookingInfo period)
         {
             var day1 = period.Start;
             var day2 = period.End;

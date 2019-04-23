@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices.Commands;
+using ParkMate.ApplicationServices.DTOs;
 using ParkMate.Infrastructure.Data;
 using Xunit;
 using static ParkMate.ApplicationServices.Tests.TestHelper;
@@ -31,9 +32,9 @@ namespace ParkMate.ApplicationServices.Tests
                 var customer = context.Customers.Include(c => c.Vehicles).Include(c => c.Bookings).FirstOrDefault();
                 var spaceId = context.ParkingSpaces.FirstOrDefault().Id;
                 var vehicleId = customer.Vehicles.FirstOrDefault().Id;
-                var booking = new BookingPeriod(DateTime.Now, DateTime.Now.AddDays(2), new Money());
-                var command = new BookParkingSpaceCommand(customer.IdentityId, vehicleId, spaceId, booking);
-                var handler = new BookParkingSpaceCommandHandler(
+                var booking = new BookingPeriodDTO { Start = DateTime.Now, End = DateTime.Now.AddDays(2), Rate = 10 };
+                var command = new CreateHourlyBookingCommand(customer.IdentityId, vehicleId, spaceId, booking);
+                var handler = new CreateHourlyBookingCommandHandler(
                     new CustomerRepository(context),
                     new ParkingSpaceRepository(context), 
                     new Mock<IMediator>().Object);
@@ -57,6 +58,11 @@ namespace ParkMate.ApplicationServices.Tests
                 Assert.Single(customer.Bookings);
                 Assert.Single(space.Bookings);
             }
+        }
+
+        private object BookingPeriodDTO(DateTime now, DateTime dateTime, Money money)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,8 +8,10 @@ namespace ParkMate.Infrastructure.Data
     {
         public void Configure(EntityTypeBuilder<Booking> booking)
         {
-            booking.OwnsOne(b => b.BookingPeriod, bp =>
-                bp.OwnsOne(m => m.Charge));
+            booking.OwnsOne(b => b.BookingInfo, bp =>
+                bp.OwnsOne(m => m.Total));
+            booking.OwnsOne(b => b.BookingInfo, bp =>
+                bp.OwnsOne(m => m.Rate));
         }
     }
 }

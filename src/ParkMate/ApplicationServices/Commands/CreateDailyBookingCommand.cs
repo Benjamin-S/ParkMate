@@ -7,16 +7,17 @@ using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices.Events;
 using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class BookParkingSpaceCommand : IRequest<Result>
+    public class CreateDailyBookingCommand : IRequest<Result>
     {
-        public BookParkingSpaceCommand(
-            string customerId, 
-            int vehicleId, 
+        public CreateDailyBookingCommand(
+            string customerId,
+            int vehicleId,
             int parkingSpaceId,
-            BookingPeriod bookingPeriod)
+            BookingPeriodDTO bookingPeriod)
         {
             CustomerId = customerId;
             VehicleId = vehicleId;
@@ -26,17 +27,17 @@ namespace ParkMate.ApplicationServices.Commands
         public string CustomerId { get; }
         public int VehicleId { get; }
         public int ParkingSpaceId { get; }
-        public BookingPeriod BookingPeriod { get; } 
+        public BookingPeriodDTO BookingPeriod { get; }
     }
-    
-    public class BookParkingSpaceCommandHandler
-        : IRequestHandler<BookParkingSpaceCommand, Result>
+
+    public class CreateDailyBookingCommandHandler
+        : IRequestHandler<CreateDailyBookingCommand, Result>
     {
         private ICustomerRepository _customerRepository;
         private IParkingSpaceRepository _parkingSpaceRepository;
         private IMediator _mediator;
 
-        public BookParkingSpaceCommandHandler(
+        public CreateDailyBookingCommandHandler(
             ICustomerRepository customerRepository,
             IParkingSpaceRepository parkingSpaceRepository,
             IMediator mediator)
@@ -50,18 +51,23 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            BookParkingSpaceCommand command,
+            CreateDailyBookingCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
+            var bookingPeriod = BookingInfo.CreateDailyBooking(
+                command.BookingPeriod.Start,
+                command.BookingPeriod.End,
+                new Money(command.BookingPeriod.Rate));
+
             var customer = await _customerRepository.GetByIdAsync(command.CustomerId);
             var parkingSpace = await _parkingSpaceRepository.GetByIdAsync(command.ParkingSpaceId);
             var vehicle = customer.Vehicles.SingleOrDefault(v => v.Id == command.VehicleId);
 
-            if(!parkingSpace.IsAvailable(command.BookingPeriod))
+            if (!parkingSpace.IsAvailable(bookingPeriod))
             {
                 return Result.CommandFail("Parking Space not available during requested period");
             }
-            var booking = new Booking(parkingSpace, vehicle, command.BookingPeriod);
+            var booking = new Booking(customer.IdentityId, parkingSpace, vehicle, bookingPeriod);
 
             parkingSpace.AddBookingToSchedule(booking);
             customer.AddBooking(booking);
@@ -76,5 +82,5 @@ namespace ParkMate.ApplicationServices.Commands
             return Result.CommandSuccess("Parking Space successfully booked");
         }
     }
-    
+
 }
