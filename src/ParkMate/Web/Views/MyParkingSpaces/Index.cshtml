@@ -64,9 +64,9 @@
                                     <span> | </span>
                                 </small>
                                 <small class="text-muted">
-                                    <a asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" 
-                                       asp-route-isVisible="@(space.Availability.IsVisible)">
-                                        @(@space.Availability.IsVisible ? "Unlist" : "List")
+                                    <a asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" >
+                                      @* asp-route-isVisible="@(space.Availability.IsVisible)">
+                                        @(@space.Availability.IsVisible ? "Unlist" : "List") *@
                                     </a>
                                     <span> | </span>
                                 </small>

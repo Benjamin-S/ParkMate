@@ -1,3 +1,5 @@
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @using Microsoft.Extensions.Configuration
 @model Web.Models.SearchResultViewModel
 @inject IConfiguration Configuration
@@ -26,14 +28,14 @@
     }
     else
     {
-        <div id="map" class="d-block" style="height: 40vh; background-color: rgba(255,0,0,0.1);"></div>
+        <div id="map" class="d-block" style="height: 40vh;")></div> 
         <div class="container my-3">
             <div class="row mx-auto my-auto">
                 <div id="cardCarousel" class="carousel slide w-100" data-ride="carousel" data-interval="false">
                     <div class="carousel-inner w-100" id="cardCarouselRow" role="listbox">
                         @{
                             foreach (var space in Model.Result.Payload)
-                            {
+                            {                                
                                 <div class="carousel-item">
                                     <div class="card col-md-3">
                                         <img class="card-img-top img-fluid" src="/imageuploads/@space.ImageURL" alt="No image">                                       
@@ -64,36 +66,45 @@
 @section Scripts
 {
     <script>
-        $(document).ready(function() {
-            $("#cardCarouselRow div:first-child").addClass("active");
-        });
+    $(document).ready(function() {
+        $("#cardCarouselRow div:first-child").addClass("active");
+    });
 
-        @*
-        $('.carousel .carousel-item').each(function(){
-            var next = $(this).next();
+    
+    $('.carousel .carousel-item').each(function(){
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this)); 
+
+        for (var i=0;i<2;i++) {
+            next=next.next();
             if (!next.length) {
                 next = $(this).siblings(':first');
             }
-            next.children(':first-child').clone().appendTo($(this));
-    
-            for (var i=0;i<2;i++) {
-                next=next.next();
-                if (!next.length) {
-                    next = $(this).siblings(':first');
-                }
-        
-                next.children(':first-child').clone().appendTo($(this));
-            }
-        });
-        *@
-        
-        var map;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: @Model.PrevInput.Latitude, lng: @Model.PrevInput.Longitude},
-                zoom: 15
-            });
         }
+    });    
+        
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: @Model.PrevInput.Latitude, lng: @Model.PrevInput.Longitude},
+            zoom: 16
+        });
+            
+        @foreach (var result in Model.Result.Payload)
+        {
+            <text>           
+                var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,@result.Location.Coordinates.Longitude);
+                var marker = new google.maps.Marker({
+                    position: latLng, 
+                    map: map,
+                    title: '@result.Title'
+                });
+            </text>
+        }
+            
+    }
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=@(Configuration["GoogleMaps:ServiceApiKey"])&callback=initMap"
