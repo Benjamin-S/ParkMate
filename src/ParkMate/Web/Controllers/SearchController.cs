@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
+using Web.Models;
 
 namespace ParkMate.Web.Controllers
 
@@ -24,9 +25,9 @@ namespace ParkMate.Web.Controllers
             return View();
         }
 
-        public IActionResult SearchResult(Result<IReadOnlyList<ParkingSpaceViewModel>> dto)
+        public IActionResult SearchResult(SearchResultViewModel viewModel)
         {
-            return View("SearchResult", dto);
+            return View("SearchResult", viewModel);
         }
         
         [HttpPost]
@@ -36,7 +37,15 @@ namespace ParkMate.Web.Controllers
             var query = new FindSpacesWithinDistanceQuery(dto);
             var result = await _mediator.Send(query);
 
-            return SearchResult(result);
+            foreach (var space in result.Payload)
+            {
+                Console.WriteLine(space.Title);
+            }
+            return SearchResult(new SearchResultViewModel()
+            {
+                PrevInput = dto,
+                Result = result
+            });
         }
 
         public async Task<IActionResult> SearchAutoComplete(string searchInput)
