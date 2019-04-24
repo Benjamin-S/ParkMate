@@ -21,8 +21,8 @@ namespace ParkMate.Infrastructure.Data
         public IMongoCollection<ParkingSpaceViewModel> ParkingSpaces => 
             MongoDatabase.GetCollection<ParkingSpaceViewModel>("ParkingSpaces");
 
-        public IMongoCollection<Customer> Customers =>
-            MongoDatabase.GetCollection<Customer>("Customer");
+        public IMongoCollection<CustomerViewModel> Customers =>
+            MongoDatabase.GetCollection<CustomerViewModel>("Customers");
 
 
         void CreateIndexes()

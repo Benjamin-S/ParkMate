@@ -5,6 +5,7 @@ using MediatR;
 using AutoMapper;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
@@ -38,7 +39,9 @@ namespace ParkMate.ApplicationServices.Commands
             AddCustomerInDocumentDbCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _context.Customers.InsertOneAsync(command.Customer);
+            var customer = _mapper.Map<Customer, CustomerViewModel>(command.Customer);
+
+            await _context.Customers.InsertOneAsync(customer);
 
             return Result.Ok();
         }

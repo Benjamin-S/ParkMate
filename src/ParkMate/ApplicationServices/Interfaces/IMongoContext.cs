@@ -10,6 +10,6 @@ namespace ParkMate.ApplicationServices.Interfaces
     {
         IMongoDatabase MongoDatabase { get; }
         IMongoCollection<ParkingSpaceViewModel> ParkingSpaces { get; }
-        IMongoCollection<Customer> Customers { get; }
+        IMongoCollection<CustomerViewModel> Customers { get; }
     }
 }

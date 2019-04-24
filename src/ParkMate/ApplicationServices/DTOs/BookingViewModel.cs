@@ -1,9 +1,13 @@
 ﻿using System;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ParkMate.ApplicationServices.DTOs
 {
     public class BookingViewModel
     {
+        [BsonIgnoreIfDefault]
+        public ObjectId Id { get; set; }
         public string CustomerId { get; set; }
         public ParkingSpaceViewModel ParkingSpace { get; set; }
         public VehicleDTO Vehicle { get; set; }
