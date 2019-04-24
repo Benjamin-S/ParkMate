@@ -37,10 +37,6 @@ namespace ParkMate.Web.Controllers
             var query = new FindSpacesWithinDistanceQuery(dto);
             var result = await _mediator.Send(query);
 
-            foreach (var space in result.Payload)
-            {
-                Console.WriteLine(space.Title);
-            }
             return SearchResult(new SearchResultViewModel()
             {
                 PrevInput = dto,

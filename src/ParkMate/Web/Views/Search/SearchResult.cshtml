@@ -90,17 +90,22 @@
                     zoom: 16
                 });
             
-            @foreach (var result in Model.Result.Payload)
-            {
-                <text>           
-                    var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
-                        @result.Location.Coordinates.Longitude);
-                    var marker = new google.maps.Marker({
-                        position: latLng,
-                        map: map,
-                        title: '@result.Title'
-                    });
-                </text>
+            @{
+                if (Model.Result.Payload != null)
+                {       
+                    foreach (var result in Model.Result.Payload)
+                    {
+                        <text>           
+                            var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
+                                @result.Location.Coordinates.Longitude);
+                            var marker = new google.maps.Marker({
+                                position: latLng,
+                                map: map,
+                                title: '@result.Title'
+                            });
+                        </text>
+                    }
+                }
             }
             
         }
