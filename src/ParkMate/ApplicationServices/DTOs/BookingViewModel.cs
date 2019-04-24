@@ -1,5 +1,4 @@
 ﻿using System;
-using ApplicationCore.Enums;
 
 namespace ParkMate.ApplicationServices.DTOs
 {
@@ -12,7 +11,7 @@ namespace ParkMate.ApplicationServices.DTOs
         public DateTime End { get; set; }
         public decimal Total { get; set; }
         public decimal Rate { get; set; }
-        public BillingUnit BillingUnit { get; set; }
+        public string BillingUnit { get; set; }
         public int BookingUnits { get; set; }
 
         public DateTime BookingTime { get; set; } 
