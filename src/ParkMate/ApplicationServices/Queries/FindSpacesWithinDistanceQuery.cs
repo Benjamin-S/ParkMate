@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using MediatR;
 using MongoDB.Driver;
 using MongoDB.Driver.GeoJsonObjectModel;
+using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.Util;
 
 namespace ParkMate.ApplicationServices.Queries
 {
@@ -42,11 +44,16 @@ namespace ParkMate.ApplicationServices.Queries
             var locationQuery = new FilterDefinitionBuilder<ParkingSpaceViewModel>()
                 .Near(ps => ps.Location, point, query.Paramaters.DistanceInMeters);
 
-            var result = await _context.ParkingSpaces.FindAsync(locationQuery).Result.ToListAsync();
+            var results = await _context.ParkingSpaces.FindAsync(locationQuery).Result.ToListAsync();
 
-            if (result != null && result.Count != 0)
+            foreach(var result in results)
             {
-                return Result<IReadOnlyList<ParkingSpaceViewModel>>.QuerySuccess(result);
+                result.DistanceInMeters = (int) Distance.Haversine(
+                    new Point(query.Paramaters.Latitude, query.Paramaters.Longitude),                     new Point(result.Location.Coordinates.Latitude, result.Location.Coordinates.Longitude));
+            }
+            if (results.Count != 0)
+            {
+                return Result<IReadOnlyList<ParkingSpaceViewModel>>.QuerySuccess(results);
             }
             return Result<IReadOnlyList<ParkingSpaceViewModel>>.QueryFail("Parking space not found");
         }

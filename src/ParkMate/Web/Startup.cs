@@ -59,6 +59,8 @@ namespace ParkMate.Web
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new ParkingSpaceMappingProfile());
+                mc.AddProfile(new BookingMappingProfile());
+                mc.AddProfile(new CustomerMappingProfile());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

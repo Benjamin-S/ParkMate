@@ -5,7 +5,7 @@ namespace ParkMate.ApplicationCore.Exceptions
 {
     public class AlreadyBookedException : Exception
     {
-        public AlreadyBookedException(BookingPeriod booking) 
+        public AlreadyBookedException(BookingInfo booking) 
             : base($"Booking from {booking.Start} - {booking.End} overlaps with an existing booking")
         {
         }

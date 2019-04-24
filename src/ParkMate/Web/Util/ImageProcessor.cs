@@ -1,9 +1,7 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using NetTopologySuite.Algorithm;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -65,7 +63,7 @@ namespace ParkMate.Web.Util
                 }
 
                 var fileName = Guid.NewGuid() + Path.GetExtension(img.FileName);
-                var filePath = Path.Combine(_environment.WebRootPath, "ImageUploads", fileName);
+                var filePath = Path.Combine(_environment.WebRootPath, "imageuploads", fileName);
 
                 using (var file = new FileStream(filePath, FileMode.Create))
                 {

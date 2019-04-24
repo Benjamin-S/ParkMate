@@ -12,7 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\BaseEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IEmailSender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Address.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingPeriod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\ParkingSpace.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\BookingRate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\Money.cs" />
@@ -29,10 +29,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Util\SystemTime.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\BookingHistory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\AvailabilityTime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\BillingUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Entities\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Enums" />
     <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
     <Folder Include="$(MSBuildThisFileDirectory)Util\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Enums\" />
   </ItemGroup>
 </Project>
