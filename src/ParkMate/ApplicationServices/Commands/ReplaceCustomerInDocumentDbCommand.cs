@@ -6,6 +6,7 @@ using AutoMapper;
 using MongoDB.Driver;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
@@ -38,9 +39,11 @@ namespace ParkMate.ApplicationServices.Commands
             ReplaceCustomerInDocumentDbCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _context.Customers.ReplaceOneAsync(doc => 
-                doc.Id == command.Customer.Id, 
-                command.Customer,
+            var customer = _mapper.Map<Customer, CustomerViewModel>(command.Customer);
+
+            await _context.Customers.ReplaceOneAsync(c => 
+                c.CustomerId.Equals(command.Customer.IdentityId), 
+                customer,
                 new UpdateOptions { IsUpsert = true }); 
 
             return Result.Ok();

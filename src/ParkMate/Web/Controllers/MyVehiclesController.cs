@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ParkMate.ApplicationCore.Entities;
+using MediatR;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
-using Web.Models;
+using ParkMate.Web.Models;
 
 namespace Web.Controllers
 {
@@ -31,7 +27,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Index(Result previousCommand)
         {
             var query = new GetCustomerQuery(_userId);
-            var viewModel = new ResultViewModel<Customer>
+            var viewModel = new ResultViewModel<CustomerViewModel>
             {
                 Command = previousCommand,
                 Query = await _mediator.Send(query)

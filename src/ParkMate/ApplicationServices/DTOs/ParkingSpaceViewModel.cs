@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver.GeoJsonObjectModel;
 
 namespace ParkMate.ApplicationServices.DTOs
 {
     public class ParkingSpaceViewModel
     {
+        [BsonIgnoreIfDefault]
         public ObjectId Id { get; set; }
         public int ParkingSpaceId { get; set; }
         public string OwnerId { get; set; }

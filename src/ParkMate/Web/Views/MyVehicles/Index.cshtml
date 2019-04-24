@@ -1,5 +1,4 @@
-@using ApplicationServices.Enums
-@model Web.Models.ResultViewModel<Customer>;
+@model ResultViewModel<CustomerViewModel>;
 
 @{
     ViewData["Title"] = "My Vehicles";
@@ -56,7 +55,7 @@
                                 <h5 class="card-title">@vehicle.Registration</h5>
                                 <p class="card-text">@vehicle.Make</p>
                                 <p class="card-text">@vehicle.Model</p>
-                                <p class="card-text">@vehicle.Colour</p>
+                                <p class="card-text">@vehicle.Color</p>
                             </div>
                         </div>
                     </div>
