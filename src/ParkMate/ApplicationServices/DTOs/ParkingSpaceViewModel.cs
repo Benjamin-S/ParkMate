@@ -31,7 +31,5 @@ namespace ParkMate.ApplicationServices.DTOs
         public AvailableTimeDTO Friday { get; set; }
         public AvailableTimeDTO Saturday { get; set; }
         public AvailableTimeDTO Sunday { get; set; }
-        public List<BookingViewModel> Bookings { get; set; } 
-            = new List<BookingViewModel>();
     }
 }

@@ -15,6 +15,5 @@ namespace ParkMate.ApplicationServices.DTOs
         public string Name { get; set; }
         public List<VehicleDTO> Vehicles { get; set; } = new List<VehicleDTO>();
         public List<ParkingSpaceViewModel> ParkingSpaces { get; set; } = new List<ParkingSpaceViewModel>();
-        public List<BookingViewModel> Bookings { get; set; } = new List<BookingViewModel>();
     }
 }
