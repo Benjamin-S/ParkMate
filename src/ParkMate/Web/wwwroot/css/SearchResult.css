@@ -19,3 +19,7 @@
     transform: translateX(0);
 
 }
+
+#map {
+    height: 40vh;
+}

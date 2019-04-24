@@ -25,10 +25,10 @@
     }
     else
     {
-        <div id="map" class="d-block" style="height: 40vh;")></div> 
+        <div id="map" class="d-block")></div> 
         <div class="container my-3">
             <div class="row mx-auto my-auto">
-                <div id="cardCarousel" class="carousel slide w-100" data-ride="carousel" data-interval="false">
+                <div id="cardCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                     <div class="carousel-inner w-100" id="cardCarouselRow" role="listbox">
                         @{
                             foreach (var space in Model.Result.Payload)
@@ -51,8 +51,8 @@
                     </div> 
                     <br/>
                     <div class="d-flex justify-content-center">                
-                        <a class="btn btn-primary mx-1" href="#cardCarousel" role="button" data-slide="prev"> < </a>
-                        <a class="btn btn-primary mx-1" href="#cardCarousel" role="button" data-slide="next"> > </a>
+                        <a class="btn btn-primary mx-1 carousel-button" href="#cardCarousel" role="button" data-slide="prev"> < </a>
+                        <a class="btn btn-primary mx-1 carousel-button" href="#cardCarousel" role="button" data-slide="next"> > </a>
                     </div>
                 </div>
             </div>
@@ -63,45 +63,47 @@
 @section Scripts
 {
     <script>
-    $(document).ready(function() {
-        $("#cardCarouselRow div:first-child").addClass("active");
-    });
-
-    
-    $('.carousel .carousel-item').each(function(){
-        var next = $(this).next();
-        if (!next.length) {
-            next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this)); 
-
-        for (var i=0;i<2;i++) {
-            next=next.next();
-            if (!next.length) {
-                next = $(this).siblings(':first');
-            }
-        }
-    });    
-        
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: @Model.PrevInput.Latitude, lng: @Model.PrevInput.Longitude},
-            zoom: 16
+        $(document).ready(function() {
+            $("#cardCarouselRow .carousel-item:first").addClass("active");
         });
-            
-        @foreach (var result in Model.Result.Payload)
-        {
-            <text>           
-                var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,@result.Location.Coordinates.Longitude);
-                var marker = new google.maps.Marker({
-                    position: latLng, 
-                    map: map,
-                    title: '@result.Title'
-                });
-            </text>
+
+        if ($('.carousel .carousel-item').length <= 4) {
+            $('.carousel-button').hide();
         }
+
+        $('.carousel .carousel-item').each(function() {
+            var next = $(this).next();
+
+            for (var i = 0; i < 3; i++) {
+                if (!next.length && ($('.carousel .carousel-item').length > 4)) {
+                    next = $(this).siblings('.carousel-item:first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
+                next = next.next();
+            }
+        });
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'),
+                {
+                    center: { lat: @Model.PrevInput.Latitude, lng: @Model.PrevInput.Longitude },
+                    zoom: 16
+                });
             
-    }
+            @foreach (var result in Model.Result.Payload)
+            {
+                <text>           
+                    var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
+                        @result.Location.Coordinates.Longitude);
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: '@result.Title'
+                    });
+                </text>
+            }
+            
+        }
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=@(Configuration["GoogleMaps:ServiceApiKey"])&callback=initMap"
