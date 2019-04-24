@@ -15,6 +15,6 @@ namespace ParkMate.ApplicationServices.DTOs
         public BillingUnit BillingUnit { get; set; }
         public int BookingUnits { get; set; }
 
-        public DateTime BookingTime { get; set; }
+        public DateTime BookingTime { get; set; } 
     }
 }
