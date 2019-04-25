@@ -1,9 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using ParkMate.ApplicationCore.Entities;
-using ParkMate.ApplicationCore.ValueObjects;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Interfaces;
 
@@ -23,6 +19,9 @@ namespace ParkMate.Infrastructure.Data
 
         public IMongoCollection<CustomerViewModel> Customers =>
             MongoDatabase.GetCollection<CustomerViewModel>("Customers");
+
+        public IMongoCollection<BookingViewModel> Bookings =>
+            MongoDatabase.GetCollection<BookingViewModel>("Bookings");
 
 
         void CreateIndexes()
