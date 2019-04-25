@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MongoDB.Driver;
 using MongoDB.Driver.GeoJsonObjectModel;
 using ParkMate.ApplicationCore.ValueObjects;
-using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.Util;

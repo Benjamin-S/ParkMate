@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using MongoDB.Driver;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Interfaces;
 
