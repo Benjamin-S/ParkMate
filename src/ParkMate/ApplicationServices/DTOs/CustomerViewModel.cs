@@ -13,7 +13,7 @@ namespace ParkMate.ApplicationServices.DTOs
         public string PhoneNumber { get; set; } 
         public string Email { get; set; }
         public string Name { get; set; }
-        public List<VehicleDTO> Vehicles { get; set; } = new List<VehicleDTO>();
+        public List<VehicleViewModel> Vehicles { get; set; } = new List<VehicleViewModel>();
         public List<ParkingSpaceViewModel> ParkingSpaces { get; set; } = new List<ParkingSpaceViewModel>();
     }
 }

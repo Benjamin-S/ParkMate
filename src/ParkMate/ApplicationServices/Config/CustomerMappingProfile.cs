@@ -16,6 +16,9 @@ namespace ApplicationServices.Config
                 .ForMember(d => d.Name, s => s.MapFrom(c => c.Name))
                 .ForMember(d => d.Vehicles, s => s.MapFrom(c => c.Vehicles))
                 .ForMember(d => d.ParkingSpaces, s => s.MapFrom(c => c.ParkingSpaces));
+
+            CreateMap<Vehicle, VehicleViewModel>()
+                .ForMember(d => d.VehicleId, s => s.MapFrom(v => v.Id));
         }
     }
 }
