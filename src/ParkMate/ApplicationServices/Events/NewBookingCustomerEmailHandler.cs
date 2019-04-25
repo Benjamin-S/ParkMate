@@ -23,7 +23,7 @@ namespace ParkMate.ApplicationServices.Events
             await _emailSender.SendEmailAsync(notification.Customer.Email,
                 "Your ParkMate Booking",
                 $"Dear {notification.Customer.Name},\n\n" +
-                "You have succesfully booked....");
+                "You have successfully booked....");
         }
     }
 }
