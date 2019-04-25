@@ -9,9 +9,9 @@ namespace ParkMate.ApplicationServices.Events
     public class NewBookingOwnerEmailHandler :
         INotificationHandler<NewBookingCreatedEvent>
     {
-        private IEmailSender _emailSender;
+        private IEmailService _emailSender;
 
-        public NewBookingOwnerEmailHandler(IEmailSender emailSender)
+        public NewBookingOwnerEmailHandler(IEmailService emailSender)
         {
             _emailSender = emailSender;
         }
@@ -25,7 +25,8 @@ namespace ParkMate.ApplicationServices.Events
                 "You have a new ParkMate booking",
                 $"Dear {notification.ParkingSpace.Owner.Name},\n\n" +
                 "You have a new ParkMate booking....");
-            */
+                */               
+
         }
     }
 }

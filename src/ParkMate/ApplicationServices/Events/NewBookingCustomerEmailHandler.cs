@@ -9,9 +9,9 @@ namespace ParkMate.ApplicationServices.Events
     public class NewBookingCustomerEmailHandler :
         INotificationHandler<NewBookingCreatedEvent>
     {
-        private IEmailSender _emailSender;
+        private IEmailService _emailSender;
 
-        public NewBookingCustomerEmailHandler(IEmailSender emailSender)
+        public NewBookingCustomerEmailHandler(IEmailService emailSender)
         {
             _emailSender = emailSender;
         }
