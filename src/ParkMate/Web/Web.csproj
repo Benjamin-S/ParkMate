@@ -31,5 +31,6 @@
     <ItemGroup>
       <Folder Include="wwwroot\imageuploads\" />
       <Folder Include="Views\MyParkingSpaces\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 </Project>

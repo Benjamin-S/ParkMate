@@ -1,9 +1,12 @@
-@using ApplicationServices.Enums
-@using ParkMate.Web.Enums
-@model Web.Models.ResultViewModel<Customer>
+@model ResultViewModel<CustomerViewModel>
 
 @{
     ViewData["Title"] = "My Parking Spaces";
+}
+
+@section Styles
+{
+    <link href="@Url.Content("~/css/MyParkingSpaces.css")" rel="stylesheet" type="text/css" />
 }
 
 <div>
@@ -53,14 +56,14 @@
                 <div class="card">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="/imageuploads/@space.Description.ImageURL" class="card-img" alt="No Image">
+                            <img src="/imageuploads/@space.ImageURL" class="card-img" alt="No Image">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">@space.Description.Title</h5>
-                                <p class="card-text">@space.Description.Description</p>                              
+                                <h5 class="card-title">@space.Title</h5>
+                                <p class="card-text">@space.Description</p>                              
                                 <small class="text-muted">
-                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.Id">View</a>
+                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.ParkingSpaceId">View</a>
                                     <span> | </span>
                                 </small>
                                 <small class="text-muted">
@@ -71,7 +74,7 @@
                                     <span> | </span>
                                 </small>
                                 <small class="text-muted">
-                                    <a asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id">Delete</a>
+                                    <a asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.ParkingSpaceId">Delete</a>
                                 </small>
                             </div>
                         </div>

@@ -34,8 +34,7 @@ namespace ApplicationServices.Config
                 .ForMember(d => d.Thursday, s => s.MapFrom(p => p.Availability.Thursday))
                 .ForMember(d => d.Friday, s => s.MapFrom(p => p.Availability.Friday))
                 .ForMember(d => d.Saturday, s => s.MapFrom(p => p.Availability.Saturday))
-                .ForMember(d => d.Sunday, s => s.MapFrom(p => p.Availability.Sunday))
-                .ForMember(d => d.Bookings, s => s.MapFrom(p => p.Bookings));
+                .ForMember(d => d.Sunday, s => s.MapFrom(p => p.Availability.Sunday));
         }
     }
 }

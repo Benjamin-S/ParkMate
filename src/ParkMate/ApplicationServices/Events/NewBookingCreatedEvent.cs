@@ -5,13 +5,15 @@ namespace ParkMate.ApplicationServices.Events
 {
     public class NewBookingCreatedEvent : INotification
     {
-        public NewBookingCreatedEvent(Customer customer, ParkingSpace parkingSpace)
+        public NewBookingCreatedEvent(Customer buyer, Customer seller, Booking booking)
         {
-            Customer = customer;
-            ParkingSpace = parkingSpace;
+            Buyer = buyer;
+            Seller = seller;
+            Booking = booking;
         }
 
-        public Customer Customer { get; }
-        public ParkingSpace ParkingSpace { get; }
+        public Customer Buyer { get; }
+        public Customer Seller { get; }
+        public Booking Booking { get; }
     }
 }

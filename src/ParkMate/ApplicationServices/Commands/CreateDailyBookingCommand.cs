@@ -61,6 +61,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             var customer = await _customerRepository.GetByIdAsync(command.CustomerId);
             var parkingSpace = await _parkingSpaceRepository.GetByIdAsync(command.ParkingSpaceId);
+            var owner = await _customerRepository.GetByIdAsync(parkingSpace.OwnerId);
             var vehicle = customer.Vehicles.SingleOrDefault(v => v.Id == command.VehicleId);
 
             if (!parkingSpace.IsAvailable(bookingPeriod))
@@ -77,7 +78,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _customerRepository.UnitOfWork.SaveEntitiesAsync();
 
-            await _mediator.Publish(new NewBookingCreatedEvent(customer, parkingSpace));
+            await _mediator.Publish(new NewBookingCreatedEvent(customer, owner, booking));
 
             return Result.CommandSuccess("Parking Space successfully booked");
         }

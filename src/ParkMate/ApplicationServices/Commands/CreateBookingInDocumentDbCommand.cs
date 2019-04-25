@@ -1,31 +1,32 @@
-﻿using System;
+﻿
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using AutoMapper;
-using MongoDB.Driver;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class ReplaceCustomerInDocumentDbCommand : IRequest<Result>
+    public class CreateBookingInDocumentDbCommand : IRequest<Result>
     {
-        public ReplaceCustomerInDocumentDbCommand(Customer customer)
+        public CreateBookingInDocumentDbCommand(
+            Booking booking)
         {
-            Customer = customer;
+            Booking = booking;
         }
-        public Customer Customer { get; }
+        public Booking Booking { get; }
     }
 
-    public class ReplaceCustomerInDocumentDbCommandHandler
-        : IRequestHandler<ReplaceCustomerInDocumentDbCommand, Result>
+    public class CreateBookingInDocumentDbCommandHandler
+        : IRequestHandler<CreateBookingInDocumentDbCommand, Result>
     {
         private IMongoContext _context;
         private IMapper _mapper;
 
-        public ReplaceCustomerInDocumentDbCommandHandler(
+        public CreateBookingInDocumentDbCommandHandler(
             IMongoContext context,
             IMapper mapper)
         {
@@ -36,15 +37,12 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            ReplaceCustomerInDocumentDbCommand command,
+            CreateBookingInDocumentDbCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var customer = _mapper.Map<Customer, CustomerViewModel>(command.Customer);
+            var booking = _mapper.Map<Booking, BookingViewModel>(command.Booking);
 
-            await _context.Customers.ReplaceOneAsync(c => 
-                c.CustomerId.Equals(command.Customer.IdentityId), 
-                customer,
-                new UpdateOptions { IsUpsert = true }); 
+            await _context.Bookings.InsertOneAsync(booking);
 
             return Result.Ok();
         }

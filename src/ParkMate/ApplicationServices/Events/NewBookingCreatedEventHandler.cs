@@ -1,8 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ParkMate.ApplicationCore.Interfaces;
-using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.Commands;
 
 namespace ParkMate.ApplicationServices.Events
 {
@@ -20,8 +19,8 @@ namespace ParkMate.ApplicationServices.Events
             NewBookingCreatedEvent notification,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _mediator.Publish(new CustomerUpdatedEvent(notification.Customer));
-            await _mediator.Publish(new ParkingSpaceUpdatedEvent(notification.ParkingSpace));
+            var command = new CreateBookingInDocumentDbCommand(notification.Booking);
+            await _mediator.Send(command);
         }
     }
 }

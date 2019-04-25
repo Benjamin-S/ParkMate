@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ParkMate.ApplicationCore.Entities;
+using MediatR;
 using ParkMate.ApplicationServices;
-using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
 using ParkMate.Web.Models;
-using Web.Models;
 
-//It would be more consistent if we had CreateBooking, 
-//EditBooking as seperate views controlled by the MyBookings 
-//controller. This also allows for the proper display of Result 
-//objects returned from commands/queries. So for instance the 
-//EditBooking function on the MyBookings controller should create 
-//a new command, pass it to the mediator, then attach the result 
-//to a ResultViewModel and pass that to the MyBookings Index view, 
+//It would be more consistent if we had CreateBooking,
+//EditBooking as seperate views controlled by the MyBookings
+//controller. This also allows for the proper display of Result
+//objects returned from commands/queries. So for instance the
+//EditBooking function on the MyBookings controller should create
+//a new command, pass it to the mediator, then attach the result
+//to a ResultViewModel and pass that to the MyBookings Index view,
 //similarly to any of the Edit functions on MyParkingSpacesController
 
 namespace Web.Controllers
@@ -41,7 +35,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Index(Result previousCommand)
         {
             var query = new GetCustomerQuery(_userId);
-            var viewModel = new ResultViewModel<Customer>
+            var viewModel = new ResultViewModel<CustomerViewModel>
             {
                 Command = previousCommand,
                 Query = await _mediator.Send(query)
@@ -103,4 +97,3 @@ namespace Web.Controllers
         }
     }
 }
-

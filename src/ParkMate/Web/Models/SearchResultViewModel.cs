@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 
-namespace Web.Models
+namespace ParkMate.Web.Models
 {
     public class SearchResultViewModel
     {

@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using MediatR;
 using ParkMate.ApplicationServices.Queries;
 
 namespace Web.Controllers

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ApplicationServices.Enums
+namespace ParkMate.ApplicationServices.Enums
 {
     public enum ResultType
     {

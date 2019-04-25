@@ -1,9 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using MediatR;
 using MongoDB.Driver;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.DTOs;
 
