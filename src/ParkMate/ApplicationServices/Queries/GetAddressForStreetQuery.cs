@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Dapper;
 using MediatR;
 using Npgsql;
-using Microsoft.Extensions.Configuration;
 using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Queries
