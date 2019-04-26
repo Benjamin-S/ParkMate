@@ -10,7 +10,7 @@ namespace ParkMate.ApplicationServices.DTOs
         public ObjectId Id { get; set; }
         public string CustomerId { get; set; }
         public ParkingSpaceViewModel ParkingSpace { get; set; }
-        public VehicleDTO Vehicle { get; set; }
+        public VehicleViewModel Vehicle { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public decimal Total { get; set; }
