@@ -49,6 +49,7 @@
         <input asp-for="ParkingSpaceId" value="@Model.ParkingSpace.Query.Payload.ParkingSpaceId" readonly/>
         <input asp-for="HourlyRate" value="@Model.ParkingSpace.Query.Payload.HourlyRate" readonly/>
         <input asp-for="DailyRate" value="@Model.ParkingSpace.Query.Payload.DailyRate" readonly/>
+        
     </div>
     <div class="form-group">
         <label asp-for="BookingType">Booking Type</label>
@@ -62,7 +63,7 @@
         <input asp-for="Booking.Start" type="datetime-local" id="Start" class="form-control flatpickr"/>
     </div>
     <div class="form-group">
-        <label for="End">Start Date</label>
+        <label for="End">End Date</label>
         <input asp-for="Booking.End" type="datetime-local" id="End" class="form-control flatpickr"/>
     </div>
     <div class="form-group">
@@ -79,7 +80,7 @@
                     {
                         foreach (var vehicle in Model.Customer.Query.Payload.Vehicles)
                         {
-                            <option value="@vehicle.VehicleId">@vehicle.Colour @vehicle.Model - @vehicle.Registration</option>
+                            <option value="@vehicle.VehicleId">@vehicle.Colour @vehicle.Make @vehicle.Model - @vehicle.Registration</option>
                         }
                     }
                 }

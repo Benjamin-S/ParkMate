@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.VisualStudio.Web.CodeGeneration;
+using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
@@ -75,7 +77,7 @@ namespace Web.Controllers
                 }
             };
 
-            return View("CreateBooking", viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
