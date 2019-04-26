@@ -1,4 +1,4 @@
-@model ResultViewModel<CustomerViewModel>
+@model MyBookingsViewModel
 
 @{
     ViewData["Title"] = "My Bookings";
@@ -12,60 +12,128 @@
 
 <div>
     @{
-        if (Model.Command.ResultType != ResultType.None)            
+        if (Model.HistoricalBookings.Command.ResultType != ResultType.None)            
         {
-            if (Model.Command.Success)
+            if (Model.HistoricalBookings.Command.Success)
             {
                 <div class="alert alert-success" role="alert">
-                    @Model.Command.Message
+                    @Model.HistoricalBookings.Command.Message
                 </div>
             }
             else
             {
                 <div class="alert alert-danger" role="alert">
-                    @Model.Command.Message
+                    @Model.HistoricalBookings.Command.Message
                 </div>   
             }
         }
     }
 </div>
 
-<div>    
-    @*{
-        if (!Model.Query.Success)
+<div>
+    @{
+        if (Model.FutureBookings.Command.ResultType != ResultType.None)            
         {
-            <div class="alert alert-danger" role="alert">
-                @Model.Query.Message
-            </div>
-        }
-        else if (!Model.Query.Payload.Bookings.FutureBookings.Any())
-        { *@
-            <div class="alert alert-info" role="alert">
-                It appears you currently have no planned future bookings.
-            </div> @*
-        } 
-        else
-        {
-            foreach (var booking in Model.Query.Payload.Bookings.FutureBookings)
+            if (Model.FutureBookings.Command.Success)
             {
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">@booking.ParkingSpace.Address.Street</h5>
-                                <p class="card-text">@booking.BookingTime.Day</p>
+                <div class="alert alert-success" role="alert">
+                    @Model.FutureBookings.Command.Message
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.FutureBookings.Command.Message
+                </div>   
+            }
+        }
+    }
+</div>
+
+@{
+    if (Model.FutureBookings.Query.Success)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h4>Future Bookings</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach (var booking in Model.FutureBookings.Query.Payload)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img id="parking-image" src="/imageuploads/@booking.ParkingSpace.ImageURL" class="card-img" alt="No Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5>@booking.ParkingSpace.Title.</h5>
+                                    <p>@booking.ParkingSpace.Description</p>
+                                    <p>Start time: @booking.Start</p>
+                                    <p>End time: @booking.End</p>
+                                    <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
+                                    <p>Total Cost: @booking.Total</p>
+                                    <small class="text-muted">
+                                        <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@booking.ParkingSpace.ParkingSpaceId">View</a>
+                                        <span> | </span>
+                                        <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@booking.ParkingSpace.ParkingSpaceId">Edit</a>
+                                        <span> | </span>
+                                        <a>Cancel</a>
+                                    </small>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            }  
-        }
-    } *@
-</div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            You currently have no planned future bookings.
+        </div>
+    }
+}
+
+@{
+    if (Model.HistoricalBookings.Query.Success)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h4>Future Bookings</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach (var booking in Model.HistoricalBookings.Query.Payload)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img id="parking-image-historical" src="/imageuploads/@booking.ParkingSpace.ImageURL" class="card-img" alt="No Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5>@booking.ParkingSpace.Title.</h5>
+                                    <p>@booking.ParkingSpace.Description</p>
+                                    <p>Start time: @booking.Start</p>
+                                    <p>End time: @booking.End</p>
+                                    <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
+                                    <p>Total Cost: @booking.Total</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+}
 
 @section Scripts
 {
     <script>
         $("#myBookings").addClass("active");
+        $(".parking-image").style.maxWidth = "200px";
+        $(".parking-image-historical").style.maxWidth = "200px";
     </script>
 }

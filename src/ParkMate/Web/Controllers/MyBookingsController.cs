@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,11 +36,21 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index(Result previousCommand)
         {
-            var query = new GetCustomerQuery(_userId);
-            var viewModel = new ResultViewModel<CustomerViewModel>
+            var historicalQuery = new GetHistoricalBookingsForCustomerQuery(_userId);
+            var futureQuery = new GetFutureBookingsForCustomerQuery(_userId);
+            var viewModel = new MyBookingsViewModel
             {
-                Command = previousCommand,
-                Query = await _mediator.Send(query)
+                HistoricalBookings = new ResultViewModel<IReadOnlyList<BookingViewModel>>
+                {
+                    Command = previousCommand,
+                    Query = await _mediator.Send(historicalQuery)
+                },
+                
+                FutureBookings = new ResultViewModel<IReadOnlyList<BookingViewModel>>
+                {
+                    Command = previousCommand,
+                    Query = await _mediator.Send(futureQuery)
+                }             
             };
 
             return View("Index", viewModel);
