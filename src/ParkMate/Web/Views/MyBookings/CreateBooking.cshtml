@@ -1,4 +1,3 @@
-@using ApplicationServices.Enums;
 @model CreateBookingViewModel;
 
 @{
@@ -46,7 +45,7 @@
 
 <form method="post" enctype="multipart/form-data" id="form">
     <div class="form-group" hidden="true">
-        <input asp-for="CustomerId" value="@Model.Customer.Query.Payload.IdentityId" readonly/>
+        <input asp-for="CustomerId" value="@Model.Customer.Query.Payload.CustomerId" readonly/>
         <input asp-for="ParkingSpaceId" value="@Model.ParkingSpace.Query.Payload.ParkingSpaceId" readonly/>
         <input asp-for="HourlyRate" value="@Model.ParkingSpace.Query.Payload.HourlyRate" readonly/>
         <input asp-for="DailyRate" value="@Model.ParkingSpace.Query.Payload.DailyRate" readonly/>
@@ -60,11 +59,11 @@
     </div>
     <div class="form-group">
         <label for="Start">Start Date</label>
-        <input asp-for="Booking.Start" type="datetime-local" id="Start" class="form-control"/>
+        <input asp-for="Booking.Start" type="datetime-local" id="Start" class="form-control flatpickr"/>
     </div>
     <div class="form-group">
         <label for="End">Start Date</label>
-        <input asp-for="Booking.End" type="datetime-local" id="End" class="form-control"/>
+        <input asp-for="Booking.End" type="datetime-local" id="End" class="form-control flatpickr"/>
     </div>
     <div class="form-group">
         <label for="vehicle-select">Vehicle</label>
@@ -80,7 +79,7 @@
                     {
                         foreach (var vehicle in Model.Customer.Query.Payload.Vehicles)
                         {
-                            <option value="@vehicle.Id">@vehicle.Colour @vehicle.Model - @vehicle.Registration</option>
+                            <option value="@vehicle.VehicleId">@vehicle.Colour @vehicle.Model - @vehicle.Registration</option>
                         }
                     }
                 }
@@ -92,6 +91,7 @@
 
 @section Scripts
 {
+    <partial name="_DateTimePicker"/>
     <script>
         document.getElementById("parking-image").style.maxWidth = "200px";
     </script>

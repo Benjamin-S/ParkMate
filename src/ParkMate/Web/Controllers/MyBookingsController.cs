@@ -7,6 +7,7 @@ using MediatR;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
+using ParkMate.ApplicationServices.Commands;
 using ParkMate.Web.Models;
 
 //It would be more consistent if we had CreateBooking,
@@ -50,7 +51,7 @@ namespace Web.Controllers
             var parkingSpaceQuery = new GetSingleParkingSpaceQuery(id);
             var viewModel = new CreateBookingViewModel
             {
-                Customer = new ResultViewModel<Customer>
+                Customer = new ResultViewModel<CustomerViewModel>
                 {
                     Command = previousCommand,
                     Query = await _mediator.Send(customerQuery)

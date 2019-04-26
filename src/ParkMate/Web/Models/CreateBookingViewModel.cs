@@ -1,7 +1,7 @@
 using System;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.DTOs;
-using Web.Models;
+using ParkMate.Web.Models;
 
 namespace ParkMate.Web.Models
 {
@@ -14,7 +14,7 @@ namespace ParkMate.Web.Models
         public decimal DailyRate { get; set; }
         public decimal HourlyRate { get; set; }
         public BookingPeriodDTO Booking { get; set; }
-        public ResultViewModel<Customer> Customer { get; set; }
+        public ResultViewModel<CustomerViewModel> Customer { get; set; }
         public ResultViewModel<ParkingSpaceViewModel> ParkingSpace { get; set; }
     }
 }
