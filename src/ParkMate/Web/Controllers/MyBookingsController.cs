@@ -58,6 +58,17 @@ namespace Web.Controllers
             return View("Index", viewModel);
         }
 
+        public async Task<IActionResult> EditBooking(string? id)
+        {
+
+            return View();
+        }
+
+        public IActionResult ViewBooking()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> CreateBooking(Result previousCommand, int id)
         {
             var customerQuery = new GetCustomerQuery(_userId);

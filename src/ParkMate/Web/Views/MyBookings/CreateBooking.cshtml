@@ -49,22 +49,21 @@
         <input asp-for="ParkingSpaceId" value="@Model.ParkingSpace.Query.Payload.ParkingSpaceId" readonly/>
         <input asp-for="HourlyRate" value="@Model.ParkingSpace.Query.Payload.HourlyRate" readonly/>
         <input asp-for="DailyRate" value="@Model.ParkingSpace.Query.Payload.DailyRate" readonly/>
-        
     </div>
     <div class="form-group">
         <label asp-for="BookingType">Booking Type</label>
-        <select asp-for="BookingType" id="BookingType">
+        <select asp-for="BookingType" class="form-control" id="BookingType">
             <option value="1">Hourly</option>
             <option value="2">Daily</option>
         </select>
     </div>
     <div class="form-group">
         <label for="Start">Start Date</label>
-        <input asp-for="Booking.Start" type="datetime-local" id="Start" class="form-control flatpickr"/>
+        <input asp-for="Booking.Start" type="datetime-local" id="Start" class="form-control"/>
     </div>
     <div class="form-group">
         <label for="End">End Date</label>
-        <input asp-for="Booking.End" type="datetime-local" id="End" class="form-control flatpickr"/>
+        <input asp-for="Booking.End" type="datetime-local" id="End" class="form-control"/>
     </div>
     <div class="form-group">
         <label for="vehicle-select">Vehicle</label>
@@ -95,5 +94,68 @@
     <partial name="_DateTimePicker"/>
     <script>
         document.getElementById("parking-image").style.maxWidth = "200px";
+        var startFP = flatpickr("#Start",
+            {
+                enableTime: true, 
+                altInput: true, 
+                altFormat: "d-m-Y H:i",
+                minDate: "today",
+                disable: [
+                    function(date) {
+                        return (getDaysOfWeek().includes(date.getDay()));
+                    }
+                ], 
+                onClose: function(selectedDates, dateStr, instance) {
+                    endFP.set("minDate", dateStr);
+                }
+            });
+        var endFP = flatpickr("#End",
+            {
+                enableTime: true, 
+                altInput: true, 
+                altFormat: "d-m-Y H:i",
+                disable: [
+                    function(date) {
+                        return (getDaysOfWeek().includes(date.getDay()));
+                    }
+                ],
+            });
+        
+        function getDaysOfWeek() {
+            var disabled = [];
+            var True = true;
+            var False = false;
+            var sunday = @Model.ParkingSpace.Query.Payload.Sunday.IsAvailable;
+            var monday = @Model.ParkingSpace.Query.Payload.Monday.IsAvailable;
+            var tuesday = @Model.ParkingSpace.Query.Payload.Tuesday.IsAvailable;
+            var wednesday = @Model.ParkingSpace.Query.Payload.Wednesday.IsAvailable;
+            var thursday = @Model.ParkingSpace.Query.Payload.Thursday.IsAvailable;
+            var friday = @Model.ParkingSpace.Query.Payload.Friday.IsAvailable;
+            var saturday = @Model.ParkingSpace.Query.Payload.Saturday.IsAvailable;
+
+            if (sunday === false) {
+                disabled.push(0);
+            }
+            if (monday === false) {
+                disabled.push(1);
+            }
+            if (tuesday === false) {
+                disabled.push(2);
+            }
+            if (wednesday === false) {
+                disabled.push(3);
+            }
+            if (thursday === false) {
+                disabled.push(4);
+            }
+            if (friday === false) {
+                disabled.push(5);
+            }
+            if (saturday === false) {
+                disabled.push(6);
+            }
+
+            return disabled;
+        }
     </script>
 }

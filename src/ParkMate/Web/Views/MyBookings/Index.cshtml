@@ -76,7 +76,7 @@
                                     <small class="text-muted">
                                         <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@booking.ParkingSpace.ParkingSpaceId">View</a>
                                         <span> | </span>
-                                        <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@booking.ParkingSpace.ParkingSpaceId">Edit</a>
+                                        <a asp-controller="MyBookings" asp-action="EditBooking" asp-route-id="@booking.Id">Edit</a>
                                         <span> | </span>
                                         <a>Cancel</a>
                                     </small>
