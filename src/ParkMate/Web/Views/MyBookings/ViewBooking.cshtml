@@ -1,12 +1,116 @@
-@model BookingViewModel
+@model ResultViewModel<BookingViewModel>
 @{
     ViewData["Title"] = "View Booking";
 }
 
-<h1>View Booking</h1>
-
-<div class="container">
-    <div class="alert alert-danger">
-        This page has not yet been implemented.
-    </div>
+<div>
+    <partial name="_UserProfilePartial"/>
 </div>
+
+<h2>View Booking</h2>
+
+
+@{
+    if (Model.Query.Success)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h4>Booking @Model.Query.Payload.BookingId - @Model.Query.Payload.Status</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img id="parking-image" src="/imageuploads/@Model.Query.Payload.ParkingSpace.ImageURL" class="card-img" alt="No Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5>@Model.Query.Payload.ParkingSpace.Title.</h5>
+                                <p>@Model.Query.Payload.ParkingSpace.Description</p>
+                                <table class="table table-sm">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Day</th>
+                                        <th scope="col">Available</th>
+                                        <th scope="col">Start Time</th>
+                                        <th scope="col">End Time</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Monday</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Monday.IsAvailable</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableFrom</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableTo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tuesday</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Tuesday.IsAvailable</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableFrom</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableTo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wednesday</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Wednesday.IsAvailable</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableFrom</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableTo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Thursday</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Thursday.IsAvailable</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableFrom</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableTo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Friday</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Friday.IsAvailable</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableFrom</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableTo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saturday</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Saturday.IsAvailable</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableFrom</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableTo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sunday</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Sunday.IsAvailable</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableFrom</td>
+                                        <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableTo</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p>Start time: @Model.Query.Payload.Start</p>
+                                <p>End time: @Model.Query.Payload.End</p>
+                                <p>Vehicle: @Model.Query.Payload.Vehicle.Colour @Model.Query.Payload.Vehicle.Make @Model.Query.Payload.Vehicle.Model - @Model.Query.Payload.Vehicle.Registration</p>
+                                <p>Total Cost: @Model.Query.Payload.Total</p>
+                                <small class="text-muted">
+                                    <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@Model.Query.Payload.BookingId">View</a>
+                                    <span> | </span>
+                                    <a asp-controller="MyBookings" asp-action="EditBooking" asp-route-id="@Model.Query.Payload.BookingId">Edit</a>
+                                    <span> | </span>
+                                    <a>Cancel</a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    }
+}
+
+@Model.Query.Payload.BookingId;
+@Model.Query.Payload.Rate;
+@Model.Query.Payload.Start;
+@Model.Query.Payload.Total;
+@Model.Query.Payload.CustomerId;
+@Model.Query.Payload.Status;
+
+@section Scripts
+{
+    <script>
+        $("#myBookings").addClass("active");
+    </script>
+}

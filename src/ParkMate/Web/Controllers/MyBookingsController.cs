@@ -5,22 +5,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using Microsoft.VisualStudio.Web.CodeGeneration;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.Web.Models;
-
-//It would be more consistent if we had CreateBooking,
-//EditBooking as seperate views controlled by the MyBookings
-//controller. This also allows for the proper display of Result
-//objects returned from commands/queries. So for instance the
-//EditBooking function on the MyBookings controller should create
-//a new command, pass it to the mediator, then attach the result
-//to a ResultViewModel and pass that to the MyBookings Index view,
-//similarly to any of the Edit functions on MyParkingSpacesController
 
 namespace Web.Controllers
 {
@@ -58,15 +47,22 @@ namespace Web.Controllers
             return View("Index", viewModel);
         }
 
-        public async Task<IActionResult> EditBooking(string? id)
+        public IActionResult EditBooking()
         {
 
             return View();
         }
 
-        public IActionResult ViewBooking()
+        public async  Task<IActionResult> ViewBooking(Result previousCommand, int id)
         {
-            return View();
+            var query = new GetBookingQuery(id);
+
+            var viewModel = new ResultViewModel<BookingViewModel>()
+            {
+                Command = previousCommand,
+                Query = await _mediator.Send(query)
+            };
+            return View(viewModel);
         }
 
         public async Task<IActionResult> CreateBooking(Result previousCommand, int id)

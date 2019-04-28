@@ -74,9 +74,9 @@
                                     <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
                                     <p>Total Cost: @booking.Total</p>
                                     <small class="text-muted">
-                                        <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@booking.ParkingSpace.ParkingSpaceId">View</a>
+                                        <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@booking.BookingId">View</a>
                                         <span> | </span>
-                                        <a asp-controller="MyBookings" asp-action="EditBooking" asp-route-id="@booking.Id">Edit</a>
+                                        <a asp-controller="MyBookings" asp-action="EditBooking" asp-route-id="@booking.BookingId">Edit</a>
                                         <span> | </span>
                                         <a>Cancel</a>
                                     </small>
