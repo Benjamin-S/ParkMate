@@ -22,7 +22,7 @@ namespace ParkMate.ApplicationServices.Events
             ParkingSpaceRegisteredEvent notification, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var command = new AddParkingSpaceToDocumentDBCommand(notification.ParkingSpace);
+            var command = new AddParkingSpaceMaterializedViewCommand(notification.ParkingSpace);
             await _mediator.Send(command);
         }
     }

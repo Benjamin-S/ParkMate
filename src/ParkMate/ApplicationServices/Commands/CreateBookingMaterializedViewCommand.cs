@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -9,23 +10,23 @@ using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class AddCustomerInDocumentDbCommand : IRequest<Result>
+    public class CreateBookingMaterializedViewCommand : IRequest<Result>
     {
-        public AddCustomerInDocumentDbCommand(
-            Customer customer)
+        public CreateBookingMaterializedViewCommand(
+            Booking booking)
         {
-            Customer = customer;
+            Booking = booking;
         }
-        public Customer Customer { get; }
+        public Booking Booking { get; }
     }
 
-    public class AddCustomerInDocumentDbCommandHandler
-        : IRequestHandler<AddCustomerInDocumentDbCommand, Result>
+    public class CreateBookingMaterializedViewCommandHandler
+        : IRequestHandler<CreateBookingMaterializedViewCommand, Result>
     {
         private IMongoContext _context;
         private IMapper _mapper;
 
-        public AddCustomerInDocumentDbCommandHandler(
+        public CreateBookingMaterializedViewCommandHandler(
             IMongoContext context,
             IMapper mapper)
         {
@@ -36,12 +37,12 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            AddCustomerInDocumentDbCommand command,
+            CreateBookingMaterializedViewCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var customer = _mapper.Map<Customer, CustomerViewModel>(command.Customer);
+            var booking = _mapper.Map<Booking, BookingViewModel>(command.Booking);
 
-            await _context.Customers.InsertOneAsync(customer);
+            await _context.Bookings.InsertOneAsync(booking);
 
             return Result.Ok();
         }

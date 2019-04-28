@@ -3,29 +3,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using AutoMapper;
-using MongoDB.Driver;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class ReplaceCustomerInDocumentDbCommand : IRequest<Result>
+    public class AddParkingSpaceMaterializedViewCommand : IRequest<Result>
     {
-        public ReplaceCustomerInDocumentDbCommand(Customer customer)
+        public AddParkingSpaceMaterializedViewCommand(
+            ParkingSpace parkingSpace)
         {
-            Customer = customer;
+            ParkingSpace = parkingSpace;
         }
-        public Customer Customer { get; }
+        public ParkingSpace ParkingSpace { get; }
     }
 
-    public class ReplaceCustomerInDocumentDbCommandHandler
-        : IRequestHandler<ReplaceCustomerInDocumentDbCommand, Result>
+    public class AddParkingSpaceMaterializedViewCommandHandler
+        : IRequestHandler<AddParkingSpaceMaterializedViewCommand, Result>
     {
         private IMongoContext _context;
         private IMapper _mapper;
 
-        public ReplaceCustomerInDocumentDbCommandHandler(
+        public AddParkingSpaceMaterializedViewCommandHandler(
             IMongoContext context,
             IMapper mapper)
         {
@@ -36,15 +36,12 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            ReplaceCustomerInDocumentDbCommand command,
+            AddParkingSpaceMaterializedViewCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var customer = _mapper.Map<Customer, CustomerViewModel>(command.Customer);
+            var space = _mapper.Map<ParkingSpace, ParkingSpaceViewModel>(command.ParkingSpace);
 
-            await _context.Customers.ReplaceOneAsync(c => 
-                c.CustomerId.Equals(command.Customer.IdentityId), 
-                customer,
-                new UpdateOptions { IsUpsert = true }); 
+            await _context.ParkingSpaces.InsertOneAsync(space);
 
             return Result.Ok();
         }

@@ -6,12 +6,13 @@ using AutoMapper;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.DTOs;
+using MongoDB.Driver;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class AddParkingSpaceToDocumentDBCommand : IRequest<Result>
+    public class DeleteParkingSpaceMaterializedViewCommand : IRequest<Result>
     {
-        public AddParkingSpaceToDocumentDBCommand(
+        public DeleteParkingSpaceMaterializedViewCommand(
             ParkingSpace parkingSpace)
         {
             ParkingSpace = parkingSpace;
@@ -19,29 +20,24 @@ namespace ParkMate.ApplicationServices.Commands
         public ParkingSpace ParkingSpace { get; }
     }
 
-    public class AddParkingSpaceToDocumentDBCommandHandler
-        : IRequestHandler<AddParkingSpaceToDocumentDBCommand, Result>
+    public class DeleteParkingSpaceMaterializedViewCommandHandler
+        : IRequestHandler<DeleteParkingSpaceMaterializedViewCommand, Result>
     {
         private IMongoContext _context;
-        private IMapper _mapper;
 
-        public AddParkingSpaceToDocumentDBCommandHandler(
-            IMongoContext context,
-            IMapper mapper)
+        public DeleteParkingSpaceMaterializedViewCommandHandler(
+            IMongoContext context)
         {
             _context = context ??
                 throw new ArgumentNullException(nameof(context));
-            _mapper = mapper ??
-                throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<Result> Handle(
-            AddParkingSpaceToDocumentDBCommand command,
+            DeleteParkingSpaceMaterializedViewCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var space = _mapper.Map<ParkingSpace, ParkingSpaceViewModel>(command.ParkingSpace);
-
-            await _context.ParkingSpaces.InsertOneAsync(space);
+            await _context.ParkingSpaces.DeleteOneAsync(
+                        ps => ps.ParkingSpaceId == command.ParkingSpace.Id);
 
             return Result.Ok();
         }

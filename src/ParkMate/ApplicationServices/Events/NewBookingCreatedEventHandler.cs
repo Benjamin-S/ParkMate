@@ -19,7 +19,7 @@ namespace ParkMate.ApplicationServices.Events
             NewBookingCreatedEvent notification,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var command = new CreateBookingInDocumentDbCommand(notification.Booking);
+            var command = new CreateBookingMaterializedViewCommand(notification.Booking);
             await _mediator.Send(command);
         }
     }
