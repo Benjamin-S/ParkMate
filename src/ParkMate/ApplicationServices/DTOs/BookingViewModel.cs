@@ -9,6 +9,7 @@ namespace ParkMate.ApplicationServices.DTOs
         [BsonIgnoreIfDefault]
         public ObjectId Id { get; set; }
         public string CustomerId { get; set; }
+        public int BookingId { get; set; }
         public ParkingSpaceViewModel ParkingSpace { get; set; }
         public VehicleViewModel Vehicle { get; set; }
         public DateTime Start { get; set; }
@@ -16,6 +17,7 @@ namespace ParkMate.ApplicationServices.DTOs
         public decimal Total { get; set; }
         public decimal Rate { get; set; }
         public string BillingUnit { get; set; }
+        public string Status { get; set; }
         public int BookingUnits { get; set; }
 
         public DateTime BookingTime { get; set; } 

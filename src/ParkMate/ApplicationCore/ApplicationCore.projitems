@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\BookingHistory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ValueObjects\AvailabilityTime.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BillingUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\BookingStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Entities\" />
