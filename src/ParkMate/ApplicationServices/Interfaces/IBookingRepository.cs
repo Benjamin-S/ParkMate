@@ -1,10 +1,10 @@
-﻿using System;
-namespace ApplicationServices.Interfaces
+﻿using System.Threading.Tasks;
+using ParkMate.ApplicationCore.Entities;
+
+namespace ParkMate.ApplicationServices.Interfaces
 {
-    public class IBookingRepository
+    public interface IBookingRepository : IRepository<Booking>
     {
-        public IBookingRepository()
-        {
-        }
+        Task<Booking> GetByIdAsync(int id);
     }
 }

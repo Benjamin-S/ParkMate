@@ -36,6 +36,8 @@ namespace Infrastructure.Migrations.ParkMateDb
 
                     b.Property<int?>("ParkingSpaceId");
 
+                    b.Property<int>("Status");
+
                     b.Property<int?>("VehicleId");
 
                     b.HasKey("Id");
