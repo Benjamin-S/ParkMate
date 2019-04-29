@@ -10,7 +10,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
         {
         }
 
-        public BookingInfo(
+        private BookingInfo(
             DateTime start, 
             DateTime end, 
             Money total,

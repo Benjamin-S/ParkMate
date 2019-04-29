@@ -5,12 +5,13 @@ using MediatR;
 using AutoMapper;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class AddCustomerInDocumentDbCommand : IRequest<Result>
+    public class AddCustomerMaterializedViewCommand : IRequest<Result>
     {
-        public AddCustomerInDocumentDbCommand(
+        public AddCustomerMaterializedViewCommand(
             Customer customer)
         {
             Customer = customer;
@@ -18,13 +19,13 @@ namespace ParkMate.ApplicationServices.Commands
         public Customer Customer { get; }
     }
 
-    public class AddCustomerInDocumentDbCommandHandler
-        : IRequestHandler<AddCustomerInDocumentDbCommand, Result>
+    public class AddCustomerMaterializedViewCommandHandler
+        : IRequestHandler<AddCustomerMaterializedViewCommand, Result>
     {
         private IMongoContext _context;
         private IMapper _mapper;
 
-        public AddCustomerInDocumentDbCommandHandler(
+        public AddCustomerMaterializedViewCommandHandler(
             IMongoContext context,
             IMapper mapper)
         {
@@ -35,10 +36,12 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            AddCustomerInDocumentDbCommand command,
+            AddCustomerMaterializedViewCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _context.Customers.InsertOneAsync(command.Customer);
+            var customer = _mapper.Map<Customer, CustomerViewModel>(command.Customer);
+
+            await _context.Customers.InsertOneAsync(customer);
 
             return Result.Ok();
         }

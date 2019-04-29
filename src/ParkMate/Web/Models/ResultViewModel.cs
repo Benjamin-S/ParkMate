@@ -1,10 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices;
-using ParkMate.ApplicationServices.Queries;
-using ParkMate.Web.Enums;
 
-namespace Web.Models
+namespace ParkMate.Web.Models
 {
     public class ResultViewModel<T>
     {

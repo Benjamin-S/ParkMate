@@ -6,12 +6,12 @@ using ParkMate.ApplicationServices.Interfaces;
 
 namespace ParkMate.ApplicationServices.Events
 {
-    public class NewBookingOwnerEmailHandler :
+    public class NewBookingSellerEmailHandler :
         INotificationHandler<NewBookingCreatedEvent>
     {
-        private IEmailSender _emailSender;
+        private IEmailService _emailSender;
 
-        public NewBookingOwnerEmailHandler(IEmailSender emailSender)
+        public NewBookingSellerEmailHandler(IEmailService emailSender)
         {
             _emailSender = emailSender;
         }
@@ -20,12 +20,10 @@ namespace ParkMate.ApplicationServices.Events
             NewBookingCreatedEvent notification,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            /*
-            await _emailSender.SendEmailAsync(notification.ParkingSpace.Owner.Email,
+            await _emailSender.SendEmailAsync(notification.Seller.Email,
                 "You have a new ParkMate booking",
-                $"Dear {notification.ParkingSpace.Owner.Name},\n\n" +
+                $"Dear {notification.Seller.Name},\n\n" +
                 "You have a new ParkMate booking....");
-            */
         }
     }
 }

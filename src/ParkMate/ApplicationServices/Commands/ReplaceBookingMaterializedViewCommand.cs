@@ -1,30 +1,31 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
 using MediatR;
 using AutoMapper;
 using MongoDB.Driver;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class ReplaceCustomerInDocumentDbCommand : IRequest<Result>
+    public class ReplaceBookingMaterializedViewCommand : IRequest<Result>
     {
-        public ReplaceCustomerInDocumentDbCommand(Customer customer)
+        public ReplaceBookingMaterializedViewCommand(Booking booking)
         {
-            Customer = customer;
+            Booking = booking;
         }
-        public Customer Customer { get; }
+        public Booking Booking { get; }
     }
 
-    public class ReplaceCustomerInDocumentDbCommandHandler
-        : IRequestHandler<ReplaceCustomerInDocumentDbCommand, Result>
+    public class ReplaceBookingMaterializedViewCommandHandler
+        : IRequestHandler<ReplaceBookingMaterializedViewCommand, Result>
     {
         private IMongoContext _context;
         private IMapper _mapper;
 
-        public ReplaceCustomerInDocumentDbCommandHandler(
+        public ReplaceBookingMaterializedViewCommandHandler(
             IMongoContext context,
             IMapper mapper)
         {
@@ -35,13 +36,15 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            ReplaceCustomerInDocumentDbCommand command,
+            ReplaceBookingMaterializedViewCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _context.Customers.ReplaceOneAsync(doc => 
-                doc.Id == command.Customer.Id, 
-                command.Customer,
-                new UpdateOptions { IsUpsert = true }); 
+            var booking = _mapper.Map<Booking, BookingViewModel>(command.Booking);
+
+            await _context.Bookings.ReplaceOneAsync(c =>
+                c.BookingId.Equals(command.Booking.Id),
+                booking,
+                new UpdateOptions { IsUpsert = true });
 
             return Result.Ok();
         }

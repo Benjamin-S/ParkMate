@@ -1,15 +1,14 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using MediatR;
 using MongoDB.Driver;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.Interfaces;
+using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Queries
 {
     public class GetCustomerQuery
-        : IRequest<Result<Customer>>
+        : IRequest<Result<CustomerViewModel>>
     {
         public GetCustomerQuery(string customerId)
         {
@@ -19,7 +18,7 @@ namespace ParkMate.ApplicationServices.Queries
     }
 
     public class GetCustomerQueryHandler
-        : IRequestHandler<GetCustomerQuery, Result<Customer>>
+        : IRequestHandler<GetCustomerQuery, Result<CustomerViewModel>>
     {
         private IMongoContext _context;
 
@@ -28,19 +27,19 @@ namespace ParkMate.ApplicationServices.Queries
             _context = context;
         }
 
-        public async Task<Result<Customer>> Handle(
+        public async Task<Result<CustomerViewModel>> Handle(
             GetCustomerQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = Builders<Customer>.Filter.Eq(c => c.IdentityId, query.CustomerId);
-
-            var customer = await _context.Customers.FindAsync(filter).Result.FirstOrDefaultAsync();
+            var customer = await _context.Customers.FindAsync(c => 
+                c.CustomerId.Equals(query.CustomerId))
+                .Result.FirstOrDefaultAsync();
 
             if (customer != null)
             {
-                return Result<Customer>.QuerySuccess(customer);
+                return Result<CustomerViewModel>.QuerySuccess(customer);
             }
-            return Result<Customer>.QueryFail("Customer not found");
+            return Result<CustomerViewModel>.QueryFail("Customer not found");
         }
     }
 }

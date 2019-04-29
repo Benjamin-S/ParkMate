@@ -1,11 +1,11 @@
-using MediatR;
+﻿using MediatR;
 using ParkMate.ApplicationCore.Entities;
 
 namespace ParkMate.ApplicationServices.Events
 {
-    public class NewBookingCreatedEvent : INotification
+    public class BookingCanceledEvent : INotification
     {
-        public NewBookingCreatedEvent(Customer buyer, Customer seller, Booking booking)
+        public BookingCanceledEvent(Customer buyer, Customer seller, Booking booking)
         {
             Buyer = buyer;
             Seller = seller;

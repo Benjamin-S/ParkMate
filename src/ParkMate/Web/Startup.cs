@@ -18,6 +18,7 @@ using ParkMate.Infrastructure.Data;
 using ParkMate.ApplicationServices.Commands;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.Web.Util;
+using ParkMate.Web.Services;
 
 using ApplicationServices.Config;
 
@@ -89,6 +90,7 @@ namespace ParkMate.Web
             services.AddImageSharp();
 
             services.AddMediatR(typeof(RegisterNewParkingSpaceCommand).Assembly);
+            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();

@@ -10,23 +10,22 @@ using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class ReplaceParkingSpaceInDocumentDbCommand : IRequest<Result>
+    public class ReplaceCustomerMaterializedViewCommand : IRequest<Result>
     {
-        public ReplaceParkingSpaceInDocumentDbCommand(
-            ParkingSpace parkingSpace)
+        public ReplaceCustomerMaterializedViewCommand(Customer customer)
         {
-            ParkingSpace = parkingSpace;
+            Customer = customer;
         }
-        public ParkingSpace ParkingSpace { get; }
+        public Customer Customer { get; }
     }
 
-    public class ReplaceParkingSpaceInDocumentDbCommandHandler
-        : IRequestHandler<ReplaceParkingSpaceInDocumentDbCommand, Result>
+    public class ReplaceCustomerMaterializedViewCommandHandler
+        : IRequestHandler<ReplaceCustomerMaterializedViewCommand, Result>
     {
         private IMongoContext _context;
         private IMapper _mapper;
 
-        public ReplaceParkingSpaceInDocumentDbCommandHandler(
+        public ReplaceCustomerMaterializedViewCommandHandler(
             IMongoContext context,
             IMapper mapper)
         {
@@ -37,16 +36,16 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            ReplaceParkingSpaceInDocumentDbCommand command,
+            ReplaceCustomerMaterializedViewCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var parkingSpace = _mapper.Map<ParkingSpaceViewModel>(command.ParkingSpace);
+            var customer = _mapper.Map<Customer, CustomerViewModel>(command.Customer);
 
-            await _context.ParkingSpaces.ReplaceOneAsync(doc => 
-                doc.ParkingSpaceId == command.ParkingSpace.Id,
-                parkingSpace,
-                new UpdateOptions { IsUpsert = true });
-        
+            await _context.Customers.ReplaceOneAsync(c => 
+                c.CustomerId.Equals(command.Customer.IdentityId), 
+                customer,
+                new UpdateOptions { IsUpsert = true }); 
+
             return Result.Ok();
         }
     }

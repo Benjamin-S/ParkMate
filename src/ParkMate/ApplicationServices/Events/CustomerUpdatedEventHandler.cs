@@ -20,7 +20,7 @@ namespace ParkMate.ApplicationServices.Events
             CustomerUpdatedEvent notification,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var command = new ReplaceCustomerInDocumentDbCommand(notification.Customer);
+            var command = new ReplaceCustomerMaterializedViewCommand(notification.Customer);
             await _mediator.Send(command);
         }
     }

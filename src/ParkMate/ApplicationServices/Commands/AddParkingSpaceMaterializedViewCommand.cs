@@ -6,13 +6,12 @@ using AutoMapper;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.DTOs;
-using MongoDB.Driver;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class DeleteParkingSpaceFromDocumentDbCommand : IRequest<Result>
+    public class AddParkingSpaceMaterializedViewCommand : IRequest<Result>
     {
-        public DeleteParkingSpaceFromDocumentDbCommand(
+        public AddParkingSpaceMaterializedViewCommand(
             ParkingSpace parkingSpace)
         {
             ParkingSpace = parkingSpace;
@@ -20,24 +19,29 @@ namespace ParkMate.ApplicationServices.Commands
         public ParkingSpace ParkingSpace { get; }
     }
 
-    public class DeleteParkingSpaceFromDocumentDbCommandHandler
-        : IRequestHandler<DeleteParkingSpaceFromDocumentDbCommand, Result>
+    public class AddParkingSpaceMaterializedViewCommandHandler
+        : IRequestHandler<AddParkingSpaceMaterializedViewCommand, Result>
     {
         private IMongoContext _context;
+        private IMapper _mapper;
 
-        public DeleteParkingSpaceFromDocumentDbCommandHandler(
-            IMongoContext context)
+        public AddParkingSpaceMaterializedViewCommandHandler(
+            IMongoContext context,
+            IMapper mapper)
         {
             _context = context ??
                 throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ??
+                throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<Result> Handle(
-            DeleteParkingSpaceFromDocumentDbCommand command,
+            AddParkingSpaceMaterializedViewCommand command,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _context.ParkingSpaces.DeleteOneAsync(
-                        ps => ps.ParkingSpaceId == command.ParkingSpace.Id);
+            var space = _mapper.Map<ParkingSpace, ParkingSpaceViewModel>(command.ParkingSpace);
+
+            await _context.ParkingSpaces.InsertOneAsync(space);
 
             return Result.Ok();
         }
