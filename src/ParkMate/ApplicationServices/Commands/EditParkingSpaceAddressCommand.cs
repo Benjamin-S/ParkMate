@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
-using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.Events;
 using ParkMate.ApplicationServices.DTOs;
@@ -64,7 +61,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _repository.UnitOfWork.SaveEntitiesAsync();
 
-            await _mediator.Publish(new ParkingSpaceRegisteredEvent(parkingSpace));
+            await _mediator.Publish(new ParkingSpaceUpdatedEvent(parkingSpace));
 
             return Result.CommandSuccess("Parking Space address was successfully updated");
         }
