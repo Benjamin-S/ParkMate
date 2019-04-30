@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ApplicationServices.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,31 @@ namespace Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> CancelBooking(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var query = new GetBookingQuery(id);
+            var viewModel = new ResultViewModel<BookingViewModel>
+            {
+                Query = await _mediator.Send(query)
+            };
+            
+            return View(viewModel);
+        }
+
+        [HttpPost, ActionName("CancelBooking")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelBookingConfirm(int id)
+        {
+            var command = new CancelBookingCommand(id, _userId);
+            var result = await _mediator.Send(command);
+            return RedirectToAction(nameof(Index));
+        }
+
         public async  Task<IActionResult> ViewBooking(Result previousCommand, int id)
         {
             var query = new GetBookingQuery(id);
@@ -103,18 +129,19 @@ namespace Web.Controllers
                     model.Booking.Rate = model.HourlyRate;
                     var command = new CreateHourlyBookingCommand(_userId, model.VehicleId, model.ParkingSpaceId, model.Booking);
                     result = await _mediator.Send(command);
-                    return await Index(result);
+                    break;
                 }
                 case 2:
                 {
                     model.Booking.Rate = model.DailyRate;
                     var command = new CreateDailyBookingCommand(_userId, model.VehicleId, model.ParkingSpaceId, model.Booking);
                     result = await _mediator.Send(command);
-                    return await Index(result);
+                    break;
                 }
                 default:
                     return View(model);
             }
+            return await Index(result);
         }
     }
 }

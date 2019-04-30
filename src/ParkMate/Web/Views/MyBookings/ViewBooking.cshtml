@@ -86,11 +86,9 @@
                                 <p>Vehicle: @Model.Query.Payload.Vehicle.Colour @Model.Query.Payload.Vehicle.Make @Model.Query.Payload.Vehicle.Model - @Model.Query.Payload.Vehicle.Registration</p>
                                 <p>Total Cost: @Model.Query.Payload.Total</p>
                                 <small class="text-muted">
-                                    <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@Model.Query.Payload.BookingId">View</a>
-                                    <span> | </span>
                                     <a asp-controller="MyBookings" asp-action="EditBooking" asp-route-id="@Model.Query.Payload.BookingId">Edit</a>
                                     <span> | </span>
-                                    <a>Cancel</a>
+                                    <a asp-controller="MyBookings" asp-action="CancelBooking" asp-route-id="@Model.Query.Payload.BookingId">Cancel</a>
                                 </small>
                             </div>
                         </div>

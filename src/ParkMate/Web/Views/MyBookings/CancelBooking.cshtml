@@ -1,0 +1,5 @@
+@model ResultViewModel<BookingViewModel>
+<form method="post" enctype="multipart/form-data" id="form" asp-action="CancelBooking">
+    <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@Model.Query.Payload.BookingId">View</a>
+    <button class="btn btn-primary" type="submit">Confirm</button>
+</form>
