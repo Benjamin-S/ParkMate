@@ -2,14 +2,23 @@
 @{
     ViewData["Title"] = "Edit Booking";
 }
-
-<h1>Edit Booking</h1>
-
 <div class="container">
-    <div class="alert alert-danger">
-        This page has not yet been implemented.
+    <div>
+        <partial name="_UserProfilePartial"/>
+    </div>
+
+    <h1>Edit Booking</h1>
+
+    <div class="container">
+        <div class="alert alert-danger">
+            This page has not yet been implemented.
+        </div>
     </div>
 </div>
 
-
-
+@section Scripts
+{
+    <script>
+        $("#myBookings").addClass("active");
+    </script>
+}

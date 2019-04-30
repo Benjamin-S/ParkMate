@@ -7,48 +7,47 @@
     <div>
         <partial name="_UserProfilePartial"/>
     </div>
-
+    
     <h2>@ViewData["Title"]</h2>
-</div>
-
-<div>
-    @{
-        if (Model.HistoricalBookings.Command.ResultType != ResultType.None)
-        {
-            if (Model.HistoricalBookings.Command.Success)
+    
+    <div>
+        @{
+            if (Model.HistoricalBookings.Command.ResultType != ResultType.None)
             {
-                <div class="alert alert-success" role="alert">
-                    @Model.HistoricalBookings.Command.Message
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-danger" role="alert">
-                    @Model.HistoricalBookings.Command.Message
-                </div>
-            }
-        }
-    }
-</div>
-<div>
-    @{
-        if (Model.FutureBookings.Command.ResultType != ResultType.None)
-        {
-            if (Model.FutureBookings.Command.Success)
-            {
-                <div class="alert alert-success" role="alert">
-                    @Model.FutureBookings.Command.Message
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-danger" role="alert">
-                    @Model.FutureBookings.Command.Message
-                </div>
+                if (Model.HistoricalBookings.Command.Success)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @Model.HistoricalBookings.Command.Message
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @Model.HistoricalBookings.Command.Message
+                    </div>
+                }
             }
         }
-    }
-</div>
+    </div>
+    <div>
+        @{
+            if (Model.FutureBookings.Command.ResultType != ResultType.None)
+            {
+                if (Model.FutureBookings.Command.Success)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @Model.FutureBookings.Command.Message
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @Model.FutureBookings.Command.Message
+                    </div>
+                }
+            }
+        }
+    </div>
 
 @{
     if (Model.FutureBookings.Query.Success)
@@ -123,8 +122,9 @@
             </ul>
         </div>
     }
+    
 }
-
+</div>
 @section Scripts
 {
     <script>
