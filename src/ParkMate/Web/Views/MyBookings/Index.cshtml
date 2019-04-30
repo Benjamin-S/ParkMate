@@ -3,16 +3,16 @@
 @{
     ViewData["Title"] = "My Bookings";
 }
+<div class="container">
+    <div>
+        <partial name="_UserProfilePartial"/>
+    </div>
 
-<div>
-    <partial name="_UserProfilePartial"/>
-</div>
-
-<h2>My Bookings</h2>
+    <h2>@ViewData["Title"]</h2>
 
 <div>
     @{
-        if (Model.HistoricalBookings.Command.ResultType != ResultType.None)            
+        if (Model.HistoricalBookings.Command.ResultType != ResultType.None)
         {
             if (Model.HistoricalBookings.Command.Success)
             {
@@ -24,15 +24,14 @@
             {
                 <div class="alert alert-danger" role="alert">
                     @Model.HistoricalBookings.Command.Message
-                </div>   
+                </div>
             }
         }
-    }
-</div>
+    </div>
 
 <div>
     @{
-        if (Model.FutureBookings.Command.ResultType != ResultType.None)            
+        if (Model.FutureBookings.Command.ResultType != ResultType.None)
         {
             if (Model.FutureBookings.Command.Success)
             {
@@ -44,7 +43,7 @@
             {
                 <div class="alert alert-danger" role="alert">
                     @Model.FutureBookings.Command.Message
-                </div>   
+                </div>
             }
         }
     }
