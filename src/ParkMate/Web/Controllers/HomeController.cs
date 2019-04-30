@@ -27,12 +27,12 @@ namespace ParkMate.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async void Index([FromForm] DistanceSearchDTO dto)
+        public async Task<IActionResult> Index([FromForm] DistanceSearchDTO dto)
         {
             var query = new FindSpacesWithinDistanceQuery(dto);
             var result = await _mediator.Send(query);
 
-            RedirectToAction("SearchResult", "Search", new
+            return RedirectToAction("SearchResult", "Search", new
             {
                 viewModel = new SearchResultViewModel()
                 {
