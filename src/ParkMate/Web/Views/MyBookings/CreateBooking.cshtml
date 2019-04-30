@@ -27,84 +27,95 @@
 @{
     if (Model.ParkingSpace.Query.Success)
     {
-        <div class="card flex-row flex-wrap">
+        <div class="card">
             <div class="card-header">
-                <img id="parking-image" class="card-img" src="/imageuploads/@Model.ParkingSpace.Query.Payload.ImageURL" alt="Card image cap">
+                <h4> @Model.ParkingSpace.Query.Payload.Title</h4>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">@Model.ParkingSpace.Query.Payload.Title</h5>
-                <p class="card-text">Description: @Model.ParkingSpace.Query.Payload.Description</p>
-                <table class="table table-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col">Day</th>
-                        <th scope="col">Start Time</th>
-                        <th scope="col">End Time</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if (Model.ParkingSpace.Query.Payload.Monday.IsAvailable)
-                    {
-                        <tr>
-                            <td>Monday</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Monday.AvailableFrom</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Monday.AvailableTo</td>
-                        </tr>
-                    }
-                    @if (@Model.ParkingSpace.Query.Payload.Tuesday.IsAvailable)
-                    {
-                        <tr>
-                            <td>Tuesday</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Tuesday.AvailableFrom</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Tuesday.AvailableTo</td>
-                        </tr>
-                    }
-                    @if (@Model.ParkingSpace.Query.Payload.Wednesday.IsAvailable)
-                    {
-                        <tr>
-                            <td>Wednesday</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Wednesday.AvailableFrom</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Wednesday.AvailableTo</td>
-                        </tr>
-                    }
-                    @if (@Model.ParkingSpace.Query.Payload.Thursday.IsAvailable)
-                    {
-                        <tr>
-                            <td>Thursday</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Thursday.AvailableFrom</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Thursday.AvailableTo</td>
-                        </tr>
-                    }
-                    @if (@Model.ParkingSpace.Query.Payload.Friday.IsAvailable)
-                    {
-                        <tr>
-                            <td>Friday</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Friday.AvailableFrom</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Friday.AvailableTo</td>
-                        </tr>
-                    }
-                    @if (@Model.ParkingSpace.Query.Payload.Saturday.IsAvailable)
-                    {
-                        <tr>
-                            <td>Saturday</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Saturday.AvailableFrom</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Saturday.AvailableTo</td>
-                        </tr>
-                    }
-                    @if (@Model.ParkingSpace.Query.Payload.Tuesday.IsAvailable)
-                    {
-                        <tr>
-                            <td>Sunday</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Sunday.AvailableFrom</td>
-                            <td>@Model.ParkingSpace.Query.Payload.Sunday.AvailableTo</td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-                <p class="card-text"><strong>Hourly Rate:</strong> $@Model.ParkingSpace.Query.Payload.HourlyRate</p>
-                <p class="card-text">Daily Rate: $@Model.ParkingSpace.Query.Payload.DailyRate</p>
-            </div>
-            <div class="w-100"></div>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img id="parking-image" src="/imageuploads/@Model.ParkingSpace.Query.Payload.ImageURL" class="card-img" alt="No Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.ParkingSpace.Query.Payload.Title</h5>
+                                <p class="card-text">Description: @Model.ParkingSpace.Query.Payload.Description</p>
+                                <table class="table table-sm">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Day</th>
+                                        <th scope="col">Start Time</th>
+                                        <th scope="col">End Time</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if (Model.ParkingSpace.Query.Payload.Monday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Monday</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Monday.AvailableFrom</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Monday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.ParkingSpace.Query.Payload.Tuesday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Tuesday</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Tuesday.AvailableFrom</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Tuesday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.ParkingSpace.Query.Payload.Wednesday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Wednesday</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Wednesday.AvailableFrom</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Wednesday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.ParkingSpace.Query.Payload.Thursday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Thursday</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Thursday.AvailableFrom</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Thursday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.ParkingSpace.Query.Payload.Friday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Friday</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Friday.AvailableFrom</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Friday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.ParkingSpace.Query.Payload.Saturday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Saturday</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Saturday.AvailableFrom</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Saturday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.ParkingSpace.Query.Payload.Tuesday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Sunday</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Sunday.AvailableFrom</td>
+                                            <td>@Model.ParkingSpace.Query.Payload.Sunday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                                <p class="card-text"><strong>Hourly Rate:</strong> $@Model.ParkingSpace.Query.Payload.HourlyRate</p>
+                                <p class="card-text">Daily Rate: $@Model.ParkingSpace.Query.Payload.DailyRate</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     }
 }
@@ -159,7 +170,7 @@
 {
     <partial name="_DateTimePicker"/>
     <script>
-//        document.getElementById("parking-image").style.maxWidth = "200px";
+        //        document.getElementById("parking-image").style.maxWidth = "200px";
         var startFP = flatpickr("#Start",
             {
                 enableTime: true,
@@ -173,6 +184,7 @@
                 ],
                 onClose: function(selectedDates, dateStr, instance) {
                     endFP.set("minDate", dateStr);
+                    endFP.jumpToDate(dateStr);
                 }
             });
         var endFP = flatpickr("#End",

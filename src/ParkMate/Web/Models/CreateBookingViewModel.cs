@@ -1,7 +1,4 @@
-using System;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices.DTOs;
-using ParkMate.Web.Models;
 
 namespace ParkMate.Web.Models
 {

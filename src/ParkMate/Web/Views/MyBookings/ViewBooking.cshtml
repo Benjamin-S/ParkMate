@@ -31,54 +31,67 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Day</th>
-                                        <th scope="col">Available</th>
                                         <th scope="col">Start Time</th>
                                         <th scope="col">End Time</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Monday</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Monday.IsAvailable</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableFrom</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableTo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tuesday</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Tuesday.IsAvailable</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableFrom</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableTo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Wednesday</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Wednesday.IsAvailable</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableFrom</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableTo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Thursday</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Thursday.IsAvailable</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableFrom</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableTo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Friday</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Friday.IsAvailable</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableFrom</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableTo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Saturday</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Saturday.IsAvailable</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableFrom</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableTo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sunday</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Sunday.IsAvailable</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableFrom</td>
-                                        <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableTo</td>
-                                    </tr>
+                                    @if (Model.Query.Payload.ParkingSpace.Monday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Monday</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableFrom</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.Query.Payload.ParkingSpace.Tuesday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Tuesday</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableFrom</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.Query.Payload.ParkingSpace.Wednesday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Wednesday</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableFrom</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.Query.Payload.ParkingSpace.Thursday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Thursday</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableFrom</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.Query.Payload.ParkingSpace.Friday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Friday</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableFrom</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.Query.Payload.ParkingSpace.Saturday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Saturday</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableFrom</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableTo</td>
+                                        </tr>
+                                    }
+                                    @if (@Model.Query.Payload.ParkingSpace.Tuesday.IsAvailable)
+                                    {
+                                        <tr>
+                                            <td>Sunday</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableFrom</td>
+                                            <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableTo</td>
+                                        </tr>
+                                    }
                                     </tbody>
                                 </table>
                                 <p>Start time: @Model.Query.Payload.Start</p>
@@ -98,13 +111,6 @@
         </div>
     }
 }
-
-@Model.Query.Payload.BookingId;
-@Model.Query.Payload.Rate;
-@Model.Query.Payload.Start;
-@Model.Query.Payload.Total;
-@Model.Query.Payload.CustomerId;
-@Model.Query.Payload.Status;
 
 @section Scripts
 {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ApplicationServices.Commands;
@@ -6,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
@@ -37,12 +41,12 @@ namespace Web.Controllers
                     Command = previousCommand,
                     Query = await _mediator.Send(historicalQuery)
                 },
-                
+
                 FutureBookings = new ResultViewModel<IReadOnlyList<BookingViewModel>>
                 {
                     Command = previousCommand,
                     Query = await _mediator.Send(futureQuery)
-                }             
+                }
             };
 
             return View("Index", viewModel);
@@ -50,23 +54,17 @@ namespace Web.Controllers
 
         public IActionResult EditBooking()
         {
-
             return View();
         }
 
         public async Task<IActionResult> CancelBooking(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var query = new GetBookingQuery(id);
             var viewModel = new ResultViewModel<BookingViewModel>
             {
                 Query = await _mediator.Send(query)
             };
-            
+
             return View(viewModel);
         }
 
@@ -79,7 +77,7 @@ namespace Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async  Task<IActionResult> ViewBooking(Result previousCommand, int id)
+        public async Task<IActionResult> ViewBooking(Result previousCommand, int id)
         {
             var query = new GetBookingQuery(id);
 
@@ -90,6 +88,7 @@ namespace Web.Controllers
             };
             return View(viewModel);
         }
+
 
         public async Task<IActionResult> CreateBooking(Result previousCommand, int id)
         {
@@ -109,10 +108,10 @@ namespace Web.Controllers
                     Query = await _mediator.Send(parkingSpaceQuery)
                 }
             };
-
+            
             return View(viewModel);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromForm] CreateBookingViewModel model)
         {
