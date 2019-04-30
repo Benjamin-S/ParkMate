@@ -7,6 +7,7 @@ namespace ParkMate.Web.Tests
 {
     public class HomeControllerTests
     {
+        /*
         [Fact]
         public void IndexWillReturnViewResult()
         {
@@ -15,6 +16,8 @@ namespace ParkMate.Web.Tests
             var result = sut.Index();
 
             Assert.IsType<ViewResult>(result);
+        
         }
+        */
     }
 }

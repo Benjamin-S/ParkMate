@@ -1,46 +1,48 @@
 @model AvailableDaysDTO
 
-<br />
-<h4>Available On Days</h4>
-<hr />
-
-<form method="post" enctype="multipart/form-data" id="form">
-    <div class="custom-control custom-checkbox">
-        <input asp-for="IsAvailableMonday" class="custom-control-input" type="checkbox" />
-        <label asp-for="IsAvailableMonday" class="custom-control-label"></label>
-        <span asp-validation-for="IsAvailableMonday" class="text-danger "></span>
-    </div>
-    <div class="custom-control custom-checkbox">
-        <input asp-for="IsAvailableTuesday" class="custom-control-input" type="checkbox" />
-        <label asp-for="IsAvailableTuesday" class="custom-control-label"></label>
-        <span asp-validation-for="IsAvailableTuesday" class="text-danger"></span>
-    </div>
-    <div class="custom-control custom-checkbox">
-        <input asp-for="IsAvailableWednesday" class="custom-control-input" type="checkbox" />
-        <label asp-for="IsAvailableWednesday" class="custom-control-label"></label>
-        <span asp-validation-for="IsAvailableWednesday" class="text-danger"></span>
-    </div>
-    <div class="custom-control custom-checkbox">
-        <input asp-for="IsAvailableThursday" class="custom-control-input" type="checkbox" />
-        <label asp-for="IsAvailableThursday" class="custom-control-label"></label>
-        <span asp-validation-for="IsAvailableThursday" class="text-danger"></span>
-    </div>
-    <div class="custom-control custom-checkbox">
-        <input asp-for="IsAvailableFriday" class="custom-control-input" type="checkbox" />
-        <label asp-for="IsAvailableFriday" class="custom-control-label"></label>
-        <span asp-validation-for="IsAvailableFriday" class="text-danger"></span>
-    </div>
-    <div class="custom-control custom-checkbox">
-        <input asp-for="IsAvailableSaturday" class="custom-control-input" type="checkbox" />
-        <label asp-for="IsAvailableSaturday" class="custom-control-label"></label>
-        <span asp-validation-for="IsAvailableSaturday" class="text-danger"></span>
-    </div>
-    <div class="custom-control custom-checkbox">
-        <input asp-for="IsAvailableSunday" class="custom-control-input" type="checkbox" />
-        <label asp-for="IsAvailableSunday" class="custom-control-label"></label>
-        <span asp-validation-for="IsAvailableSunday" class="text-danger"></span>
-    </div>
+<div class="container">
     <br />
+    <h4>Available On Days</h4>
+    <hr />
+
+    <form method="post" enctype="multipart/form-data" id="form">
+        <div class="custom-control custom-checkbox">
+            <input asp-for="IsAvailableMonday" class="custom-control-input" type="checkbox" />
+            <label asp-for="IsAvailableMonday" class="custom-control-label"></label>
+            <span asp-validation-for="IsAvailableMonday" class="text-danger "></span>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input asp-for="IsAvailableTuesday" class="custom-control-input" type="checkbox" />
+            <label asp-for="IsAvailableTuesday" class="custom-control-label"></label>
+            <span asp-validation-for="IsAvailableTuesday" class="text-danger"></span>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input asp-for="IsAvailableWednesday" class="custom-control-input" type="checkbox" />
+            <label asp-for="IsAvailableWednesday" class="custom-control-label"></label>
+            <span asp-validation-for="IsAvailableWednesday" class="text-danger"></span>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input asp-for="IsAvailableThursday" class="custom-control-input" type="checkbox" />
+            <label asp-for="IsAvailableThursday" class="custom-control-label"></label>
+            <span asp-validation-for="IsAvailableThursday" class="text-danger"></span>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input asp-for="IsAvailableFriday" class="custom-control-input" type="checkbox" />
+            <label asp-for="IsAvailableFriday" class="custom-control-label"></label>
+            <span asp-validation-for="IsAvailableFriday" class="text-danger"></span>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input asp-for="IsAvailableSaturday" class="custom-control-input" type="checkbox" />
+            <label asp-for="IsAvailableSaturday" class="custom-control-label"></label>
+            <span asp-validation-for="IsAvailableSaturday" class="text-danger"></span>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input asp-for="IsAvailableSunday" class="custom-control-input" type="checkbox" />
+            <label asp-for="IsAvailableSunday" class="custom-control-label"></label>
+            <span asp-validation-for="IsAvailableSunday" class="text-danger"></span>
+        </div>
+        <br />
     
-    <button type="submit" class="btn btn-primary mt-1">Submit</button>
-</form>
+        <button type="submit" class="btn btn-primary mt-1">Submit</button>
+    </form>
+</div>

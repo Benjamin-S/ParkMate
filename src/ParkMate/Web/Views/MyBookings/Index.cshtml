@@ -3,35 +3,35 @@
 @{
     ViewData["Title"] = "My Bookings";
 }
+<div class="container">
+    <div>
+        <partial name="_UserProfilePartial"/>
+    </div>
 
-<div>
-    <partial name="_UserProfilePartial"/>
-</div>
+    <h2>@ViewData["Title"]</h2>
 
-<h2>My Bookings</h2>
-
-<div>
-    @{
-        if (Model.Command.ResultType != ResultType.None)            
-        {
-            if (Model.Command.Success)
+    <div>
+        @{
+            if (Model.Command.ResultType != ResultType.None)            
             {
-                <div class="alert alert-success" role="alert">
-                    @Model.Command.Message
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-danger" role="alert">
-                    @Model.Command.Message
-                </div>   
+                if (Model.Command.Success)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @Model.Command.Message
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @Model.Command.Message
+                    </div>   
+                }
             }
         }
-    }
-</div>
+    </div>
 
-<div>    
-    @*{
+    <div>    
+        @*{
         if (!Model.Query.Success)
         {
             <div class="alert alert-danger" role="alert">
@@ -40,9 +40,9 @@
         }
         else if (!Model.Query.Payload.Bookings.FutureBookings.Any())
         { *@
-            <div class="alert alert-info" role="alert">
-                It appears you currently have no planned future bookings.
-            </div> @*
+        <div class="alert alert-info" role="alert">
+            It appears you currently have no planned future bookings.
+        </div> @*
         } 
         else
         {
@@ -61,6 +61,7 @@
             }  
         }
     } *@
+    </div>
 </div>
 
 @section Scripts
