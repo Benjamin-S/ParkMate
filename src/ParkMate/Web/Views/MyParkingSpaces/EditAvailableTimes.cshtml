@@ -9,35 +9,36 @@
         <link href="~/lib/clockpicker/dist/bootstrap-clockpicker.css" rel="stylesheet" />
     </environment> 
 }
+<div class="container">
+    <br />
+    <h4>Availability Hours</h4>
+    <hr />
 
-<br />
-<h4>Availability Hours</h4>
-<hr />
-
-<form method="post" enctype="multipart/form-data" id="form">
-    <div class="form-group">
-        <label asp-for="AvailableFrom"></label>
-        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-            <input asp-for="AvailableFrom" class="form-control" type="text" value="09:00" id="AvailableFrom" />
+    <form method="post" enctype="multipart/form-data" id="form">
+        <div class="form-group">
+            <label asp-for="AvailableFrom"></label>
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="AvailableFrom" class="form-control" type="text" value="09:00" id="AvailableFrom" />
+            </div>
+            <span asp-validation-for="AvailableFrom" class="text-danger"></span>
         </div>
-        <span asp-validation-for="AvailableFrom" class="text-danger"></span>
-    </div>
     
-    <div class="form-group">
-        <label asp-for="AvailableTo"></label>
-        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-            <input asp-for="AvailableTo" class="form-control" type="text" value="17:00" id="AvailableTo" />
+        <div class="form-group">
+            <label asp-for="AvailableTo"></label>
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="AvailableTo" class="form-control" type="text" value="17:00" id="AvailableTo" />
+            </div>
+            <span asp-validation-for="AvailableTo" class="text-danger"></span>
         </div>
-        <span asp-validation-for="AvailableTo" class="text-danger"></span>
-    </div>
     
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="24hrCheck">
-        <label class="custom-control-label" for="24hrCheck">Set 24-hr Availability</label>
-    </div>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="24hrCheck">
+            <label class="custom-control-label" for="24hrCheck">Set 24-hr Availability</label>
+        </div>
     
-    <button type="submit" class="btn btn-primary mt-1">Submit</button>
-</form>
+        <button type="submit" class="btn btn-primary mt-1">Submit</button>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>

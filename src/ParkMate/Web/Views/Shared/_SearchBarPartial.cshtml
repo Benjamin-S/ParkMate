@@ -1,28 +1,25 @@
 @model DistanceSearchDTO
 
-<div class="col-8">   
-    <div class="input-group-append btn-group">
-        <input class="form-control" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
-        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-            <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu" id="results"/>
+<div class="input-group">
+    <input class="form-control" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
+    
+    <div class="input-group-append">
+        <select asp-for="DistanceInMeters" id="stateInput" class="custom-select">
+            <option value="100">+100m</option>
+            <option value="250">+250m</option>
+            <option value="500">+500m</option>
+            <option value="750">+750m</option>
+            <option value="1000">+1km</option>
+            <option value="2000">+2km</option>
+        </select>
+    </div>
+    <div class="input-group-append">
+        <button type="submit" class="btn btn-primary">Search</button>
     </div>
 </div>
 
-<div class="col-2">
-    <select asp-for="DistanceInMeters" id="stateInput" class="custom-select">
-        <option value="100">+100m</option>
-        <option value="250">+250m</option>
-        <option value="500">+500m</option>
-        <option value="750">+750m</option>
-        <option value="1000">+1km</option>
-        <option value="2000">+2km</option>
-    </select>
-</div>
-    
-<div class="col-2">
-    <button type="submit" class="btn btn-primary mt-1">Search</button>
+<div class="w-100 position-relative">
+    <ul class="list-group position-absolute w-100" id="results"></ul>
 </div>
     
 <div class="form-group">
@@ -59,7 +56,7 @@
                         $("#results").empty();
 
                         for (i = 0; i < data.length; i++) {                           
-                            $("#results").append('<a href="#" class="list-group-item list-group-item-action" ' +
+                            $("#results").append('<a href="#" class="list-group-item list-group-item-action float-left" ' +
                                 'id="' + data[i].id +'">' +
                                 data[i].street + ", " +
                                 data[i].city + ", " +
