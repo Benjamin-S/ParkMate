@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ParkMate.ApplicationServices.DTOs;
-using ParkMate.ApplicationServices.Queries;
 using ParkMate.Web.Models;
 
 namespace ParkMate.Web.Controllers
@@ -27,18 +25,13 @@ namespace ParkMate.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index([FromForm] DistanceSearchDTO dto)
+        public IActionResult Index([FromForm] DistanceSearchDTO dto)
         {
-            var query = new FindSpacesWithinDistanceQuery(dto);
-            var result = await _mediator.Send(query);
-
             return RedirectToAction("SearchResult", "Search", new
             {
-                viewModel = new SearchResultViewModel()
-                {
-                    PrevInput = dto,
-                    Result = result
-                }
+                distance = dto.DistanceInMeters,
+                lat = dto.Latitude,
+                lon = dto.Longitude
             });
         }
 
