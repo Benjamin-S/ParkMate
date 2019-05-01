@@ -42,7 +42,7 @@
                                                 <hr/>
                                                 <p class="card-text text-truncate d-block">@space.Description</p>
                                                 <p class="card-text">Distance: @(space.DistanceInMeters)m.</p>
-                                                <a class="btn btn-primary">Book</a>
+                                                <a class="btn btn-primary" asp-controller="MyBookings" asp-action="CreateBooking" asp-route-id="@space.ParkingSpaceId">Book</a>
                                                 <a class="btn btn-primary float-right" asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.ParkingSpaceId">View</a>
                                             </div>
                                         </div>
