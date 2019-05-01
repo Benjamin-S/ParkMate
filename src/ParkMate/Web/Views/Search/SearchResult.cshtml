@@ -101,7 +101,9 @@
                     url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"   
                 }
             });
-            
+
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(marker.getPosition());
             
             @{
                 if (Model.Result.Payload != null)
@@ -109,10 +111,10 @@
                     foreach (var result in Model.Result.Payload)
                     {
                         <text>           
-                            var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
+                            latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
                                 @result.Location.Coordinates.Longitude);
                             
-                            var marker = new google.maps.Marker({
+                            marker = new google.maps.Marker({
                                 position: latLng,
                                 map: map,
                                 title: '@result.Title',
@@ -120,11 +122,14 @@
                                     url: "http://maps.google.com/mapfiles/ms/icons/red.png"   
                                 }
                             }); 
+                            
+                            bounds.extend(marker.getPosition())
                         </text>
                     }
                 }
             }
             
+            map.fitBounds(bounds);
         }
 
     </script>
