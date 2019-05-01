@@ -12,13 +12,13 @@
     </form>
 
     @{
-        if (!Model.Result.Success)
+        @* if (!Model.Result.Success)
         {
             <div class="alert alert-danger" role="alert">
                 @Model.Result.Message
             </div>
-        }
-        else if (!Model.Result.Payload.Any())
+        } 
+        else *@ if (!Model.Result.Payload.Any())
         {
             <div class="alert alert-info" role="alert">
                 Your search returned no results.
