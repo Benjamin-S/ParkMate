@@ -3,71 +3,72 @@
 @{
     ViewData["Title"] = "My Vehicles";
 }
-
-<div>
-    <partial name="_UserProfilePartial"/>
-</div>
-
-<h2>My Vehicles</h2>
-
-<div>
-    @{
-        if (Model.Command.ResultType != ResultType.None)            
-        {
-            if (Model.Command.Success)
+<div class="container">
+    <div>
+        <partial name="_UserProfilePartial"/>
+    </div>
+    
+    <h2>@ViewData["Title"]</h2>
+    
+    <div>
+        @{
+            if (Model.Command.ResultType != ResultType.None)            
             {
-                <div class="alert alert-success" role="alert">
-                    @Model.Command.Message
+                if (Model.Command.Success)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @Model.Command.Message
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @Model.Command.Message
+                    </div>   
+                }
+            }
+        }
+    </div>
+    
+    <div>    
+        @{
+            if (!Model.Query.Success)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.Query.Message
                 </div>
+            }
+            else if (!Model.Query.Payload.Vehicles.Any())
+            { 
+                <div class="alert alert-info" role="alert">
+                    It appears you currently have no vehicles listed.
+                </div> 
             }
             else
             {
-                <div class="alert alert-danger" role="alert">
-                    @Model.Command.Message
-                </div>   
-            }
-        }
-    }
-</div>
-
-<div>    
-    @{
-        if (!Model.Query.Success)
-        {
-            <div class="alert alert-danger" role="alert">
-                @Model.Query.Message
-            </div>
-        }
-        else if (!Model.Query.Payload.Vehicles.Any())
-        { 
-            <div class="alert alert-info" role="alert">
-                It appears you currently have no vehicles listed.
-            </div> 
-        }
-        else
-        {
-            foreach (var vehicle in Model.Query.Payload.Vehicles)
-            {
-                <div class="card">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">@vehicle.Registration</h5>
-                                <p class="card-text">@vehicle.Make</p>
-                                <p class="card-text">@vehicle.Model</p>
-                                <p class="card-text">@vehicle.Colour</p>
+                foreach (var vehicle in Model.Query.Payload.Vehicles)
+                {
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">@vehicle.Registration</h5>
+                                    <p class="card-text">@vehicle.Make</p>
+                                    <p class="card-text">@vehicle.Model</p>
+                                    <p class="card-text">@vehicle.Colour</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }  
-        }
-    } 
+                }  
+            }
+        } 
+    </div>
+    
+    <br/>
+    <a asp-controller="MyVehicles" asp-action="AddVehicle" class="btn btn-primary float-right">Add new</a>
+    <br/>
 </div>
-
-<br/>
-<a asp-controller="MyVehicles" asp-action="AddVehicle" class="btn btn-primary float-right">Add new</a>
-<br/>
 
 @section Scripts
 {

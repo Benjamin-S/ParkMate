@@ -1,0 +1,83 @@
+@model DistanceSearchDTO
+
+<div class="input-group input-group-lg">
+    <input class="form-control" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
+    
+    <div class="input-group-append">
+        <select asp-for="DistanceInMeters" id="stateInput" class="custom-select custom-select-lg">
+            <option value="100">+100m</option>
+            <option value="250">+250m</option>
+            <option value="500">+500m</option>
+            <option value="750">+750m</option>
+            <option value="1000">+1km</option>
+            <option value="2000">+2km</option>
+        </select>
+    </div>
+    <div class="input-group-append">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</div>
+
+<div class="w-100 position-relative" style="z-index:100">
+    <ul class="list-group position-absolute w-100" id="results"></ul>
+</div>
+    
+<div class="form-group">
+        <input asp-for="Latitude" id="latitudeInput" type="hidden" class="form-control"/>
+        <span asp-validation-for="Latitude" class="text-danger"></span>
+</div>
+     
+<div class="form-group">
+    <input asp-for="Longitude" id="longitudeInput" type="hidden" class="form-control"/>
+    <span asp-validation-for="Longitude" class="text-danger"></span>
+</div>
+
+<environment include="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"
+            crossorigin="anonymous"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+    </script>
+</environment>
+
+<script type="text/javascript">
+    $("#searchBar").on("input",
+        function() {
+            var inputText = $(this).val();
+
+            if (inputText.match("[a-zA-Z]")) { 
+                $.get('@Url.Action("SearchAutoComplete", "Search")',
+                    { searchInput: inputText },
+                    function(data) {
+                        $("#results").empty();
+
+                        for (i = 0; i < data.length; i++) {                           
+                            $("#results").append('<a href="#" class="list-group-item list-group-item-action float-left" ' +
+                                'id="' + data[i].id +'">' +
+                                data[i].street + ", " +
+                                data[i].city + ", " +
+                                data[i].state +
+                                "</li>");
+                            $("#results a:last-child").data(data[i]);                 
+                        }
+
+                        if ($("#results").is(":hidden")) {
+                            $("#results").show();
+                        }
+                    });
+            }
+        });
+
+    $(document).on("click", "#results > a", function() {
+        
+        $("#latitudeInput").val($(this).data().latitude);
+        $("#longitudeInput").val($(this).data().longitude);   
+        
+        $("#searchBar").val($(this).text());
+        $("#results").empty();
+    });
+</script>
