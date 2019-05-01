@@ -23,6 +23,7 @@ namespace ParkMate.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public async Task<IActionResult> SearchResult(int distance, double lat, double lon)
         {
             var dto = new DistanceSearchDTO()
