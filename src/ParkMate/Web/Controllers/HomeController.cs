@@ -1,10 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ParkMate.ApplicationServices.DTOs;
-using ParkMate.ApplicationServices.Queries;
 using ParkMate.Web.Models;
 
 namespace ParkMate.Web.Controllers
