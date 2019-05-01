@@ -33,6 +33,7 @@ namespace ParkMate.Web.Controllers
                 Longitude = lon
                 
             };
+            
             var query = new FindSpacesWithinDistanceQuery(dto);
             var result = await _mediator.Send(query);
             
@@ -44,13 +45,6 @@ namespace ParkMate.Web.Controllers
                 );
         }
         
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index([FromForm] DistanceSearchDTO dto)
-        {
-            return await SearchResult(dto.DistanceInMeters, dto.Latitude, dto.Longitude);
-        }
-
         public async Task<IActionResult> SearchAutoComplete(string searchInput)
         {
             var query = new GetAddressForStreetQuery(searchInput);

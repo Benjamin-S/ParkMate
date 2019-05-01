@@ -23,17 +23,6 @@ namespace ParkMate.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index([FromForm] DistanceSearchDTO dto)
-        {
-            return RedirectToAction("SearchResult", "Search", new
-            {
-                distance = dto.DistanceInMeters,
-                lat = dto.Latitude,
-                lon = dto.Longitude
-            });
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

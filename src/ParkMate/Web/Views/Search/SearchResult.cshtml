@@ -7,9 +7,7 @@
 }
 
 <div class="container">
-    <form method="post" enctype="multipart/form-data" id="form">
-        <partial name="_SearchBarPartial" for="PrevInput" />
-    </form>
+    <partial name="_SearchBarPartial" for="PrevInput" />
 
     @{
         if (!Model.Result.Success)
@@ -17,7 +15,7 @@
             <div class="alert alert-danger" role="alert">
                 @Model.Result.Message
             </div>
-        } 
+        }
         else if (!Model.Result.Payload.Any())
         {
             <div class="alert alert-info" role="alert">
@@ -92,6 +90,19 @@
                     zoom: 16
                 });
             
+            var latLng = new google.maps.LatLng(@Model.PrevInput.Latitude,
+                @Model.PrevInput.Longitude);
+            
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                title: "Target Address",
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"   
+                }
+            });
+            
+            
             @{
                 if (Model.Result.Payload != null)
                 {       
@@ -100,11 +111,15 @@
                         <text>           
                             var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
                                 @result.Location.Coordinates.Longitude);
+                            
                             var marker = new google.maps.Marker({
                                 position: latLng,
                                 map: map,
-                                title: '@result.Title'
-                            });
+                                title: '@result.Title',
+                                icon: {
+                                    url: "http://maps.google.com/mapfiles/ms/icons/red.png"   
+                                }
+                            }); 
                         </text>
                     }
                 }
