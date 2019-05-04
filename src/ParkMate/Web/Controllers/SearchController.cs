@@ -23,25 +23,28 @@ namespace ParkMate.Web.Controllers
             return View();
         }
 
-        public IActionResult SearchResult(SearchResultViewModel viewModel)
+        [HttpGet]
+        public async Task<IActionResult> SearchResult(int distance, double lat, double lon)
         {
-            return View("SearchResult", viewModel);
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index([FromForm] DistanceSearchDTO dto)
-        {
+            var dto = new DistanceSearchDTO()
+            {
+                DistanceInMeters = distance,
+                Latitude = lat,
+                Longitude = lon
+                
+            };
+            
             var query = new FindSpacesWithinDistanceQuery(dto);
             var result = await _mediator.Send(query);
-
-            return SearchResult(new SearchResultViewModel()
-            {
-                PrevInput = dto,
-                Result = result
-            });
+            
+            return View("SearchResult", new SearchResultViewModel()
+                {
+                    PrevInput = dto,
+                    Result = result
+                }
+                );
         }
-
+        
         public async Task<IActionResult> SearchAutoComplete(string searchInput)
         {
             var query = new GetAddressForStreetQuery(searchInput);
