@@ -94,6 +94,7 @@ namespace ParkMate.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IParkingSpaceRepository, ParkingSpaceRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IMongoContext, MongoDbContext>();
             services.AddScoped<ImageProcessor>();
 

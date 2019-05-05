@@ -10,6 +10,7 @@ namespace Web.Controllers
     {
         private IMediator _mediator;
 
+
         public ViewParkingSpaceController(IMediator mediator)
         {
             _mediator = mediator;
@@ -23,3 +24,4 @@ namespace Web.Controllers
         }
     }
 }
+       
