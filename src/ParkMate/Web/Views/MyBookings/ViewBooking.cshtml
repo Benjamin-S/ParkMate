@@ -105,8 +105,6 @@
                                     @if (Model.Query.Payload.Status == BookingStatus.Active.ToString())
                                     {
                                         <small class="text-muted">
-                                            <a asp-controller="MyBookings" asp-action="EditBooking" asp-route-id="@Model.Query.Payload.BookingId">Edit</a>
-                                            <span> | </span>
                                             <a asp-controller="MyBookings" asp-action="CancelBooking" asp-route-id="@Model.Query.Payload.BookingId">Cancel</a>
                                         </small>
                                     }

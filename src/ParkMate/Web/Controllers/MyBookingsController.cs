@@ -53,11 +53,6 @@ namespace Web.Controllers
             return View("Index", viewModel);
         }
 
-        public IActionResult EditBooking()
-        {
-            return View();
-        }
-
         public async Task<IActionResult> CancelBooking(int id)
         {
             var query = new GetBookingQuery(id);
