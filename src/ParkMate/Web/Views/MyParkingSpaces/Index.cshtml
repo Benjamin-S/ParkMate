@@ -9,87 +9,85 @@
     <link href="@Url.Content("~/css/MyParkingSpaces.css")" rel="stylesheet" type="text/css" />
 }
 
-<div class="container">
-    <div>
-        <partial name="_UserProfilePartial"/>
-    </div>
 
-    <h2>@ViewData["Title"]</h2>
-    
-    <div>
-        @{
-            if (Model.Command.ResultType != ResultType.None)            
+<div>
+    <partial name="_UserProfilePartial"/>
+</div>
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    @{
+        if (Model.Command.ResultType != ResultType.None)            
+        {
+            if (Model.Command.Success)
             {
-                if (Model.Command.Success)
-                {
-                    <div class="alert alert-success" role="alert">
-                        @Model.Command.Message
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-danger" role="alert">
-                        @Model.Command.Message
-                    </div>   
-                }
-            }
-        }
-    </div>
-    
-    <div>
-        @{
-            if (!Model.Query.Success)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @Model.Query.Message
-                </div>
-            }
-            else if (!Model.Query.Payload.ParkingSpaces.Any())
-            {
-                <div class="alert alert-info" role="alert">
-                    It appears you currently have no owned parking spaces.
+                <div class="alert alert-success" role="alert">
+                    @Model.Command.Message
                 </div>
             }
             else
             {
-                foreach (var space in Model.Query.Payload.ParkingSpaces)
-                {
-                    <div class="card">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="/imageuploads/@space.ImageURL" class="card-img" alt="No Image">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">@space.Title</h5>
-                                    <p class="card-text">@space.Description</p>                              
-                                    <small class="text-muted">
-                                        <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.ParkingSpaceId">View</a>
-                                        <span> | </span>
-                                    </small>
-                                    <small class="text-muted">
-                                        <a asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" >
-                                          @* asp-route-isVisible="@(space.Availability.IsVisible)">
-                                            @(@space.Availability.IsVisible ? "Unlist" : "List") *@
-                                        </a>
-                                        <span> | </span>
-                                    </small>
-                                    <small class="text-muted">
-                                        <a asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.ParkingSpaceId">Delete</a>
-                                    </small>
-                                </div>
+                <div class="alert alert-danger" role="alert">
+                    @Model.Command.Message
+                </div>   
+            }
+        }
+    }
+</div>
+
+<div>
+    @{
+        if (!Model.Query.Success)
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.Query.Message
+            </div>
+        }
+        else if (!Model.Query.Payload.ParkingSpaces.Any())
+        {
+            <div class="alert alert-info" role="alert">
+                It appears you currently have no owned parking spaces.
+            </div>
+        }
+        else
+        {
+            foreach (var space in Model.Query.Payload.ParkingSpaces)
+            {
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="/imageuploads/@space.ImageURL" class="card-img" alt="No Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@space.Title</h5>
+                                <p class="card-text">@space.Description</p>                              
+                                <small class="text-muted">
+                                    <a asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.ParkingSpaceId">View</a>
+                                    <span> | </span>
+                                </small>
+                                <small class="text-muted">
+                                    <a asp-action="SetVisibility" asp-route-parkingSpaceId="@space.ParkingSpaceId" asp-route-isVisible="@space.IsVisible">
+                                        @(space.IsVisible ? "Unlist" : "List") 
+                                    </a>
+                                    <span> | </span>
+                                </small>
+                                <small class="text-muted">
+                                    <a asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.ParkingSpaceId">Delete</a>
+                                </small>
                             </div>
                         </div>
                     </div>
-                }  
-            }
+                </div>
+            }  
         }
-    </div>
-    
-    <br/>
-    <a asp-controller="MyParkingSpaces" asp-action="CreateParkingSpace" class="btn btn-primary float-right">Add new</a>
-    <br/>
+    }
 </div>
+
+<br/>
+<a asp-controller="MyParkingSpaces" asp-action="CreateParkingSpace" class="btn btn-primary float-right">Add new</a>
+<br/>
              
 @section Scripts
 {
