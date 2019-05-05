@@ -46,13 +46,13 @@
     </div>
 
     <div class="form-group">
-        <input asp-for="@Model.Location.Coordinates.Latitude" id="latitudeInput" type="hidden" class="form-control"/>
+        <input value="@Model.Location.Coordinates.Latitude" name="Latitude" id="latitudeInput" type="hidden" class="form-control"/>
         <span asp-validation-for="@Model.Location.Coordinates.Latitude" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <input asp-for="@Model.Location.Coordinates.Longitude" id="longitudeInput" type="hidden" class="form-control"/>
-        <span asp-validation-for="@Model.Location.Coordinates.Longitude" class="text-danger"></span>
+        <input value="@Model.Location.Coordinates.Latitude" name="Longitude" id="longitudeInput" type="hidden" class="form-control"/>
+        <span class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary mt-1">Submit</button>

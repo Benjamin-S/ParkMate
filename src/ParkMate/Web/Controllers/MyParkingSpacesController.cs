@@ -105,8 +105,6 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAddress([FromForm] AddressDTO dto, int parkingSpaceId)
         {          
-            Console.WriteLine("=============");
-            Console.WriteLine(dto.Latitude);
             var command = new EditParkingSpaceAddressCommand(parkingSpaceId, _userId, dto);
             var result = await _mediator.Send(command);
             return await Index(result);
@@ -136,7 +134,16 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAvailability([FromForm] AvailabilityDTO days, int parkingSpaceId)
         {
-            var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, new List<AvailableTimeDTO>() /*, days *@ */);
+            var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, new List<AvailableTimeDTO>()
+            {
+                days.Monday,
+                days.Tuesday,
+                days.Wednesday,
+                days.Thursday,
+                days.Friday,
+                days.Saturday,
+                days.Sunday
+            });
             var result = await _mediator.Send(command);
             return await Index(result);
         }
