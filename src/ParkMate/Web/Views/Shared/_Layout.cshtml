@@ -24,7 +24,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/img/ParkMateLogo.png" width="253px" height="67px"/>
@@ -52,8 +52,22 @@
         <div class="container">
             <partial name="_CookieConsentPartial"/>
         </div>
-        <main role="main" class="pb-3">
-            @RenderBody()
+        <main role="main">
+            @{
+                if (ViewData["noContainer"] == "true")
+                {
+                    @RenderBody()
+                }
+                else
+                {
+                    <div class="content">
+                        <div class="overlay"></div>
+                        <div class="container shadow-lg border border-dark rounded p-5">
+                            @RenderBody()
+                        </div>
+                    </div>                   
+                }
+            }
         </main>
     </div>
     

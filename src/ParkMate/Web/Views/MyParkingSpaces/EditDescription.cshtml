@@ -3,37 +3,35 @@
      ViewData["Title"] = "Edit Description";
  }
  
- <div class="container">
-     <h4>@ViewData["Title"]</h4>
-     <hr />
-     
-     <form method="post" enctype="multipart/form-data" id="form">
-         <br />
-         <h4>Parking Space Description</h4>
-         <hr />
-    
-         <div class="form-group">
-             <label asp-for="Description.Title"></label>
-             <input asp-for="Description.Title" class="form-control" />
-             <span asp-validation-for="Description.Title" class="text-danger"></span>
-         </div>
-         <div class="form-group">
-             <label asp-for="Description.Description"></label>
-             <input asp-for="Description.Description" class="form-control" />
-             <span asp-validation-for="Description.Description" class="text-danger"></span>
-         </div>
-         <div class="form-group">
-             <label asp-for="ImageFile"></label>
-             <div class="custom-file">
-                 <input asp-for="ImageFile" type="file" class="custom-file-input" id="customFile" />
-                 <label class="custom-file-label" for="customFile">Choose file...</label>
-             </div>
-             <span asp-validation-for="ImageFile" class="text-danger"></span>
-         </div>
-         
-         <button type="submit" class="btn btn-primary mt-1">Submit</button>
-     </form>
- </div>
+ <h4>@ViewData["Title"]</h4>
+ <hr/>
+
+<form method="post" enctype="multipart/form-data" id="form">
+    <br/>
+    <h4>Parking Space Description</h4>
+    <hr/>
+
+    <div class="form-group">
+        <label asp-for="Description.Title"></label>
+        <input asp-for="Description.Title" class="form-control"/>
+        <span asp-validation-for="Description.Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description.Description"></label>
+        <input asp-for="Description.Description" class="form-control"/>
+        <span asp-validation-for="Description.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageFile"></label>
+        <div class="custom-file">
+            <input asp-for="ImageFile" type="file" class="custom-file-input" id="customFile"/>
+            <label class="custom-file-label" for="customFile">Choose file...</label>
+        </div>
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-1">Submit</button>
+</form>
  
  @section Scripts {
      <partial name="_ValidationScriptsPartial"/>
