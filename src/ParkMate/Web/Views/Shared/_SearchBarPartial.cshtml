@@ -47,7 +47,7 @@
 <script type="text/javascript">
     $("#searchButton").on("click",
         function() {
-            window.location.href = "@Url.Action("SearchResult", "Search")" +
+            window.location.href = "@Url.Action("SearchResult", "SearchResult")" +
                 "?distance=" +
                 $('#distanceInput').val() +
                 "&lat=" +
@@ -61,7 +61,7 @@
             var inputText = $(this).val();
 
             if (inputText.match("[a-zA-Z]")) { 
-                $.get('@Url.Action("SearchAutoComplete", "Search")',
+                $.get('@Url.Action("SearchAutoComplete", "SearchResult")',
                     { searchInput: inputText },
                     function(data) {
                         $("#results").empty();
