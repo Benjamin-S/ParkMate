@@ -1,4 +1,4 @@
- @model BookingRateDTO
+ @model ParkingSpaceViewModel
  
  @{
      ViewData["Title"] = "Edit Booking Rate";
@@ -7,7 +7,7 @@
 <h3>@ViewData["Title"]</h3>
 <hr/>
 
-<form method="post" enctype="multipart/form-data" id="form">
+ <form method="post" enctype="multipart/form-data" id="form" asp-route-parkingSpaceId="@Model.ParkingSpaceId">
     <br/>
     <h4>Booking Rates</h4>
     <hr/>

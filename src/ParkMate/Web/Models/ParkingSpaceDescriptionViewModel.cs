@@ -7,6 +7,7 @@ namespace ParkMate.Web.Models
 {
     public class ParkingSpaceDescriptionViewModel
     {
+        public int ParkingSpaceId { get; set; }
         public DescriptionDTO Description { get; set; }
         
         [Required]

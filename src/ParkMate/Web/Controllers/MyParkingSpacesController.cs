@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -41,31 +42,48 @@ namespace Web.Controllers
   
             return View("Index", viewModel);
         }
-
-        public IActionResult EditAddress()
-        {
-            return View();
-        }
         
-        public IActionResult EditAvailability()
-        {
-            return View();
-        }
-        
-        public IActionResult EditBookingRate()
-        {
-            return View();
-        }
-        
-        public IActionResult EditDescription()
-        {
-            return View();
-        }
-
         public IActionResult CreateParkingSpace()
         {
             return View();
         }
+
+        public async Task<IActionResult> EditAddress(int parkingSpaceId)
+        {
+            var query = new GetSingleParkingSpaceQuery(parkingSpaceId);
+            var result = await _mediator.Send(query);
+            return View(result.Payload);
+        }
+        
+        public async Task<IActionResult> EditAvailability(int parkingSpaceId)
+        {
+            var query = new GetSingleParkingSpaceQuery(parkingSpaceId);
+            var result = await _mediator.Send(query);
+            return View(result.Payload);
+        }
+        
+        public async Task<IActionResult> EditBookingRate(int parkingSpaceId)
+        {
+            var query = new GetSingleParkingSpaceQuery(parkingSpaceId);
+            var result = await _mediator.Send(query);
+            return View(result.Payload);
+        }
+        
+        public async Task<IActionResult> EditDescription(int parkingSpaceId)
+        {
+            var query = new GetSingleParkingSpaceQuery(parkingSpaceId);
+            var result = await _mediator.Send(query);
+            return View(new ParkingSpaceDescriptionViewModel()
+            {
+                Description = new DescriptionDTO()
+                {
+                    Description = result.Payload.Description,
+                    ImageURL = result.Payload.ImageURL,
+                    Title = result.Payload.Title
+                },
+                ParkingSpaceId = result.Payload.ParkingSpaceId
+            });
+        }   
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -77,24 +95,20 @@ namespace Web.Controllers
             }
             var imageResult = _imageProcessor.SaveImage(model.ImageFile);
             model.ParkingSpace.Description.ImageURL = imageResult.FileName;
-
             model.ParkingSpace.OwnerId = _userId;
-
             var command = new RegisterNewParkingSpaceCommand(model.ParkingSpace);
-
             var result = await _mediator.Send(command);
-
             return await Index(result);
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAddress([FromForm] AddressDTO dto, int parkingSpaceId)
-        {
+        {          
+            Console.WriteLine("=============");
+            Console.WriteLine(dto.Latitude);
             var command = new EditParkingSpaceAddressCommand(parkingSpaceId, _userId, dto);
-
             var result = await _mediator.Send(command);
-
             return await Index(result);
         }
         
@@ -103,12 +117,9 @@ namespace Web.Controllers
         public async Task<IActionResult> EditDescription([FromForm] ParkingSpaceDescriptionViewModel model, int parkingSpaceId)
         {
             var imageResult = _imageProcessor.SaveImage(model.ImageFile);
-            model.Description.ImageURL = imageResult.FileName;
-            
+            model.Description.ImageURL = imageResult.FileName;            
             var command = new EditParkingSpaceDescriptionCommand(parkingSpaceId, _userId, model.Description);
-
             var result = await _mediator.Send(command);
-
             return await Index(result);
         }
         
@@ -117,9 +128,7 @@ namespace Web.Controllers
         public async Task<IActionResult> EditBookingRate([FromForm] BookingRateDTO dto, int parkingSpaceId)
         {
             var command = new EditParkingSpaceBookingRateCommand(parkingSpaceId, _userId, dto);
-
             var result = await _mediator.Send(command);
-
             return await Index(result);
         }
 
@@ -127,28 +136,22 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAvailability([FromForm] AvailabilityDTO days, int parkingSpaceId)
         {
-            var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, days);
-
+            var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, new List<AvailableTimeDTO>() /*, days *@ */);
             var result = await _mediator.Send(command);
-
             return await Index(result);
         }
         
         public async Task<IActionResult> SetVisibility(bool isVisible, int parkingSpaceId)
         {
-            var command = new SetParkingSpaceVisibilityCommand(parkingSpaceId, _userId, isVisible);
-
+            var command = new SetParkingSpaceVisibilityCommand(parkingSpaceId, _userId, !isVisible);
             var result = await _mediator.Send(command);
-
             return await Index(result);
         }
 
         public async Task<IActionResult> DeleteParkingSpace(int parkingSpaceId)
         {
             var command = new DeleteParkingSpaceCommand(parkingSpaceId, _userId);
-
             var result = await _mediator.Send(command);
-
             return await Index(result);
         }
     }

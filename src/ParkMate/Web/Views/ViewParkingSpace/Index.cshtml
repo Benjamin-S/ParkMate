@@ -1,5 +1,3 @@
-@using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Identity
 @model Result<ParkingSpaceViewModel> 
 @{
     ViewData["Title"] = "Parking Space Details";
@@ -19,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
+                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditDescription" asp-route-parkingSpaceId="@space.ParkingSpaceId">Edit</a>
                     <h5 class="card-title">Description</h5>
                     <h6 class="card-text">@space.Title</h6>
                     <p class="card-text">@space.Description</p>
@@ -28,7 +26,7 @@
             <div class="card">
                 <div class="card-body">
                     @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAddress" asp-route-id="@space.Id">Edit</a>
+                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAddress" asp-route-parkingSpaceId="@space.ParkingSpaceId">Edit</a>
                     <h5 class="card-title">Address</h5>
                     <p class="card-text">Street: @space.Street</p>
                     <p class="card-text">City: @space.City</p>
@@ -39,7 +37,7 @@
             <div class="card">
                 <div class="card-body">
                     @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
+                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditBookingRate" asp-route-parkingSpaceId="@space.ParkingSpaceId">Edit</a>
                     <h5 class="card-title">Booking Rate</h5>
                     <p class="card-text">Hourly Rate: @space.HourlyRate</p>
                     <p class="card-text">Daily Rate: @space.DailyRate</p>
@@ -48,7 +46,7 @@
             <div class="card">
                 <div class="card-body">
                     @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailability" asp-route-id="@space.Id">Edit</a>
+                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailability" asp-route-parkingSpaceId="@space.ParkingSpaceId">Edit</a>
                     <h5 class="card-title">Availability Times</h5>
                     <p class="card-text">Available From: @space.Monday.AvailableFrom</p>
                     <p class="card-text">Available To: @space.Monday.AvailableTo</p>
@@ -57,7 +55,7 @@
             <div class="card">
                 <div class="card-body">
                     @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableDays" asp-route-id="@space.Id">Edit</a>
+                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableDays" asp-route-parkingSpaceId="@space.ParkingSpaceId">Edit</a>
                     <h5 class="card-title">Availability</h5>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Monday.IsAvailable" class="custom-control-input" type="checkbox"/>
@@ -94,8 +92,8 @@
     
         <br/>
         <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces"
-           asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" asp-route-isAvaliable="@(!space.IsVisible)">
-            @(@space.IsVisible ? "Unlist" : "List") 
+           asp-action="SetVisibility" asp-route-parkingSpaceId="@space.ParkingSpaceId" asp-route-isAvaliable="@space.IsVisible">
+            @(space.IsVisible ? "Unlist" : "List") 
         </a>
         <a class="btn btn-danger float-right owner-only" asp-controller="MyParkingSpaces"
            asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id">Delete</a>

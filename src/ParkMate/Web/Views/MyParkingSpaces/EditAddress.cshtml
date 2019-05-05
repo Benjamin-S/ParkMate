@@ -1,4 +1,4 @@
- @model AddressDTO
+ @model ParkingSpaceViewModel
  
  @{
      ViewData["Title"] = "Edit Address";
@@ -7,7 +7,7 @@
  <h3>@ViewData["Title"]</h3>
  <hr />
 
-<form method="post" enctype="multipart/form-data" id="form">
+ <form method="post" enctype="multipart/form-data" id="form" asp-route-parkingSpaceId="@Model.ParkingSpaceId">
 
     <input class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Search..." id="searchBar">
     <ul class="list-group" id="results"></ul>
@@ -15,19 +15,19 @@
 
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Street"></label>
-        <input asp-for="Street" id="streetInput" class="form-control" readonly/>
+        <label asp-for="@Model.Street"></label>
+        <input asp-for="@Model.Street" id="streetInput" class="form-control" readonly/>
         <span asp-validation-for="Street" class="text-danger"></span>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label asp-for="City"></label>
-            <input asp-for="City" id="cityInput" class="form-control" readonly/>
-            <span asp-validation-for="City" class="text-danger"></span>
+            <label asp-for="@Model.City"></label>
+            <input asp-for="@Model.City" id="cityInput" class="form-control" readonly/>
+            <span asp-validation-for="@Model.City" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4">
-            <label asp-for="State"></label>
-            <select asp-for="State" id="stateInput" class="form-control" readonly>
+            <label asp-for="@Model.State"></label>
+            <select asp-for="@Model.State" id="stateInput" class="form-control" readonly>
                 <option>New South Wales</option>
                 <option>Victoria</option>
                 <option>Queensland</option>
@@ -36,23 +36,23 @@
                 <option>Tasmania</option>
                 <option>Northern Territory</option>
             </select>
-            <span asp-validation-for="State" class="text-danger"></span>
+            <span asp-validation-for="@Model.State" class="text-danger"></span>
         </div>
         <div class="form-group col-md-2">
-            <label asp-for="Zip"></label>
-            <input asp-for="Zip" id="zipInput" class="form-control" readonly/>
-            <span asp-validation-for="Zip" class="text-danger"></span>
+            <label asp-for="@Model.Zip"></label>
+            <input asp-for="@Model.Zip" id="zipInput" class="form-control" readonly/>
+            <span asp-validation-for="@Model.Zip" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group">
-        <input asp-for="Latitude" id="latitudeInput" type="hidden" class="form-control"/>
-        <span asp-validation-for="Latitude" class="text-danger"></span>
+        <input asp-for="@Model.Location.Coordinates.Latitude" id="latitudeInput" type="hidden" class="form-control"/>
+        <span asp-validation-for="@Model.Location.Coordinates.Latitude" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <input asp-for="Longitude" id="longitudeInput" type="hidden" class="form-control"/>
-        <span asp-validation-for="Longitude" class="text-danger"></span>
+        <input asp-for="@Model.Location.Coordinates.Longitude" id="longitudeInput" type="hidden" class="form-control"/>
+        <span asp-validation-for="@Model.Location.Coordinates.Longitude" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary mt-1">Submit</button>

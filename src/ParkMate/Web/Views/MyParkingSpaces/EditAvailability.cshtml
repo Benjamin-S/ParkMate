@@ -1,4 +1,4 @@
-@model AvailabilityDTO
+@model ParkingSpaceViewModel
 
 @section Styles {
     <link href="@Url.Content("~/css/createParkingSpace.css")" rel="stylesheet" type="text/css" />
@@ -22,7 +22,7 @@
 </div>
 <hr/>
 
-<form method="post" enctype="multipart/form-data" id="form">
+<form method="post" enctype="multipart/form-data" id="form" asp-route-parkingSpaceId="@Model.ParkingSpaceId">
     <div class="form-group row">     
         <div class="col">
             <div class="custom-control custom-checkbox form-check-inline">
