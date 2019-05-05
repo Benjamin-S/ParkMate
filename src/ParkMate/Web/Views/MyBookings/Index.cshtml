@@ -12,25 +12,6 @@
     
     <div>
         @{
-            if (Model.HistoricalBookings.Command.ResultType != ResultType.None)
-            {
-                if (Model.HistoricalBookings.Command.Success)
-                {
-                    <div class="alert alert-success" role="alert">
-                        @Model.HistoricalBookings.Command.Message
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-danger" role="alert">
-                        @Model.HistoricalBookings.Command.Message
-                    </div>
-                }
-            }
-        }
-    </div>
-    <div>
-        @{
             if (Model.FutureBookings.Command.ResultType != ResultType.None)
             {
                 if (Model.FutureBookings.Command.Success)

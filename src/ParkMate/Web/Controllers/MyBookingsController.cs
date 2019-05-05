@@ -14,6 +14,7 @@ using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.DTOs;
 using ParkMate.ApplicationServices.Queries;
 using ParkMate.ApplicationServices.Commands;
+using ParkMate.Web.Controllers;
 using ParkMate.Web.Models;
 
 namespace Web.Controllers
@@ -88,58 +89,29 @@ namespace Web.Controllers
             };
             return View(viewModel);
         }
-
-
-        public async Task<IActionResult> CreateBooking(Result previousCommand, int id)
-        {
-            var customerQuery = new GetCustomerQuery(_userId);
-            var parkingSpaceQuery = new GetSingleParkingSpaceQuery(id);
-            var viewModel = new CreateBookingViewModel
-            {
-                Customer = new ResultViewModel<CustomerViewModel>
-                {
-                    Command = previousCommand,
-                    Query = await _mediator.Send(customerQuery)
-                },
-
-                ParkingSpace = new ResultViewModel<ParkingSpaceViewModel>
-                {
-                    Command = previousCommand,
-                    Query = await _mediator.Send(parkingSpaceQuery)
-                }
-            };
-            
-            return View(viewModel);
-        }
         
         [HttpPost]
-        public async Task<IActionResult> CreateBooking([FromForm] CreateBookingViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmBooking([FromForm] CreateBookingViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            model.CustomerId = _userId;
+
+            var timeLapse = model.BookingPeriod.End - model.BookingPeriod.Start;
 
             Result result;
-            switch (model.BookingType)
+            if (timeLapse.Hours >= 24)
             {
-                case 1:
-                {
-                    model.Booking.Rate = model.HourlyRate;
-                    var command = new CreateHourlyBookingCommand(_userId, model.VehicleId, model.ParkingSpaceId, model.Booking);
-                    result = await _mediator.Send(command);
-                    break;
-                }
-                case 2:
-                {
-                    model.Booking.Rate = model.DailyRate;
-                    var command = new CreateDailyBookingCommand(_userId, model.VehicleId, model.ParkingSpaceId, model.Booking);
-                    result = await _mediator.Send(command);
-                    break;
-                }
-                default:
-                    return View(model);
+                var command = new CreateDailyBookingCommand(model.CustomerId, model.VehicleId, model.ParkingSpaceId,
+                    model.BookingPeriod);
+                result = await _mediator.Send(command);
             }
+            else
+            {
+                var command = new CreateHourlyBookingCommand(model.CustomerId, model.VehicleId, model.ParkingSpaceId,
+                    model.BookingPeriod);
+                result = await _mediator.Send(command);
+            }
+
             return await Index(result);
         }
     }
