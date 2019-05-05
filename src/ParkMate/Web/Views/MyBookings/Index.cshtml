@@ -58,7 +58,7 @@
                                         <p>Start time: @booking.Start</p>
                                         <p>End time: @booking.End</p>
                                         <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
-                                        <p>Total Cost: @booking.Total</p>
+                                        <p>Total Cost: $@booking.Total</p>
                                         <small class="text-muted">
                                             <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@booking.BookingId">View</a>
                                         </small>
@@ -100,7 +100,7 @@
                                         <p>Start time: @booking.Start</p>
                                         <p>End time: @booking.End</p>
                                         <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
-                                        <p>Total Cost: @booking.Total</p>
+                                        <p>Total Cost: $@booking.Total</p>
                                     </div>
                                 </div>
                             </div>
