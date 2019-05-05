@@ -48,7 +48,7 @@
             <div class="card">
                 <div class="card-body">
                     @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableTimes" asp-route-id="@space.Id">Edit</a>
+                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailability" asp-route-id="@space.Id">Edit</a>
                     <h5 class="card-title">Availability Times</h5>
                     <p class="card-text">Available From: @space.Monday.AvailableFrom</p>
                     <p class="card-text">Available To: @space.Monday.AvailableTo</p>

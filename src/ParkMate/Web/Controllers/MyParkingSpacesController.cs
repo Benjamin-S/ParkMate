@@ -47,12 +47,7 @@ namespace Web.Controllers
             return View();
         }
         
-        public IActionResult EditAvailableDays()
-        {
-            return View();
-        }
-        
-        public IActionResult EditAvailableTimes()
+        public IActionResult EditAvailability()
         {
             return View();
         }
@@ -130,7 +125,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAvailability(List<AvailableTimeDTO> days, int parkingSpaceId)
+        public async Task<IActionResult> EditAvailability([FromForm] AvailabilityDTO days, int parkingSpaceId)
         {
             var command = new EditParkingSpaceAvailabilityCommand(parkingSpaceId, _userId, days);
 

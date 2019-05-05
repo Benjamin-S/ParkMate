@@ -4,42 +4,37 @@
      ViewData["Title"] = "Edit Booking Rate";
  }
  
-<div class="content">
-    <div class="overlay"></div>
-    <div class="container shadow-lg border border-dark rounded p-5">
-        <h4>@ViewData["Title"]</h4>
-        <hr/>
+<h3>@ViewData["Title"]</h3>
+<hr/>
 
-        <form method="post" enctype="multipart/form-data" id="form">
-            <br/>
-            <h4>Booking Rates</h4>
-            <hr/>
+<form method="post" enctype="multipart/form-data" id="form">
+    <br/>
+    <h4>Booking Rates</h4>
+    <hr/>
 
-            <div class="form-group">
-                <label asp-for="HourlyRate"></label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                    </div>
-                    <input asp-for="HourlyRate" class="form-control"/>
-                </div>
-                <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    <div class="form-group">
+        <label asp-for="HourlyRate"></label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
             </div>
-            <div class="form-group">
-                <label asp-for="DailyRate"></label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">$</span>
-                    </div>
-                    <input asp-for="DailyRate" class="form-control"/>
-                </div>
-                <span asp-validation-for="DailyRate" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary mt-1">Submit</button>
-        </form>
+            <input asp-for="HourlyRate" class="form-control"/>
+        </div>
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
     </div>
-</div>
+    <div class="form-group">
+        <label asp-for="DailyRate"></label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+            </div>
+            <input asp-for="DailyRate" class="form-control"/>
+        </div>
+        <span asp-validation-for="DailyRate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-1">Submit</button>
+</form>
  
  @section Scripts {
      <partial name="_ValidationScriptsPartial"/>
