@@ -1,15 +1,21 @@
+@using ApplicationCore.Enums
 @model MyBookingsViewModel
 
 @{
     ViewData["Title"] = "My Bookings";
 }
+
+@section Styles
+{
+    <link href="@Url.Content("~/css/MyBookings.css")" rel="stylesheet" type="text/css" />
+}
 <div class="container">
     <div>
         <partial name="_UserProfilePartial"/>
     </div>
-    
+
     <h2>@ViewData["Title"]</h2>
-    
+
     <div>
         @{
             if (Model.FutureBookings.Command.ResultType != ResultType.None)
@@ -30,82 +36,82 @@
         }
     </div>
 
-@{
-    if (Model.FutureBookings.Query.Success)
-    {
-        <div class="card">
-            <div class="card-header">
-                <h4>Future Bookings</h4>
-            </div>
-            <ul class="list-group list-group-flush">
-                @foreach (var booking in Model.FutureBookings.Query.Payload)
-                {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img id="parking-image" src="/imageuploads/@booking.ParkingSpace.ImageURL" class="card-img" alt="No Image">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5>@booking.ParkingSpace.Title.</h5>
-                                    <p>@booking.ParkingSpace.Description</p>
-                                    <p>Start time: @booking.Start</p>
-                                    <p>End time: @booking.End</p>
-                                    <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
-                                    <p>Total Cost: @booking.Total</p>
-                                    <small class="text-muted">
-                                        <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@booking.BookingId">View</a>
-                                    </small>
+    @{
+        if (Model.FutureBookings.Query.Success)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h4>Future Bookings</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var booking in Model.FutureBookings.Query.Payload)
+                    {
+                        <li class="list-group-item @booking.Status">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img id="parking-image" src="/imageuploads/@booking.ParkingSpace.ImageURL" class="card-img" alt="No Image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5>@booking.ParkingSpace.Title - @booking.Status</h5>
+                                        <p>@booking.ParkingSpace.Description</p>
+                                        <p>Start time: @booking.Start</p>
+                                        <p>End time: @booking.End</p>
+                                        <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
+                                        <p>Total Cost: @booking.Total</p>
+                                        <small class="text-muted">
+                                            <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@booking.BookingId">View</a>
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                You currently have no planned future bookings.
+            </div>
+        }
     }
-    else
-    {
-        <div class="alert alert-info" role="alert">
-            You currently have no planned future bookings.
-        </div>
-    }
-}
 
-@{
-    if (Model.HistoricalBookings.Query.Success)
-    {
-        <div class="card">
-            <div class="card-header">
-                <h4>Past Bookings</h4>
-            </div>
-            <ul class="list-group list-group-flush">
-                @foreach (var booking in Model.HistoricalBookings.Query.Payload)
-                {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img id="parking-image-historical" src="/imageuploads/@booking.ParkingSpace.ImageURL" class="card-img" alt="No Image">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5>@booking.ParkingSpace.Title.</h5>
-                                    <p>@booking.ParkingSpace.Description</p>
-                                    <p>Start time: @booking.Start</p>
-                                    <p>End time: @booking.End</p>
-                                    <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
-                                    <p>Total Cost: @booking.Total</p>
+    @{
+        if (Model.HistoricalBookings.Query.Success)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h4>Past Bookings</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var booking in Model.HistoricalBookings.Query.Payload)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img id="parking-image-historical" src="/imageuploads/@booking.ParkingSpace.ImageURL" class="card-img" alt="No Image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5>@booking.ParkingSpace.Title - @booking.Status</h5>
+                                        <p>@booking.ParkingSpace.Description</p>
+                                        <p>Start time: @booking.Start</p>
+                                        <p>End time: @booking.End</p>
+                                        <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
+                                        <p>Total Cost: @booking.Total</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
     }
-    
-}
 </div>
+
 @section Scripts
 {
     <script>
