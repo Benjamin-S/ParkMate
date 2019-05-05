@@ -7,7 +7,9 @@
 }
 
 <div class="container">
-    <partial name="_SearchBarPartial" for="PrevInput" />
+    <form method="post" enctype="multipart/form-data" id="form">
+        <partial name="_SearchBarPartial" for="PrevInput" />
+    </form>
 
     @{
         if (!Model.Result.Success)
@@ -40,7 +42,6 @@
                                                 <hr/>
                                                 <p class="card-text text-truncate d-block">@space.Description</p>
                                                 <p class="card-text">Distance: @(space.DistanceInMeters)m.</p>
-                                                <a class="btn btn-primary">Book</a>
                                                 <a class="btn btn-primary float-right" asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@space.ParkingSpaceId">View</a>
                                             </div>
                                         </div>
@@ -89,47 +90,25 @@
                     center: { lat: @Model.PrevInput.Latitude, lng: @Model.PrevInput.Longitude },
                     zoom: 16
                 });
-            
-            var latLng = new google.maps.LatLng(@Model.PrevInput.Latitude,
-                @Model.PrevInput.Longitude);
-            
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                title: "Target Address",
-                icon: {
-                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"   
-                }
-            });
 
-            var bounds = new google.maps.LatLngBounds();
-            bounds.extend(marker.getPosition());
-            
             @{
                 if (Model.Result.Payload != null)
-                {       
+                {
                     foreach (var result in Model.Result.Payload)
                     {
-                        <text>           
-                            latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
+                        <text>
+                            var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
                                 @result.Location.Coordinates.Longitude);
-                            
-                            marker = new google.maps.Marker({
+                            var marker = new google.maps.Marker({
                                 position: latLng,
                                 map: map,
-                                title: '@result.Title',
-                                icon: {
-                                    url: "http://maps.google.com/mapfiles/ms/icons/red.png"   
-                                }
-                            }); 
-                            
-                            bounds.extend(marker.getPosition())
+                                title: '@result.Title'
+                            });
                         </text>
                     }
                 }
             }
-            
-            map.fitBounds(bounds);
+
         }
 
     </script>

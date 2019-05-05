@@ -1,118 +1,231 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Identity
-@model Result<ParkingSpaceViewModel> 
+@model Result<ParkingSpaceViewModel>
 @{
     ViewData["Title"] = "Parking Space Details";
     var space = Model.Payload;
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container">
 
-@{
-    if (!Model.Success)
-    {
-        <div class="alert alert-danger" role="alert">
-            @Model.Message
-        </div>
-    } else {
-        <div>
-            <div class="card">
-                <div class="card-body">
-                    @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
-                    <h5 class="card-title">Description</h5>
-                    <h6 class="card-text">@space.Title</h6>
-                    <p class="card-text">@space.Description</p>
-                </div>
+    <h1>@ViewData["Title"]</h1>
+
+    @{
+        if (!Model.Success)
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.Message
             </div>
-            <div class="card">
-                <div class="card-body">
-                    @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAddress" asp-route-id="@space.Id">Edit</a>
-                    <h5 class="card-title">Address</h5>
-                    <p class="card-text">Street: @space.Street</p>
-                    <p class="card-text">City: @space.City</p>
-                    <p class="card-text">State: @space.State</p>
-                    <p class="card-text">Postcode: @space.Zip</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
-                    <h5 class="card-title">Booking Rate</h5>
-                    <p class="card-text">Hourly Rate: @space.HourlyRate</p>
-                    <p class="card-text">Daily Rate: @space.DailyRate</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableTimes" asp-route-id="@space.Id">Edit</a>
-                    <h5 class="card-title">Availability Times</h5>
-                    <p class="card-text">Available From: @space.Monday.AvailableFrom</p>
-                    <p class="card-text">Available To: @space.Monday.AvailableTo</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableDays" asp-route-id="@space.Id">Edit</a>
-                    <h5 class="card-title">Availability</h5>
-                    <div class="custom-control custom-checkbox">
-                        <input asp-for="@space.Monday.IsAvailable" class="custom-control-input" type="checkbox"/>
-                        <label class="custom-control-label">Monday</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input asp-for="@space.Tuesday.IsAvailable" class="custom-control-input" type="checkbox"/>
-                        <label class="custom-control-label">Tuesday</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input asp-for="@space.Wednesday.IsAvailable" class="custom-control-input" type="checkbox"/>
-                        <label class="custom-control-label">Wednesday</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input asp-for="@space.Thursday.IsAvailable" class="custom-control-input" type="checkbox"/>
-                        <label class="custom-control-label">Thursday</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input asp-for="@space.Friday.IsAvailable" class="custom-control-input" type="checkbox"/>
-                        <label class="custom-control-label">Friday</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input asp-for="@space.Saturday.IsAvailable" class="custom-control-input" type="checkbox"/>
-                        <label class="custom-control-label">Saturday</label>
-                    </div>
-                    <div class="custom-control custom-checkbox">
-                        <input asp-for="@space.Sunday.IsAvailable" class="custom-control-input" type="checkbox"/>
-                        <label class="custom-control-label">Sunday</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-    
-        <br/>
-        <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces"
-           asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" asp-route-isAvaliable="@(!space.IsVisible)">
-            @(@space.IsVisible ? "Unlist" : "List") 
-        </a>
-        <a class="btn btn-danger float-right owner-only" asp-controller="MyParkingSpaces"
-           asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id">Delete</a>
-            <br/>
         }
-}
+        else
+        {
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        @* Check if UserId == space.OwnerId *@
+                        <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditDescription" asp-route-id="@space.Id">Edit</a>
+                        <h5 class="card-title">Description</h5>
+                        <h6 class="card-text">@space.Title</h6>
+                        <p class="card-text">@space.Description</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        @* Check if UserId == space.OwnerId *@
+                        <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAddress" asp-route-id="@space.Id">Edit</a>
+                        <h5 class="card-title">Address</h5>
+                        <p class="card-text">Street: @space.Street</p>
+                        <p class="card-text">City: @space.City</p>
+                        <p class="card-text">State: @space.State</p>
+                        <p class="card-text">Postcode: @space.Zip</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        @* Check if UserId == space.OwnerId *@
+                        <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditBookingRate" asp-route-id="@space.Id">Edit</a>
+                        <h5 class="card-title">Booking Rate</h5>
+                        <p class="card-text">Hourly Rate: @space.HourlyRate</p>
+                        <p class="card-text">Daily Rate: @space.DailyRate</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        @* Check if UserId == space.OwnerId *@
+                        <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableTimes" asp-route-id="@space.Id">Edit</a>
+                        <h5 class="card-title">Availability Times</h5>
+                        <p class="card-text">Available From: @space.Monday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Monday.AvailableTo</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        @* Check if UserId == space.OwnerId *@
+                        <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableDays" asp-route-id="@space.Id">Edit</a>
+                        <h5 class="card-title">Availability</h5>
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="@space.Monday.IsAvailable" class="custom-control-input" type="checkbox"/>
+                            <label class="custom-control-label">Monday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="@space.Tuesday.IsAvailable" class="custom-control-input" type="checkbox"/>
+                            <label class="custom-control-label">Tuesday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="@space.Wednesday.IsAvailable" class="custom-control-input" type="checkbox"/>
+                            <label class="custom-control-label">Wednesday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="@space.Thursday.IsAvailable" class="custom-control-input" type="checkbox"/>
+                            <label class="custom-control-label">Thursday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="@space.Friday.IsAvailable" class="custom-control-input" type="checkbox"/>
+                            <label class="custom-control-label">Friday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="@space.Saturday.IsAvailable" class="custom-control-input" type="checkbox"/>
+                            <label class="custom-control-label">Saturday</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input asp-for="@space.Sunday.IsAvailable" class="custom-control-input" type="checkbox"/>
+                            <label class="custom-control-label">Sunday</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <br/>
+            <div class="float-right btn-toolbar">
+                <div class="btn-group mr-2">
+                    <a class="btn btn-danger owner-only" asp-controller="MyParkingSpaces"
+                       asp-action="DeleteParkingSpace" asp-route-parkingSpaceId="@space.Id">
+                        Delete
+                    </a>
+                </div>
+                <div class="btn-group mr-2">
+                    <a class="btn btn-primary owner-only" asp-controller="MyParkingSpaces"
+                       asp-action="SetVisibility" asp-route-parkingSpaceId="@space.Id" asp-route-isAvaliable="@(!space.IsVisible)">
+                        @(@space.IsVisible ? "Unlist" : "List")
+                    </a>
+                </div>
+                <div class="btn-group mr-2">
+                    <button class="btn btn-primary" id="bookingButton" data-toggle="modal" data-target="#bookingModal">Place a booking</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        }
+    }
+</div>
+
+@Html.Partial("_BookingModalPartial", new CreateBookingViewModel())
 
 @section Scripts
 {
+    <partial name="_DateTimePicker"/>
     <script>
         $(document).ready(function() {
             $('input[type="checkbox"]').click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
             });
+
+            $.get('@Url.Action("CustomerVehicles", "MyVehicles")',
+                function(data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $('#vehicle-select').append('<option ' +
+                            'value="' +
+                            data[i].vehicleId +
+                            '">' +
+                            data[i].colour +
+                            ' ' +
+                            data[i].make +
+                            ' ' +
+                            data[i].model +
+                            ' - ' +
+                            data[i].registration +
+                            '</option>');
+                    }
+                });
+
+            $('#parkingSpaceId').val('@space.ParkingSpaceId');
         });
+
+        var startFP = flatpickr("#Start",
+            {
+                enableTime: true,
+                altInput: true,
+                altFormat: "d-m-Y H:i",
+                minDate: "today",
+                disable: [
+                    function(date) {
+                        return (getDaysOfWeek().includes(date.getDay()));
+                    }
+                ],
+                onClose: function(selectedDates, dateStr, instance) {
+                    endFP.set("minDate", dateStr);
+                    endFP.jumpToDate(dateStr);
+                }
+            });
+        var endFP = flatpickr("#End",
+            {
+                enableTime: true,
+                altInput: true,
+                altFormat: "d-m-Y H:i",
+                disable: [
+                    function(date) {
+                        return (getDaysOfWeek().includes(date.getDay()));
+                    }
+                ],
+                onClose: function(selectedDates, dateStr, instance) {
+                    updateRate();
+                }
+            });
+        
+        function updateRate() {
+            var startObj = startFP.parseDate(startFP.selectedDates[0], 'd-m-Y H:i');
+            var endObj = endFP.parseDate(endFP.selectedDates[0], 'd-m-Y H:i');
+            var dateDiff = endObj - startObj;
+            var dateDiff = dateDiff / 1000/ 60 / 60;
+            $('#rate').val(dateDiff > 24 ? @space.DailyRate : @space.HourlyRate);
+        }
+
+        function getDaysOfWeek() {
+            var disabled = [];
+            var True = true;
+            var False = false;
+            var sunday = @Model.Payload.Sunday.IsAvailable;
+            var monday = @Model.Payload.Monday.IsAvailable;
+            var tuesday = @Model.Payload.Tuesday.IsAvailable;
+            var wednesday = @Model.Payload.Wednesday.IsAvailable;
+            var thursday = @Model.Payload.Thursday.IsAvailable;
+            var friday = @Model.Payload.Friday.IsAvailable;
+            var saturday = @Model.Payload.Saturday.IsAvailable;
+
+            if (sunday === false) {
+                disabled.push(0);
+            }
+            if (monday === false) {
+                disabled.push(1);
+            }
+            if (tuesday === false) {
+                disabled.push(2);
+            }
+            if (wednesday === false) {
+                disabled.push(3);
+            }
+            if (thursday === false) {
+                disabled.push(4);
+            }
+            if (friday === false) {
+                disabled.push(5);
+            }
+            if (saturday === false) {
+                disabled.push(6);
+            }
+
+            return disabled;
+        }
     </script>
 }
-
-

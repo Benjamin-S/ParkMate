@@ -49,5 +49,13 @@ namespace Web.Controllers
             var result = await _mediator.Send(command);
             return await Index(result);
         }
+        
+        public async Task<IActionResult> CustomerVehicles ()
+        {
+            var query = new GetCustomerQuery(_userId);
+            var result = await _mediator.Send(query);
+
+            return Json(result.Payload.Vehicles);
+        }
     }
 }
