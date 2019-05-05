@@ -69,7 +69,7 @@
          var inputText = $(this).val();
     
          if (inputText.match("[a-zA-Z]")) {
-            $.get('@Url.Action("SearchAutoComplete", "Search")',
+            $.get('@Url.Action("SearchAutoComplete", "SearchResult")',
              { searchInput: inputText },
              function(data) {
                  $("#results").empty();
