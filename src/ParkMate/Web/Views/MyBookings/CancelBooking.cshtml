@@ -13,6 +13,7 @@
         </div>
         <div class="card-body">
             <form method="post" enctype="multipart/form-data" id="form" asp-action="CancelBooking">
+                <p>Please note that you cannot undo this action, however you are free to book again at any time.</p>
                 <a asp-controller="MyBookings" asp-action="ViewBooking" asp-route-id="@Model.Query.Payload.BookingId">Return to booking</a>
                 <button class="btn btn-danger" type="submit">Confirm</button>
             </form>

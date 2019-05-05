@@ -28,84 +28,18 @@
                                 <div class="card-body">
                                     <h5>@Model.Query.Payload.ParkingSpace.Title.</h5>
                                     <p>@Model.Query.Payload.ParkingSpace.Description</p>
-                                    @if (Model.Query.Payload.Status == BookingStatus.Active.ToString())
-                                    {
-                                        <table class="table table-sm">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Day</th>
-                                                <th scope="col">Start Time</th>
-                                                <th scope="col">End Time</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if (Model.Query.Payload.ParkingSpace.Monday.IsAvailable)
-                                            {
-                                                <tr>
-                                                    <td>Monday</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableFrom</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Monday.AvailableTo</td>
-                                                </tr>
-                                            }
-                                            @if (@Model.Query.Payload.ParkingSpace.Tuesday.IsAvailable)
-                                            {
-                                                <tr>
-                                                    <td>Tuesday</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableFrom</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Tuesday.AvailableTo</td>
-                                                </tr>
-                                            }
-                                            @if (@Model.Query.Payload.ParkingSpace.Wednesday.IsAvailable)
-                                            {
-                                                <tr>
-                                                    <td>Wednesday</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableFrom</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Wednesday.AvailableTo</td>
-                                                </tr>
-                                            }
-                                            @if (@Model.Query.Payload.ParkingSpace.Thursday.IsAvailable)
-                                            {
-                                                <tr>
-                                                    <td>Thursday</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableFrom</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Thursday.AvailableTo</td>
-                                                </tr>
-                                            }
-                                            @if (@Model.Query.Payload.ParkingSpace.Friday.IsAvailable)
-                                            {
-                                                <tr>
-                                                    <td>Friday</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableFrom</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Friday.AvailableTo</td>
-                                                </tr>
-                                            }
-                                            @if (@Model.Query.Payload.ParkingSpace.Saturday.IsAvailable)
-                                            {
-                                                <tr>
-                                                    <td>Saturday</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableFrom</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Saturday.AvailableTo</td>
-                                                </tr>
-                                            }
-                                            @if (@Model.Query.Payload.ParkingSpace.Tuesday.IsAvailable)
-                                            {
-                                                <tr>
-                                                    <td>Sunday</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableFrom</td>
-                                                    <td>@Model.Query.Payload.ParkingSpace.Sunday.AvailableTo</td>
-                                                </tr>
-                                            }
-                                            </tbody>
-                                        </table>
-                                    }
-                                    <p>Start time: @Model.Query.Payload.Start</p>
-                                    <p>End time: @Model.Query.Payload.End</p>
+                                    <p>Street: @Model.Query.Payload.ParkingSpace.Street</p>
+                                    <p>City: @Model.Query.Payload.ParkingSpace.City</p>
+                                    <p>State: @Model.Query.Payload.ParkingSpace.State</p>
+                                    <p>Postcode: @Model.Query.Payload.ParkingSpace.Zip</p>
+                                    <p>Booking Start time: @Model.Query.Payload.Start</p>
+                                    <p>Booking End time: @Model.Query.Payload.End</p>
                                     <p>Vehicle: @Model.Query.Payload.Vehicle.Colour @Model.Query.Payload.Vehicle.Make @Model.Query.Payload.Vehicle.Model - @Model.Query.Payload.Vehicle.Registration</p>
-                                    <p>Total Cost: @Model.Query.Payload.Total</p>
+                                    <p>Total Cost: $@Model.Query.Payload.Total</p>
                                     @if (Model.Query.Payload.Status == BookingStatus.Active.ToString())
                                     {
                                         <small class="text-muted">
-                                            <a asp-controller="MyBookings" asp-action="CancelBooking" asp-route-id="@Model.Query.Payload.BookingId">Cancel</a>
+                                            <a asp-controller="MyBookings" asp-action="CancelBooking" asp-route-id="@Model.Query.Payload.BookingId">Cancel Booking</a>
                                         </small>
                                     }
                                 </div>
