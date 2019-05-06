@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
-using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.Events;
 using ParkMate.ApplicationServices.DTOs;

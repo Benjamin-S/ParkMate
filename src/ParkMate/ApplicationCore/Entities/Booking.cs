@@ -21,6 +21,7 @@ namespace ParkMate.ApplicationCore.Entities
             BookingInfo = bookingPeriod ?? 
                 throw new ArgumentNullException(nameof(bookingPeriod));
 
+            BookingTime = DateTime.Now;
             Status = BookingStatus.Active;
         }
 
