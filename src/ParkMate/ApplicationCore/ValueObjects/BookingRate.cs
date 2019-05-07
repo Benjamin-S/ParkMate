@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ParkMate.ApplicationCore.ValueObjects
 {
+    
     public class BookingRate : ValueObject
     {
         private BookingRate()

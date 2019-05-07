@@ -1,0 +1,284 @@
+@model ParkingSpaceViewModel
+
+@section Styles {
+    <link href="@Url.Content("~/css/createParkingSpace.css")" rel="stylesheet" type="text/css" />
+    <environment include="Development">
+        <link href="~/lib/clockpicker/dist/bootstrap-clockpicker.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/lib/clockpicker/dist/bootstrap-clockpicker.css" rel="stylesheet" />
+    </environment> 
+}
+
+<br />
+<h3>Edit Availability</h3>
+<hr />
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-2 text-center">Available From</div>
+    <div class="col-2 text-center">Available To</div>
+    <div class="col-2"></div>
+</div>
+<hr/>
+
+<form method="post" enctype="multipart/form-data" id="form" asp-route-parkingSpaceId="@Model.ParkingSpaceId">
+    <div class="form-group row">     
+        <div class="col">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input availableCheck" asp-for="Monday.IsAvailable">
+                <label class="custom-control-label" asp-for="Monday.IsAvailable"></label>
+            </div>
+        </div>
+        
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Monday.AvailableFrom" class="form-control availableFrom" type="text"/>
+            </div>
+            <span asp-validation-for="Monday.AvailableFrom" class="text-danger col"></span>
+        </div>
+
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Monday.AvailableTo" class="form-control availableTo" type="text"/>
+            </div>
+            <span asp-validation-for="Monday.AvailableTo" class="text-danger"></span>
+        </div>
+
+        <div class="col-2">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input 24hrCheck" id="check1">
+                <label class="custom-control-label" for="check1">24hr</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group row">     
+        <div class="col">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input availableCheck" asp-for="Tuesday.IsAvailable">
+                <label class="custom-control-label" asp-for="Tuesday.IsAvailable"></label>
+            </div>
+        </div>
+            
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Tuesday.AvailableFrom" class="form-control availableFrom" type="text"/>
+            </div>
+            <span asp-validation-for="Tuesday.AvailableFrom" class="text-danger col"></span>
+        </div>
+    
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Tuesday.AvailableTo" class="form-control availableTo" type="text"/>
+            </div>
+            <span asp-validation-for="Tuesday.AvailableTo" class="text-danger"></span>
+        </div>
+    
+        <div class="col-2">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input 24hrCheck" id="check2">
+                <label class="custom-control-label" for="check2">24hr</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">     
+        <div class="col">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input availableCheck" asp-for="Wednesday.IsAvailable">
+                <label class="custom-control-label" asp-for="Wednesday.IsAvailable"></label>
+            </div>
+        </div>
+        
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Wednesday.AvailableFrom" class="form-control availableFrom" type="text"/>
+            </div>
+            <span asp-validation-for="Wednesday.AvailableFrom" class="text-danger col"></span>
+        </div>
+
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Wednesday.AvailableTo" class="form-control availableTo" type="text"/>
+            </div>
+            <span asp-validation-for="Wednesday.AvailableTo" class="text-danger"></span>
+        </div>
+
+        <div class="col-2">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input 24hrCheck" id="check3">
+                <label class="custom-control-label" for="check3">24hr</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group row">     
+        <div class="col">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input availableCheck" asp-for="Thursday.IsAvailable">
+                <label class="custom-control-label" asp-for="Thursday.IsAvailable"></label>
+            </div>
+        </div>
+        
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Thursday.AvailableFrom" class="form-control availableFrom" type="text"/>
+            </div>
+            <span asp-validation-for="Thursday.AvailableFrom" class="text-danger col"></span>
+        </div>
+
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Thursday.AvailableTo" class="form-control availableTo" type="text"/>
+            </div>
+            <span asp-validation-for="Thursday.AvailableTo" class="text-danger"></span>
+        </div>
+
+        <div class="col-2">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input 24hrCheck" id="check4">
+                <label class="custom-control-label" for="check4">24hr</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group row">     
+        <div class="col">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input availableCheck" asp-for="Friday.IsAvailable">
+                <label class="custom-control-label" asp-for="Friday.IsAvailable"></label>
+            </div>
+        </div>
+            
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Friday.AvailableFrom" class="form-control availableFrom" type="text"/>
+            </div>
+            <span asp-validation-for="Friday.AvailableFrom" class="text-danger col"></span>
+        </div>
+    
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Friday.AvailableTo" class="form-control availableTo" type="text"/>
+            </div>
+            <span asp-validation-for="Friday.AvailableTo" class="text-danger"></span>
+        </div>
+    
+        <div class="col-2">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input 24hrCheck" id="check5">
+                <label class="custom-control-label" for="check5">24hr</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">     
+        <div class="col">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input availableCheck" asp-for="Saturday.IsAvailable">
+                <label class="custom-control-label" asp-for="Saturday.IsAvailable"></label>
+            </div>
+        </div>
+            
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Saturday.AvailableFrom" class="form-control availableFrom" type="text"/>
+            </div>
+            <span asp-validation-for="Saturday.AvailableFrom" class="text-danger col"></span>
+        </div>
+    
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Saturday.AvailableTo" class="form-control availableTo" type="text"/>
+            </div>
+            <span asp-validation-for="Saturday.AvailableTo" class="text-danger"></span>
+        </div>
+    
+        <div class="col-2">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input 24hrCheck" id="check6">
+                <label class="custom-control-label" for="check6">24hr</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">     
+        <div class="col">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input availableCheck" asp-for="Sunday.IsAvailable">
+                <label class="custom-control-label" asp-for="Sunday.IsAvailable"></label>
+            </div>
+        </div>
+            
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Sunday.AvailableFrom" class="form-control availableFrom" type="text" />
+            </div>
+            <span asp-validation-for="Sunday.AvailableFrom" class="text-danger col"></span>
+        </div>
+    
+        <div class="col-2 text-center">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                <input asp-for="Sunday.AvailableTo" class="form-control availableTo" type="text"/>
+            </div>
+            <span asp-validation-for="Sunday.AvailableTo" class="text-danger"></span>
+        </div>
+    
+        <div class="col-2">
+            <div class="custom-control custom-checkbox form-check-inline">
+                <input type="checkbox" class="custom-control-input 24hrCheck" id="check7">
+                <label class="custom-control-label" for="check7">24hr</label>
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary mt-1">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ClockPickerPartial"/>
+    <script>
+        $(".availableCheck").each(function() {
+            $(this).on('change',  function() {
+                if ($(this).prop("checked")) {
+                    $(this).parents(".form-group").find(".availableFrom, .availableTo, .24hrCheck").prop("disabled", false);
+                } else {
+                    $(this).parents(".form-group").find(".availableFrom, .availableTo, .24hrCheck").prop("disabled", true);
+                }
+            });
+        });
+
+        $(".24hrCheck").each(function() {
+            $(this).on('change',  function() {
+                if ($(this).prop("checked")) {
+                    $(this).parents(".form-group").find(".availableFrom, .availableTo").prop("disabled", true);
+                    $(this).parents(".form-group").find(".availableFrom, .availableTo").val("0:00");
+                } else {
+                    $(this).parents(".form-group").find(".availableFrom, .availableTo").prop("disabled", false);
+                    $(this).parents(".form-group").find(".availableTo").val("01:00");
+                }
+            });
+        });
+
+        $(".availableFrom, .availableTo").each(function() {
+            $(this).on('change',
+                function() {
+                    var start = new Date('01/01/1970 ' + $(this).parents(".form-group").find(".availableFrom").val());
+                    var end = new Date('01/01/1970 ' + $(this).parents(".form-group").find(".availableTo").val());
+
+                    if ((end - start) < 3600000 && (end - start) >= 0) {
+                        start.setHours(start.getHours() + 1);
+                        var newHours = formatLeading0(start.getHours());
+                        var newMinutes = formatLeading0(start.getMinutes());
+                        $(this).parents(".form-group").find(".availableTo").val(newHours + ":" + newMinutes);
+                    }
+                });
+        });
+
+        function formatLeading0(n) {
+            return n < 10 ? '0' + n : n;
+        }
+    </script>
+}

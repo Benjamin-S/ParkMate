@@ -1,40 +1,37 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using ParkMate.ApplicationCore.Entities;
 using ParkMate.ApplicationCore.ValueObjects;
-using ParkMate.ApplicationServices;
 using ParkMate.ApplicationServices.Interfaces;
 using ParkMate.ApplicationServices.Events;
 using ParkMate.ApplicationServices.DTOs;
 
 namespace ParkMate.ApplicationServices.Commands
 {
-    public class EditParkingSpaceBookingRateCommand  : IRequest<Result>
+    public class EditParkingSpaceDescriptionCommand  : IRequest<Result>
     {
-        public EditParkingSpaceBookingRateCommand(
+        public EditParkingSpaceDescriptionCommand(
             int parkingSpaceId, 
             string ownerId, 
-            BookingRateDTO bookingRate)
+            DescriptionDTO description)
         {
             ParkingSpaceId = parkingSpaceId;
             OwnerId = ownerId;
-            BookingRate = bookingRate;
+            Description = description;
         }
         public int ParkingSpaceId { get; }
         public string OwnerId { get; }
-        public BookingRateDTO BookingRate { get; }
+        public DescriptionDTO Description { get; }
     }
     
-    public class EditParkingSpaceBookingRateCommandHandler 
-        : IRequestHandler<EditParkingSpaceBookingRateCommand, Result>
+    public class EditParkingSpaceDescriptionCommandHandler 
+        : IRequestHandler<EditParkingSpaceDescriptionCommand, Result>
     {
         private IParkingSpaceRepository _repository;
         private IMediator _mediator;
 
-        public EditParkingSpaceBookingRateCommandHandler(
+        public EditParkingSpaceDescriptionCommandHandler(
             IParkingSpaceRepository repository,
             IMediator mediator)
         {
@@ -44,7 +41,7 @@ namespace ParkMate.ApplicationServices.Commands
         }
 
         public async Task<Result> Handle(
-            EditParkingSpaceBookingRateCommand command, 
+            EditParkingSpaceDescriptionCommand command, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var parkingSpace = await _repository.GetByIdAsync(command.ParkingSpaceId);
@@ -54,11 +51,12 @@ namespace ParkMate.ApplicationServices.Commands
                 return Result.CommandFail("Not authorized to modify this Parking Space");
             }
 
-            var rate = new BookingRate(
-                new Money(command.BookingRate.HourlyRate), 
-                new Money(command.BookingRate.DailyRate));
+            var description = new ParkingSpaceDescription(
+                command.Description.Title, 
+                command.Description.Description, 
+                command.Description.ImageURL);
 
-            parkingSpace.UpdateBookingRate(rate);
+            parkingSpace.UpdateDescription(description);
             
             _repository.Update(parkingSpace);
 
@@ -66,7 +64,7 @@ namespace ParkMate.ApplicationServices.Commands
 
             await _mediator.Publish(new ParkingSpaceUpdatedEvent(parkingSpace));
 
-            return Result.CommandSuccess("Parking Space booking rate was successfully updated");
+            return Result.CommandSuccess("Parking Space description was successfully updated");
         }
     }
 }

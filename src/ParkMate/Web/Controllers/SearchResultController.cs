@@ -9,11 +9,11 @@ using ParkMate.Web.Models;
 namespace ParkMate.Web.Controllers
 
 {
-    public class SearchController : Controller
+    public class SearchResultController : Controller
     {
         private IMediator _mediator;
 
-        public SearchController(IMediator mediator)
+        public SearchResultController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -37,7 +37,7 @@ namespace ParkMate.Web.Controllers
             var query = new FindSpacesWithinDistanceQuery(dto);
             var result = await _mediator.Send(query);
             
-            return View("SearchResult", new SearchResultViewModel()
+            return View("Index", new SearchResultViewModel()
                 {
                     PrevInput = dto,
                     Result = result
