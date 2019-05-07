@@ -3,3 +3,7 @@
     height: 22vw;
     object-fit: cover;
 }
+
+#map{
+    height:25vh;
+}
