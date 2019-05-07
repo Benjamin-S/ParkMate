@@ -53,10 +53,10 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5>@booking.ParkingSpace.Title - @booking.Status</h5>
+                                        <h5>@booking.ParkingSpace.Title<small class="text-muted"> - @booking.Status</small></h5>
                                         <p>@booking.ParkingSpace.Description</p>
-                                        <p>Start time: @booking.Start</p>
-                                        <p>End time: @booking.End</p>
+                                        <p>Start time: @booking.Start.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
+                                        <p>End time: @booking.End.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
                                         <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
                                         <p>Total Cost: $@booking.Total</p>
                                         <small class="text-muted">
@@ -95,10 +95,10 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5>@booking.ParkingSpace.Title - @booking.Status</h5>
+                                        <h5>@booking.ParkingSpace.Title <small class="text-muted"> - @booking.Status</small></h5>
                                         <p>@booking.ParkingSpace.Description</p>
-                                        <p>Start time: @booking.Start</p>
-                                        <p>End time: @booking.End</p>
+                                        <p>Start time: @booking.Start.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
+                                        <p>End time: @booking.End.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
                                         <p>Vehicle: @booking.Vehicle.Colour @booking.Vehicle.Make @booking.Vehicle.Model - @booking.Vehicle.Registration</p>
                                         <p>Total Cost: $@booking.Total</p>
                                     </div>
