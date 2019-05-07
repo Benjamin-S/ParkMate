@@ -48,44 +48,50 @@
             <div class="card">
                 <div class="card-body">
                     @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailability" asp-route-parkingSpaceId="@space.ParkingSpaceId">Edit</a>
-                    <h5 class="card-title">Availability Times</h5>
-                    <p class="card-text">Available From: @space.Monday.AvailableFrom</p>
-                    <p class="card-text">Available To: @space.Monday.AvailableTo</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    @* Check if UserId == space.OwnerId *@
-                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailableDays" asp-route-id="@space.Id">Edit</a>
+                    <a class="btn btn-primary float-right owner-only" asp-controller="MyParkingSpaces" asp-action="EditAvailability" asp-route-parkingSpaceId="@space.ParkingSpaceId">Edit</a>                  
+                    
                     <h5 class="card-title">Availability</h5>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Monday.IsAvailable" class="custom-control-input" type="checkbox"/>
                         <label class="custom-control-label">Monday</label>
+                        <p class="card-text">Available From: @space.Monday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Monday.AvailableTo</p>
                     </div>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Tuesday.IsAvailable" class="custom-control-input" type="checkbox"/>
                         <label class="custom-control-label">Tuesday</label>
+                        <p class="card-text">Available From: @space.Tuesday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Tuesday.AvailableTo</p>
                     </div>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Wednesday.IsAvailable" class="custom-control-input" type="checkbox"/>
                         <label class="custom-control-label">Wednesday</label>
+                        <p class="card-text">Available From: @space.Wednesday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Wednesday.AvailableTo</p>
                     </div>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Thursday.IsAvailable" class="custom-control-input" type="checkbox"/>
                         <label class="custom-control-label">Thursday</label>
+                        <p class="card-text">Available From: @space.Thursday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Thursday.AvailableTo</p>
                     </div>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Friday.IsAvailable" class="custom-control-input" type="checkbox"/>
                         <label class="custom-control-label">Friday</label>
+                        <p class="card-text">Available From: @space.Friday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Friday.AvailableTo</p>
                     </div>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Saturday.IsAvailable" class="custom-control-input" type="checkbox"/>
                         <label class="custom-control-label">Saturday</label>
+                        <p class="card-text">Available From: @space.Saturday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Saturday.AvailableTo</p>
                     </div>
                     <div class="custom-control custom-checkbox">
                         <input asp-for="@space.Sunday.IsAvailable" class="custom-control-input" type="checkbox"/>
                         <label class="custom-control-label">Sunday</label>
+                        <p class="card-text">Available From: @space.Sunday.AvailableFrom</p>
+                        <p class="card-text">Available To: @space.Sunday.AvailableTo</p>
                     </div>
                 </div>
             </div>
