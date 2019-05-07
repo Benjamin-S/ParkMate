@@ -32,8 +32,8 @@
                                     <p>City: @Model.Query.Payload.ParkingSpace.City</p>
                                     <p>State: @Model.Query.Payload.ParkingSpace.State</p>
                                     <p>Postcode: @Model.Query.Payload.ParkingSpace.Zip</p>
-                                    <p>Booking Start time: @Model.Query.Payload.Start</p>
-                                    <p>Booking End time: @Model.Query.Payload.End</p>
+                                    <p>Booking Start time: @Model.Query.Payload.Start.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
+                                    <p>Booking End time: @Model.Query.Payload.End.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
                                     <p>Vehicle: @Model.Query.Payload.Vehicle.Colour @Model.Query.Payload.Vehicle.Make @Model.Query.Payload.Vehicle.Model - @Model.Query.Payload.Vehicle.Registration</p>
                                     <p>Total Cost: $@Model.Query.Payload.Total</p>
                                     @if (Model.Query.Payload.Status == BookingStatus.Active.ToString())
