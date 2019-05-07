@@ -61,7 +61,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
             yield return DayOfWeek;
             yield return AvailableFrom;
             yield return AvailableTo;
-            yield return IsAvailable;
+            yield return IsAvailable; 
         }
 
     }
