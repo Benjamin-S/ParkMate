@@ -9,32 +9,32 @@
 {
     <link href="@Url.Content("~/css/MyBookings.css")" rel="stylesheet" type="text/css" />
 }
-<div class="container">
-    <div>
-        <partial name="_UserProfilePartial"/>
-    </div>
 
-    <h2>@ViewData["Title"]</h2>
+<div>
+    <partial name="_UserProfilePartial"/>
+</div>
 
-    <div>
-        @{
-            if (Model.FutureBookings.Command.ResultType != ResultType.None)
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    @{
+        if (Model.FutureBookings.Command.ResultType != ResultType.None)
+        {
+            if (Model.FutureBookings.Command.Success)
             {
-                if (Model.FutureBookings.Command.Success)
-                {
-                    <div class="alert alert-success" role="alert">
-                        @Model.FutureBookings.Command.Message
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-danger" role="alert">
-                        @Model.FutureBookings.Command.Message
-                    </div>
-                }
+                <div class="alert alert-success" role="alert">
+                    @Model.FutureBookings.Command.Message
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.FutureBookings.Command.Message
+                </div>
             }
         }
-    </div>
+    }
+</div>
 
     @{
         if (Model.FutureBookings.Query.Success)
@@ -110,7 +110,7 @@
             </div>
         }
     }
-</div>
+
 
 @section Scripts
 {

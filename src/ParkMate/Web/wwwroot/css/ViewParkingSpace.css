@@ -1,0 +1,9 @@
+#featureImage {
+    width: 100%;
+    height: 22vw;
+    object-fit: cover;
+}
+
+#map{
+    height:25vh;
+}

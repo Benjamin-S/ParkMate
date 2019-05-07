@@ -83,9 +83,25 @@
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'),
                 {
-                    center: { lat: @Model.PrevInput.Latitude, lng: @Model.PrevInput.Longitude },
-                    zoom: 16
+                    center: { lat: @Model.PrevInput.Latitude, lng: @Model.PrevInput.Longitude }                  
                 });
+            
+            var infoWindow = new google.maps.InfoWindow();
+            
+            var latLng = new google.maps.LatLng(@Model.PrevInput.Latitude,
+                @Model.PrevInput.Longitude);
+
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                title: "Target Address",
+                icon: {
+                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"   
+                }
+            });
+
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(marker.getPosition());
 
             @{
                 if (Model.Result.Payload != null)
@@ -93,18 +109,36 @@
                     foreach (var result in Model.Result.Payload)
                     {
                         <text>
-                            var latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
+                            latLng = new google.maps.LatLng(@result.Location.Coordinates.Latitude,
                                 @result.Location.Coordinates.Longitude);
-                            var marker = new google.maps.Marker({
+
+                            marker = new google.maps.Marker({
                                 position: latLng,
                                 map: map,
-                                title: '@result.Title'
+                                title: '@result.Title',
+                                icon: {
+                                    url: "http://maps.google.com/mapfiles/ms/icons/red.png"   
+                                },
+                                content: '<div class="card-body">' +
+                                    '<h5 class="card-title text-truncate d-block">@result.Title</h5>' +
+                                    '<hr/>' +
+                                    '<p class="card-text text-truncate d-block">@result.Description</p>' +
+                                    '<p class="card-text">Distance: @(result.DistanceInMeters)m.</p>' +
+                                    '<a class="btn btn-primary float-right w-100" asp-controller="ViewParkingSpace" asp-action="Index" asp-route-id="@result.ParkingSpaceId">View</a>' +
+                                    '</div>'
+                            });                         
+                            
+                            marker.addListener('click', function() {
+                                infoWindow.setContent(this.content);
+                                infoWindow.open(this.getMap(), this);
                             });
+
+                            bounds.extend(marker.getPosition());
                         </text>
                     }
                 }
             }
-
+            map.fitBounds(bounds);
         }
 
     </script>

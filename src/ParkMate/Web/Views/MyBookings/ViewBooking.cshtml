@@ -3,54 +3,52 @@
 @{
     ViewData["Title"] = "View Booking";
 }
-<div class="container">
-    <div>
-        <partial name="_UserProfilePartial"/>
-    </div>
 
-    <h2>View Booking</h2>
+<div>
+    <partial name="_UserProfilePartial"/>
+</div>
 
+<h2>View Booking</h2>
 
-    @{
-        if (Model.Query.Success)
-        {
-            <div class="card">
-                <div class="card-header">
-                    <h4>Booking @Model.Query.Payload.BookingId - @Model.Query.Payload.Status</h4>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img id="parking-image" src="/imageuploads/@Model.Query.Payload.ParkingSpace.ImageURL" class="card-img" alt="No Image">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5>@Model.Query.Payload.ParkingSpace.Title.</h5>
-                                    <p>@Model.Query.Payload.ParkingSpace.Description</p>
-                                    <p>Street: @Model.Query.Payload.ParkingSpace.Street</p>
-                                    <p>City: @Model.Query.Payload.ParkingSpace.City</p>
-                                    <p>State: @Model.Query.Payload.ParkingSpace.State</p>
-                                    <p>Postcode: @Model.Query.Payload.ParkingSpace.Zip</p>
-                                    <p>Booking Start time: @Model.Query.Payload.Start.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
-                                    <p>Booking End time: @Model.Query.Payload.End.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
-                                    <p>Vehicle: @Model.Query.Payload.Vehicle.Colour @Model.Query.Payload.Vehicle.Make @Model.Query.Payload.Vehicle.Model - @Model.Query.Payload.Vehicle.Registration</p>
-                                    <p>Total Cost: $@Model.Query.Payload.Total</p>
-                                    @if (Model.Query.Payload.Status == BookingStatus.Active.ToString())
-                                    {
-                                        <small class="text-muted">
-                                            <a asp-controller="MyBookings" asp-action="CancelBooking" asp-route-id="@Model.Query.Payload.BookingId">Cancel Booking</a>
-                                        </small>
-                                    }
-                                </div>
+ @{
+    if (Model.Query.Success)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h4>Booking @Model.Query.Payload.BookingId - @Model.Query.Payload.Status</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img id="parking-image" src="/imageuploads/@Model.Query.Payload.ParkingSpace.ImageURL" class="card-img" alt="No Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5>@Model.Query.Payload.ParkingSpace.Title.</h5>
+                                <p>@Model.Query.Payload.ParkingSpace.Description</p>
+                                <p>Street: @Model.Query.Payload.ParkingSpace.Street</p>
+                                <p>City: @Model.Query.Payload.ParkingSpace.City</p>
+                                <p>State: @Model.Query.Payload.ParkingSpace.State</p>
+                                <p>Postcode: @Model.Query.Payload.ParkingSpace.Zip</p>
+                                <p>Booking Start time: @Model.Query.Payload.Start.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
+                                <p>Booking End time: @Model.Query.Payload.End.ToString("dddd, dd MMMM yyyy, HH:mm")</p>
+                                <p>Vehicle: @Model.Query.Payload.Vehicle.Colour @Model.Query.Payload.Vehicle.Make @Model.Query.Payload.Vehicle.Model - @Model.Query.Payload.Vehicle.Registration</p>
+                                <p>Total Cost: $@Model.Query.Payload.Total</p>
+                                @if (Model.Query.Payload.Status == BookingStatus.Active.ToString())
+                                {
+                                    <small class="text-muted">
+                                        <a asp-controller="MyBookings" asp-action="CancelBooking" asp-route-id="@Model.Query.Payload.BookingId">Cancel Booking</a>
+                                    </small>
+                                }
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
-        }
+                    </div>
+                </li>
+            </ul>
+        </div>
     }
-</div>
+}
 
 @section Scripts
 {
