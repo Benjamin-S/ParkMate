@@ -29,10 +29,6 @@ namespace ParkMate.ApplicationCore.ValueObjects
 
         public static AvailabilityTime CreateAvailabilityWithHours(DayOfWeek day, TimeSpan from, TimeSpan to)
         {
-            if (from.Subtract(to).Duration().Hours < 1)
-            {
-                throw new InvalidAvailabilityTimeException(from, to, "Minimum availability period is 1 hour");
-            }
             return new AvailabilityTime(day, from, to, true);
         }
 
@@ -65,7 +61,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
             yield return DayOfWeek;
             yield return AvailableFrom;
             yield return AvailableTo;
-            yield return IsAvailable;
+            yield return IsAvailable; 
         }
 
     }

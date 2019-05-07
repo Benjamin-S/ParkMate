@@ -13,12 +13,29 @@
       <PackageReference Include="AutoMapper" Version="8.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Queries\" />
-      <Folder Include="Events\" />
-      <Folder Include="DTOs\" />
+      <Folder Include="ParkingSpace\Events\" />
       <Folder Include="Enums\" />
-      <Folder Include="Config\" />
-      <Folder Include="Util\" />
+      <Folder Include="Utility\" />
+      <Folder Include="ParkingSpace\" />
+      <Folder Include="ParkingSpace\Commands\" />
+      <Folder Include="ParkingSpace\Queries\" />
+      <Folder Include="Booking\" />
+      <Folder Include="Booking\Commands\" />
+      <Folder Include="Booking\Queries\" />
+      <Folder Include="Customer\" />
+      <Folder Include="Customer\Commands\" />
+      <Folder Include="Customer\Queries\" />
+      <Folder Include="Booking\Events\" />
+      <Folder Include="Booking\Events\Handlers\" />
+      <Folder Include="Customer\Events\" />
+      <Folder Include="Customer\Events\Handlers\" />
+      <Folder Include="ParkingSpace\Events\Handlers\" />
+      <Folder Include="ParkingSpace\DTO\" />
+      <Folder Include="Booking\DTO\" />
+      <Folder Include="Customer\DTO\" />
+      <Folder Include="Booking\ViewModels\" />
+      <Folder Include="Customer\ViewModels\" />
+      <Folder Include="ParkingSpace\ViewModels\" />
     </ItemGroup>
     <ItemGroup>
       <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
