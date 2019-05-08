@@ -20,13 +20,13 @@ namespace ParkMate.ApplicationServices.Commands
         public bool IsListed { get; }
     }
     
-    public class SetParkingSpaceVisibilityCommandCommandHandler 
+    public class SetParkingSpaceVisibilityCommandHandler 
         : IRequestHandler<SetParkingSpaceVisibilityCommand, Result>
     {
         private IParkingSpaceRepository _repository;
         private IMediator _mediator;
 
-        public SetParkingSpaceVisibilityCommandCommandHandler(
+        public SetParkingSpaceVisibilityCommandHandler(
             IParkingSpaceRepository repository,
             IMediator mediator)
         {
