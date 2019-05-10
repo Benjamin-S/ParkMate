@@ -10,7 +10,6 @@ namespace ParkMate.Web.Models
         public int ParkingSpaceId { get; set; }
         public DescriptionDTO Description { get; set; }
         
-        [Required]
         [Display(Name = "Image File")]
         public IFormFile ImageFile { get; set; }
     }

@@ -93,8 +93,18 @@ namespace Web.Controllers
             {
                 return View(model);
             }
-            var imageResult = _imageProcessor.SaveImage(model.ImageFile);
-            model.ParkingSpace.Description.ImageURL = imageResult.FileName;
+
+            if (model.ImageFile != null)
+            {
+                var imageResult = _imageProcessor.SaveImage(model.ImageFile);
+                model.ParkingSpace.Description.ImageURL =
+                    imageResult.IsValid ? imageResult.FileName : "default.jpg";
+            }
+            else
+            {
+                model.ParkingSpace.Description.ImageURL = "default.jpg";
+            }
+
             model.ParkingSpace.OwnerId = _userId;
             var command = new RegisterNewParkingSpaceCommand(model.ParkingSpace);
             var result = await _mediator.Send(command);
@@ -114,8 +124,15 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditDescription([FromForm] ParkingSpaceDescriptionViewModel model, int parkingSpaceId)
         {
-            var imageResult = _imageProcessor.SaveImage(model.ImageFile);
-            model.Description.ImageURL = imageResult.FileName;            
+            if (model.ImageFile != null)
+            {
+                var imageResult = _imageProcessor.SaveImage(model.ImageFile);
+                model.Description.ImageURL = imageResult.IsValid ? imageResult.FileName : "default.jpg";
+            }
+            else
+            {
+                model.Description.ImageURL = "default.jpg";
+            }
             var command = new EditParkingSpaceDescriptionCommand(parkingSpaceId, _userId, model.Description);
             var result = await _mediator.Send(command);
             return await Index(result);
