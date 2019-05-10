@@ -18,7 +18,7 @@ namespace ParkMate.ApplicationCore.ValueObjects
         }
 
         public decimal Value { get; private set; }
-        public CultureInfo CultureInfo { get; } 
+        public static CultureInfo CultureInfo { get; } 
                 = CultureInfo.CreateSpecificCulture("en-AU");
 
         private void Validate(decimal value)
@@ -71,9 +71,13 @@ namespace ParkMate.ApplicationCore.ValueObjects
         {
             return money * times;
         }
+        public static string ValueAsString(decimal value)
+        {
+            return value.ToString("C2", CultureInfo);
+        }
         public override string ToString()
         {
-            return Value.ToString("C2", CultureInfo);
+            return ValueAsString(Value);
         }
         protected override IEnumerable<object> GetEqualityComponents()
         {
