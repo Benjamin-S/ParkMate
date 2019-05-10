@@ -128,7 +128,6 @@ namespace Web.Controllers
             {
                 var imageResult = _imageProcessor.SaveImage(model.ImageFile);
                 model.Description.ImageURL = imageResult.IsValid ? imageResult.FileName : "default.jpg";
-                model.Description.ImageURL = imageResult.FileName;
             }
             else
             {
