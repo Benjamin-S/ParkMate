@@ -226,7 +226,9 @@
                     }
                 ],
                 onClose: function(selectedDates, dateStr, instance) {
-                    endFP.set("minDate", dateStr);
+                    var minimumDate = new Date(dateStr);
+                    minimumDate.setHours(minimumDate.getHours() + 1);
+                    endFP.set("minDate",  minimumDate);
                     endFP.jumpToDate(dateStr);
                 }
             });

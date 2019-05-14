@@ -84,7 +84,7 @@ namespace Web.Controllers
             };
             return View(viewModel);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmBooking([FromForm] CreateBookingViewModel model)
@@ -94,7 +94,7 @@ namespace Web.Controllers
             var timeLapse = model.BookingPeriod.End - model.BookingPeriod.Start;
 
             Result result;
-            if (timeLapse.Hours >= 24)
+            if (timeLapse.TotalHours >= 24)
             {
                 var command = new CreateDailyBookingCommand(model.CustomerId, model.VehicleId, model.ParkingSpaceId,
                     model.BookingPeriod);
